@@ -1,0 +1,341 @@
+{
+    "1": {
+        "positions": [
+            "top",
+            "left"
+        ],
+        "layers": [
+            1
+        ],
+        "can_join": [
+            2,
+            10
+        ]
+    },
+    "2": {
+        "positions": [
+            "top",
+            "center"
+        ],
+        "layers": [
+            1,
+            4
+        ],
+        "can_join": [
+            1,
+            3,
+            5
+        ]
+    },
+    "3": {
+        "positions": [
+            "top",
+            "right"
+        ],
+        "layers": [
+            1
+        ],
+        "can_join": [
+            2,
+            15
+        ]
+    },
+    "4": {
+        "positions": [
+            "top",
+            "left"
+        ],
+        "layers": [
+            2
+        ],
+        "can_join": [
+            5,
+            11
+        ]
+    },
+    "5": {
+        "positions": [
+            "top",
+            "center"
+        ],
+        "layers": [
+            2,
+            4
+        ],
+        "can_join": [
+            2,
+            4,
+            6,
+            8
+        ]
+    },
+    "6": {
+        "positions": [
+            "top",
+            "right"
+        ],
+        "layers": [
+            2
+        ],
+        "can_join": [
+            5,
+            14
+        ]
+    },
+    "7": {
+        "positions": [
+            "top",
+            "left"
+        ],
+        "layers": [
+            3
+        ],
+        "can_join": [
+            8,
+            12
+        ]
+    },
+    "8": {
+        "positions": [
+            "top",
+            "center"
+        ],
+        "layers": [
+            3
+        ],
+        "can_join": [
+            5,
+            7,
+            9
+        ]
+    },
+    "9": {
+        "positions": [
+            "top",
+            "right"
+        ],
+        "layers": [
+            3
+        ],
+        "can_join": [
+            8,
+            13
+        ]
+    },
+    "10": {
+        "positions": [
+            "center",
+            "left"
+        ],
+        "layers": [
+            1,
+            4
+        ],
+        "can_join": [
+            1,
+            11,
+            22
+        ]
+    },
+    "11": {
+        "positions": [
+            "center",
+            "left"
+        ],
+        "layers": [
+            2,
+            4
+        ],
+        "can_join": [
+            4,
+            10,
+            12,
+            19
+        ]
+    },
+    "12": {
+        "positions": [
+            "center",
+            "left"
+        ],
+        "layers": [
+            3,
+            4
+        ],
+        "can_join": [
+            7,
+            11,
+            16
+        ]
+    },
+    "13": {
+        "positions": [
+            "center",
+            "right"
+        ],
+        "layers": [
+            3,
+            4
+        ],
+        "can_join": [
+            9,
+            14,
+            18
+        ]
+    },
+    "14": {
+        "positions": [
+            "center",
+            "right"
+        ],
+        "layers": [
+            2,
+            4
+        ],
+        "can_join": [
+            6,
+            13,
+            15,
+            21
+        ]
+    },
+    "15": {
+        "positions": [
+            "center",
+            "right"
+        ],
+        "layers": [
+            1,
+            4
+        ],
+        "can_join": [
+            3,
+            14,
+            24
+        ]
+    },
+    "16": {
+        "positions": [
+            "bottom",
+            "left"
+        ],
+        "layers": [
+            3
+        ],
+        "can_join": [
+            12,
+            17
+        ]
+    },
+    "17": {
+        "positions": [
+            "bottom",
+            "center"
+        ],
+        "layers": [
+            3,
+            4
+        ],
+        "can_join": [
+            16,
+            18,
+            20
+        ]
+    },
+    "18": {
+        "positions": [
+            "bottom",
+            "right"
+        ],
+        "layers": [
+            3
+        ],
+        "can_join": [
+            13,
+            17
+        ]
+    },
+    "19": {
+        "positions": [
+            "bottom",
+            "left"
+        ],
+        "layers": [
+            2
+        ],
+        "can_join": [
+            11,
+            20
+        ]
+    },
+    "20": {
+        "positions": [
+            "bottom",
+            "center"
+        ],
+        "layers": [
+            2,
+            4
+        ],
+        "can_join": [
+            17,
+            19,
+            21,
+            23
+        ]
+    },
+    "21": {
+        "positions": [
+            "bottom",
+            "right"
+        ],
+        "layers": [
+            2
+        ],
+        "can_join": [
+            14,
+            20
+        ]
+    },
+    "22": {
+        "positions": [
+            "bottom",
+            "left"
+        ],
+        "layers": [
+            1
+        ],
+        "can_join": [
+            10,
+            23
+        ]
+    },
+    "23": {
+        "positions": [
+            "bottom",
+            "center"
+        ],
+        "layers": [
+            1,
+            4
+        ],
+        "can_join": [
+            20,
+            22,
+            24
+        ]
+    },
+    "24": {
+        "positions": [
+            "bottom",
+            "right"
+        ],
+        "layers": [
+            1
+        ],
+        "can_join": [
+            15,
+            23
+        ]
+    }
+}

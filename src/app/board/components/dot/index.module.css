@@ -1,0 +1,82 @@
+.dot_container{
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+
+    background: linear-gradient(145deg, #CACCCF, #FFFFFF);
+    border-radius: 100%;
+    box-shadow: 9.91px 9.91px 15px #D9DADE, -9.91px -9.91px 15px #FFFFFF;
+
+    z-index: 100;
+
+    border: 0;
+}
+
+.player_one:hover{
+    cursor: pointer;
+    box-shadow: inset 9.91px 9.91px 15px #775ED4, inset -9.91px -9.91px 15px #8F70FE;
+    background: linear-gradient(145deg, #9C7AFF, #6A54BD);
+}
+
+.player_two:hover{
+    cursor: pointer;
+    box-shadow: inset 9.91px 9.91px 15px #d45e5e, inset -9.91px -9.91px 15px #fe7070;
+    background: linear-gradient(145deg, #ff7a7a, #bd5454);
+}
+
+
+.player_one_dot{
+    box-shadow: inset 9.91px 9.91px 15px #775ED4, inset -9.91px -9.91px 15px #8F70FE;
+    background: linear-gradient(145deg, #9C7AFF, #6A54BD);
+}
+
+.player_two_dot{
+    box-shadow: inset 9.91px 9.91px 15px #d45e5e, inset -9.91px -9.91px 15px #fe7070;
+    background: linear-gradient(145deg, #ff7a7a, #bd5454);
+}
+
+
+.top{
+    top: -30px;
+}
+
+.bottom{
+    bottom: -30px;
+}
+
+.left{
+    left: -30px;
+}
+
+.right{
+    right: -30px;
+}
+
+.top.center{
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -30px);
+}
+
+.bottom.center{
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 30px);
+}
+
+.left.center{
+    left: 0;
+    top: 50%;
+    transform: translate(-50%, -30px);
+}
+
+.right.center{
+    right: 0;
+    top: 50%;
+    transform: translate(30px, -50%);
+}

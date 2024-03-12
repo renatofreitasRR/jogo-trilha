@@ -1,0 +1,30 @@
+.separator_container{
+    position: absolute;
+
+    border: 1px solid black;
+    width: 100%;
+    max-width: 300px;
+    z-index: 10;
+}
+
+.separator_container.left{
+    top: '50%';
+    left: calc(50% - 250px);
+    transform: translate(-50%, -50%);
+}
+
+.separator_container.right{
+    top: '50%';
+    left: calc(50% + 250px);
+    transform: translate(-50%, -50%);
+}
+
+.separator_container.top{
+    top: calc(50% - 250px);
+    transform: rotate(90deg);
+}
+
+.separator_container.bottom{
+    top: calc(50% + 250px);
+    transform: rotate(90deg);
+}
