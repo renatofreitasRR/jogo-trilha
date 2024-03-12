@@ -26,6 +26,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
     const [playerTwoDots, setPlayerTwoDots] = useState<string[]>([]);
     const [currentDotClicked, setCurrentDotClicked] = useState<string | undefined>(undefined);
     const [level, setLevels] = useState<1 | 2 | 3>(1);
+    const [playerOneChipsAvailables, setPlayerOneChipsAvailables] = useState(9);
+    const [playerTwoChipsAvailables, setPlayerTwoChipsAvailables] = useState(9);
 
     function loadDots() {
         const dots_data = dots_json;
@@ -112,16 +114,32 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         const dotClicked = getDot(dot_id);
 
-        if (dotClicked?.has_piece) {
-            setCurrentDotClicked(dot_id);
-            blinkNeighbourhoods(dotClicked);
-            return;
+        if (playerTwoChipsAvailables == 0) {
+            console.log("LVL 2");
+            setLevels(2);
         }
 
+        console.log("STEP ONE");
+
         if (level === 2) {
+
+            console.log("LEVEL TWO");
+
+            if (dotClicked?.has_piece) {
+
+                console.log("BLINK");
+
+                setCurrentDotClicked(dot_id);
+
+                blinkNeighbourhoods(dotClicked);
+                return;
+            }
+
             if ((
                 !dotClicked.hasOwnProperty('has_piece') || dotClicked?.has_piece === false)
                 && dotClicked.blink_dot === true) {
+
+                console.log("MOVING");
 
                 moveDot(dotClicked);
                 resetDots();
@@ -133,16 +151,25 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         const isPlayerOne = currentPlayer === 1;
 
+        console.log("SET PLAYER");
+
         if (isPlayerOne && playerOneDots.length >= 9)
             return;
 
         if (isPlayerOne === false && playerTwoDots.length >= 9)
             return;
 
-        if (isPlayerOne)
-            setPlayerOneDots(prevDots => [...prevDots, dot_id])
-        else
-            setPlayerTwoDots(prevDots => [...prevDots, dot_id])
+        if (isPlayerOne) {
+
+            console.log("SET DOTS PLAYER ONE");
+            setPlayerOneDots(prevDots => [...prevDots, dot_id]);
+            setPlayerOneChipsAvailables(playerOneChipsAvailables - 1);
+        }
+        else {
+            console.log("SET DOTS PLAYER TWO");
+            setPlayerTwoDots(prevDots => [...prevDots, dot_id]);
+            setPlayerTwoChipsAvailables(playerTwoChipsAvailables - 1);
+        }
 
         setBoardDots(prevDots => {
             return prevDots.map(dot => {
@@ -153,6 +180,9 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 }
             });
         });
+
+
+
 
     }
 
