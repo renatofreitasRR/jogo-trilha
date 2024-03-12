@@ -19,6 +19,7 @@ export default function Dot({ dot }: DotProps) {
         <button
             type='button'
             className={`
+            ${dot.blink_dot && styles.blink}
             ${styles.dot_container}
             ${styles[dot.positions[0]]}
             ${styles[dot.positions[1]]}

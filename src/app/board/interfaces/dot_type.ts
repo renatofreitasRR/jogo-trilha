@@ -6,4 +6,5 @@ export interface DotType {
     can_join: number[];
     has_piece: boolean;
     player?: 1 | 2;
+    blink_dot: boolean;
 }

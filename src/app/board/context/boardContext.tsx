@@ -2,6 +2,8 @@ import { ReactNode, createContext, useContext, useEffect, useState } from 'react
 import { DotType } from '../interfaces/dot_type';
 
 import dots_json from "../../../../data/data.json";
+import combinations_json from "../../../../data/combinations.json";
+import { LayerCombinationsType } from '../interfaces/dot_combination_type';
 
 interface BoardContextProps {
     boardDots: DotType[];
@@ -18,9 +20,12 @@ interface BoardProviderProps {
 
 export function BoardProvider({ children }: BoardProviderProps) {
     const [boardDots, setBoardDots] = useState<DotType[]>([]);
+    const [layersCombinations, setLayersCombinations] = useState<LayerCombinationsType[]>([]);
     const [currentPlayer, setCurrentPlayer] = useState<1 | 2>(2);
     const [playerOneDots, setPlayerOneDots] = useState<string[]>([]);
     const [playerTwoDots, setPlayerTwoDots] = useState<string[]>([]);
+    const [currentDotClicked, setCurrentDotClicked] = useState<string | undefined>(undefined);
+    const [level, setLevels] = useState<1 | 2 | 3>(1);
 
     function loadDots() {
         const dots_data = dots_json;
@@ -44,14 +49,94 @@ export function BoardProvider({ children }: BoardProviderProps) {
         setBoardDots(arrays_joined);
     }
 
+    function resetDots() {
+        setBoardDots(prevDots => {
+            return prevDots.map(dot => {
+                return { ...dot, blink_dot: false };
+            });
+        });
+    }
+
+    function getDot(dot_id: string): DotType {
+        const dot = boardDots.find(dot => dot.id == dot_id);
+
+        return dot as DotType;
+    }
+
+    function blinkNeighbourhoods(dotClicked: DotType) {
+        if (dotClicked?.has_piece) {
+            dotClicked.can_join.map(neighbourhood_id => {
+                const dotNeighbourhood = getDot(neighbourhood_id.toString());
+                if (!dotNeighbourhood.hasOwnProperty('has_piece') || dotNeighbourhood.has_piece === false) {
+                    setBoardDots(prevDots => {
+                        return prevDots.map(dot => {
+                            if (dot.id === dotNeighbourhood.id) {
+                                return { ...dot, blink_dot: true };
+                            } else {
+                                return dot;
+                            }
+                        });
+                    });
+                }
+            })
+        }
+    }
+
+    function moveDot(move_to_dot: DotType) {
+        const last_dot = getDot(currentDotClicked as string);
+
+        setBoardDots(prevDots => {
+            return prevDots.map(dot => {
+                if (dot.id === last_dot.id) {
+                    return { ...dot, has_piece: false };
+                } else {
+                    return dot;
+                }
+            });
+        });
+
+        setBoardDots(prevDots => {
+            return prevDots.map(dot => {
+                if (dot.id === move_to_dot.id) {
+                    return { ...dot, has_piece: true, player: currentPlayer, blink_dot: false };
+                } else {
+                    return dot;
+                }
+            });
+        });
+    }
+
+
+
     function clickInDot(dot_id: string) {
+
+        const dotClicked = getDot(dot_id);
+
+        if (dotClicked?.has_piece) {
+            setCurrentDotClicked(dot_id);
+            blinkNeighbourhoods(dotClicked);
+            return;
+        }
+
+        if (level === 2) {
+            if ((
+                !dotClicked.hasOwnProperty('has_piece') || dotClicked?.has_piece === false)
+                && dotClicked.blink_dot === true) {
+
+                moveDot(dotClicked);
+                resetDots();
+                return;
+
+            }
+        }
+
 
         const isPlayerOne = currentPlayer === 1;
 
         if (isPlayerOne && playerOneDots.length >= 9)
             return;
 
-        if (!isPlayerOne && playerTwoDots.length >= 9)
+        if (isPlayerOne === false && playerTwoDots.length >= 9)
             return;
 
         if (isPlayerOne)

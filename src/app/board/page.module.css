@@ -1,0 +1,24 @@
+.page_division{
+    display: flex;
+}
+
+
+.board_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width:  100vw;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.chips_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 1.6rem;
+}

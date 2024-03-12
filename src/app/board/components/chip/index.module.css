@@ -1,0 +1,18 @@
+.chip_container{
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(145deg, #CACCCF, #FFFFFF);
+    border-radius: 100%;
+    box-shadow: 9.91px 9.91px 15px #D9DADE, -9.91px -9.91px 15px #FFFFFF;
+
+    border: 0;
+}
+
+.chip_container + .chip_container{
+    margin-top: 16px;
+}
