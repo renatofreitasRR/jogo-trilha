@@ -10,7 +10,7 @@ export function PlayerTurn() {
 
     return (
         <div className={styles.player_turn}>
-            <h1>Turno Jogador {playerTurn}</h1>
+            <h2>Turno Jogador {playerTurn}</h2>
         </div>
     )
 }

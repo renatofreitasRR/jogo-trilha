@@ -1,6 +1,6 @@
 .dot_container{
-    width: 60px;
-    height: 60px;
+    width: 47px;
+    height: 47px;
 
     display: flex;
     align-items: center;
@@ -42,43 +42,43 @@
 
 
 .top{
-    top: -30px;
+    top: -24px;
 }
 
 .bottom{
-    bottom: -30px;
+    bottom: -24px;
 }
 
 .left{
-    left: -30px;
+    left: -24px;
 }
 
 .right{
-    right: -30px;
+    right: -24px;
 }
 
 .top.center{
     top: 0;
     left: 50%;
-    transform: translate(-50%, -30px);
+    transform: translate(-50%, -24px);
 }
 
 .bottom.center{
     bottom: 0;
     left: 50%;
-    transform: translate(-50%, 30px);
+    transform: translate(-50%, 24px);
 }
 
 .left.center{
     left: 0;
     top: 50%;
-    transform: translate(-50%, -30px);
+    transform: translate(-50%, -24px);
 }
 
 .right.center{
     right: 0;
     top: 50%;
-    transform: translate(30px, -50%);
+    transform: translate(24px, -50%);
 }
 
 .blink{

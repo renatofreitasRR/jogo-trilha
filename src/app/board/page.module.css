@@ -1,13 +1,19 @@
+.page_content{
+    margin: 0 auto;
+    width: 50%;
+}
+
 .page_division{
     display: flex;
+    justify-content: center;
 }
 
 .board_container{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    width:  100vw;
+    height: 80vh;
+    width:  100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
