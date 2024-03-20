@@ -15,7 +15,6 @@ export default function Board() {
             <PlayerTurn />
             <div className={styles.page_content}>
                 <div className={styles.page_division}>
-
                     <ChipAvailable player={1} />
                     <main className={styles.board_container}>
                         <Layer

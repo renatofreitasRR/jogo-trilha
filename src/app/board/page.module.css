@@ -1,11 +1,12 @@
 .page_content{
     margin: 0 auto;
-    width: 50%;
+    width: 90%;
 }
 
 .page_division{
     display: flex;
     justify-content: center;
+    align-items: flex-start;
 }
 
 .board_container{

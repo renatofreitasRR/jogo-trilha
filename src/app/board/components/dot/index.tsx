@@ -27,6 +27,7 @@ export default function Dot({ dot }: DotProps) {
             ${dot.has_piece && dot.player === 1 ? styles.player_one_dot : dot.has_piece ? styles.player_two_dot : ''}
             `}
             onClick={() => clickInDot(dot.id)}
+            title='Botão'
         >
             <div>
                 <strong>{dot.id}</strong>

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { BoardContext } from "../../contexts/boardContext";
 import styles from "./index.module.css";
+import Chip from "../chip";
 
 export function PlayerTurn() {
 
@@ -11,6 +12,7 @@ export function PlayerTurn() {
     return (
         <div className={styles.player_turn}>
             <h2>Turno Jogador {playerTurn}</h2>
+            <Chip player={playerTurn} />
         </div>
     )
 }
