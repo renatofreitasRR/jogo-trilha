@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { BoardContext, BoardProvider } from "../../context/boardContext";
+import { BoardContext, BoardProvider } from "../../contexts/boardContext";
 import Chip from "../chip";
 import styles from "./index.module.css";
 

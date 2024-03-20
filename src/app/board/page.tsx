@@ -3,7 +3,7 @@ import { useContext } from "react";
 import Chip from "./components/chip";
 import Layer from "./components/layer";
 import Separator from "./components/separator";
-import { BoardContext, BoardProvider } from "./context/boardContext";
+import { BoardContext, BoardProvider } from "./contexts/boardContext";
 import styles from './page.module.css';
 import ChipAvailable from "./components/chipaside";
 import { PlayerTurn } from "./components/playerturn";

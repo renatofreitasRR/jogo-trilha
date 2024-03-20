@@ -2,7 +2,7 @@
 import { useContext } from "react";
 import Dot from "../dot";
 import styles from "./index.module.css";
-import { BoardContext } from "../../context/boardContext";
+import { BoardContext } from "../../contexts/boardContext";
 
 interface LayerProps {
     layer: number;
