@@ -1,26 +1,20 @@
 'use client'
+import { useContext } from "react";
 import Chip from "./components/chip";
 import Layer from "./components/layer";
 import Separator from "./components/separator";
-import { BoardProvider } from "./context/boardContext";
+import { BoardContext, BoardProvider } from "./context/boardContext";
 import styles from './page.module.css';
+import ChipAvailable from "./components/chipaside";
+import { PlayerTurn } from "./components/playerturn";
 
 export default function Board() {
+
     return (
         <BoardProvider>
+            <PlayerTurn />
             <div className={styles.page_division}>
-                <aside className={styles.chips_container}>
-                    <h2>Jogador Nº1</h2>
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                </aside>
+                <ChipAvailable player={1} />
                 <main className={styles.board_container}>
                     <Layer
                         layer={1}
@@ -44,18 +38,7 @@ export default function Board() {
                         position='bottom'
                     />
                 </main>
-                <aside className={styles.chips_container}>
-                    <h2>Jogador Nº2</h2>
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                    <Chip />
-                </aside>
+                <ChipAvailable player={2} />
             </div>
         </BoardProvider>
 

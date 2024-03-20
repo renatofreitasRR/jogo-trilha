@@ -8,7 +8,9 @@ import { LayerCombinationsType } from '../interfaces/dot_combination_type';
 interface BoardContextProps {
     boardDots: DotType[];
     clickInDot: (dot_id: string) => void;
-    currentPlayer: 1 | 2;
+    playerTurn: 1 | 2;
+    playerOneChipsAvailables: number;
+    playerTwoChipsAvailables: number;
 }
 
 export const BoardContext = createContext({} as BoardContextProps);
@@ -21,13 +23,14 @@ interface BoardProviderProps {
 export function BoardProvider({ children }: BoardProviderProps) {
     const [boardDots, setBoardDots] = useState<DotType[]>([]);
     const [layersCombinations, setLayersCombinations] = useState<LayerCombinationsType[]>([]);
-    const [currentPlayer, setCurrentPlayer] = useState<1 | 2>(2);
+    const [currentPlayer, setCurrentPlayer] = useState<1 | 2>(1);
     const [playerOneDots, setPlayerOneDots] = useState<string[]>([]);
     const [playerTwoDots, setPlayerTwoDots] = useState<string[]>([]);
     const [currentDotClicked, setCurrentDotClicked] = useState<string | undefined>(undefined);
     const [level, setLevels] = useState<1 | 2 | 3>(1);
     const [playerOneChipsAvailables, setPlayerOneChipsAvailables] = useState(9);
     const [playerTwoChipsAvailables, setPlayerTwoChipsAvailables] = useState(9);
+    const [playerTurn, setPlayerTurn] = useState<1 | 2>(1);
 
     function loadDots() {
         const dots_data = dots_json;
@@ -65,7 +68,20 @@ export function BoardProvider({ children }: BoardProviderProps) {
         return dot as DotType;
     }
 
+    function changeTurn() {
+        if (playerTurn == 1) {
+            setPlayerTurn(2);
+            setCurrentPlayer(2);
+        }
+        else {
+            setPlayerTurn(1);
+            setCurrentPlayer(1);
+        }
+    }
+
     function blinkNeighbourhoods(dotClicked: DotType) {
+        console.log("BLIIIINNNK")
+
         if (dotClicked?.has_piece) {
             dotClicked.can_join.map(neighbourhood_id => {
                 const dotNeighbourhood = getDot(neighbourhood_id.toString());
@@ -108,13 +124,11 @@ export function BoardProvider({ children }: BoardProviderProps) {
         });
     }
 
-
-
     function clickInDot(dot_id: string) {
 
         const dotClicked = getDot(dot_id);
 
-        if (playerTwoChipsAvailables == 0) {
+        if (playerTwoChipsAvailables == 0 || playerOneChipsAvailables == 0) {
             console.log("LVL 2");
             setLevels(2);
         }
@@ -125,8 +139,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
             console.log("LEVEL TWO");
 
-            if (dotClicked?.has_piece) {
-
+            if (dotClicked?.has_piece && dotClicked.player == playerTurn) {
+                resetDots();
                 console.log("BLINK");
 
                 setCurrentDotClicked(dot_id);
@@ -143,13 +157,14 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
                 moveDot(dotClicked);
                 resetDots();
+
+                changeTurn();
                 return;
 
             }
         }
 
-
-        const isPlayerOne = currentPlayer === 1;
+        const isPlayerOne = playerTurn === 1;
 
         console.log("SET PLAYER");
 
@@ -160,7 +175,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
             return;
 
         if (isPlayerOne) {
-
             console.log("SET DOTS PLAYER ONE");
             setPlayerOneDots(prevDots => [...prevDots, dot_id]);
             setPlayerOneChipsAvailables(playerOneChipsAvailables - 1);
@@ -169,6 +183,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
             console.log("SET DOTS PLAYER TWO");
             setPlayerTwoDots(prevDots => [...prevDots, dot_id]);
             setPlayerTwoChipsAvailables(playerTwoChipsAvailables - 1);
+
         }
 
         setBoardDots(prevDots => {
@@ -181,9 +196,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
             });
         });
 
-
-
-
+        changeTurn();
     }
 
     useEffect(() => {
@@ -194,8 +207,10 @@ export function BoardProvider({ children }: BoardProviderProps) {
         <BoardContext.Provider
             value={
                 {
+                    playerOneChipsAvailables,
+                    playerTwoChipsAvailables,
                     boardDots,
-                    currentPlayer,
+                    playerTurn,
                     clickInDot
                 }}>
             {children}

@@ -11,7 +11,7 @@ interface DotProps {
 export default function Dot({ dot }: DotProps) {
     const {
         clickInDot,
-        currentPlayer
+        playerTurn
     } = useContext(BoardContext);
 
 
@@ -23,7 +23,7 @@ export default function Dot({ dot }: DotProps) {
             ${styles.dot_container}
             ${styles[dot.positions[0]]}
             ${styles[dot.positions[1]]}
-            ${currentPlayer === 1 ? styles.player_one : styles.player_two}
+            ${playerTurn === 1 ? styles.player_one : styles.player_two}
             ${dot.has_piece && dot.player === 1 ? styles.player_one_dot : dot.has_piece ? styles.player_two_dot : ''}
             `}
             onClick={() => clickInDot(dot.id)}
