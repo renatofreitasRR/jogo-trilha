@@ -4,6 +4,7 @@ import { DotType } from '../interfaces/dot_type';
 import dots_json from "../../../../data/data.json";
 import combinations_json from "../../../../data/combinations.json";
 import { LayerCombinationsType } from '../interfaces/dot_combination_type';
+import { GameRules } from '../services/gameRules';
 
 interface BoardContextProps {
     boardDots: DotType[];
@@ -80,7 +81,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
     }
 
     function blinkNeighbourhoods(dotClicked: DotType) {
-        console.log("BLIIIINNNK")
 
         if (dotClicked?.has_piece) {
             dotClicked.can_join.map(neighbourhood_id => {
@@ -128,59 +128,43 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         const dotClicked = getDot(dot_id);
 
-        if (playerTwoChipsAvailables == 0 || playerOneChipsAvailables == 0) {
-            console.log("LVL 2");
+        if (GameRules.canChangeToLevelTwo(playerOneChipsAvailables, playerTwoChipsAvailables, level))
             setLevels(2);
-        }
-
-        console.log("STEP ONE");
 
         if (level === 2) {
 
-            console.log("LEVEL TWO");
+            if (GameRules.canBlink(dotClicked, playerTurn)) {
 
-            if (dotClicked?.has_piece && dotClicked.player == playerTurn) {
                 resetDots();
-                console.log("BLINK");
-
                 setCurrentDotClicked(dot_id);
-
                 blinkNeighbourhoods(dotClicked);
+
                 return;
             }
 
-            if ((
-                !dotClicked.hasOwnProperty('has_piece') || dotClicked?.has_piece === false)
-                && dotClicked.blink_dot === true) {
-
-                console.log("MOVING");
+            if (GameRules.canMove(dotClicked, level)) {
 
                 moveDot(dotClicked);
                 resetDots();
-
                 changeTurn();
+
                 return;
 
             }
         }
 
+        //LVL 1
+
+        if (GameRules.canPutDot(playerTurn, dotClicked, playerOneChipsAvailables, playerTwoChipsAvailables) === false)
+            return;
+
         const isPlayerOne = playerTurn === 1;
 
-        console.log("SET PLAYER");
-
-        if (isPlayerOne && playerOneDots.length >= 9)
-            return;
-
-        if (isPlayerOne === false && playerTwoDots.length >= 9)
-            return;
-
         if (isPlayerOne) {
-            console.log("SET DOTS PLAYER ONE");
             setPlayerOneDots(prevDots => [...prevDots, dot_id]);
             setPlayerOneChipsAvailables(playerOneChipsAvailables - 1);
         }
         else {
-            console.log("SET DOTS PLAYER TWO");
             setPlayerTwoDots(prevDots => [...prevDots, dot_id]);
             setPlayerTwoChipsAvailables(playerTwoChipsAvailables - 1);
 
