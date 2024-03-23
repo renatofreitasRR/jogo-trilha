@@ -20,7 +20,6 @@ export class GameRules {
     }
 
     static canPutDot(playerTurn: 1 | 2, dotClicked: DotType, playerOneChipsAvailable: number, playerTwoChipsAvailable: number, eatTime: boolean): boolean {
-
         const isPlayerOne = playerTurn === 1;
 
         if (eatTime === true)
@@ -48,7 +47,7 @@ export class GameRules {
 
     static canEat(eatTime: boolean, playerTurn: 1 | 2, dotClicked: DotType): boolean {
 
-        if (eatTime === true && dotClicked.has_piece === true && dotClicked.player != playerTurn)
+        if (eatTime === true && dotClicked.has_piece === true && dotClicked.player != playerTurn && dotClicked.blink_dot === true)
             return true;
 
         return false;

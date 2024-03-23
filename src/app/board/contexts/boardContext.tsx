@@ -102,17 +102,25 @@ export function BoardProvider({ children }: BoardProviderProps) {
     }
 
     function blinkDotsToEat(player: 1 | 2) {
+
+        const gamePoints = new GamePoints();
+
+
         boardDots.filter(x => x.has_piece === true && x.player != player).map(dot_filter => {
             setBoardDots(prevDots => {
                 return prevDots.map(dot_prev => {
-                    if (dot_prev.id === dot_filter.id) {
+                    const dotIsInRow = gamePoints.dotToEatIsInARowCombination(dot_prev, getDot);
+
+                    if (dot_prev.id === dot_filter.id && dotIsInRow === false) {
                         return { ...dot_prev, blink_dot: true };
                     } else {
                         return dot_prev;
                     }
                 });
             });
-        })
+        });
+
+
     }
 
     function moveDot(move_to_dot: DotType) {
@@ -155,14 +163,14 @@ export function BoardProvider({ children }: BoardProviderProps) {
     }
 
     function clickInDot(dot_id: string) {
-
-
         const dotClicked = getDot(dot_id);
 
-        console.log("clickInDot DOT", dotClicked);
+        const gamePoints = new GamePoints();
 
-
-        const dotPoints = new GamePoints();
+        if (eatTime && (gamePoints.hasPlayerEnemyDotsToEat(eatTime, boardDots, playerTurn) === false)) {
+            console.log("SET EAT TIME FALSE");
+            setEatTime(false);
+        }
 
         if (GameRules.canEat(eatTime, playerTurn, dotClicked)) {
 
@@ -192,7 +200,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
                 moveDot(dotClicked);
 
-                if (dotPoints.makeARow(dotClicked, playerTurn, getDot)) {
+                if (gamePoints.rowCombined(dotClicked, playerTurn, getDot)) {
 
                     blinkDotsToEat(playerTurn);
                     setEatTime(true);
@@ -216,11 +224,11 @@ export function BoardProvider({ children }: BoardProviderProps) {
         const isPlayerOne = playerTurn === 1;
 
         if (isPlayerOne) {
-            setPlayerOneDots(prevDots => [...prevDots, dot_id]);
+            // setPlayerOneDots(prevDots => [...prevDots, dot_id]);
             setPlayerOneChipsAvailables(playerOneChipsAvailables - 1);
         }
         else {
-            setPlayerTwoDots(prevDots => [...prevDots, dot_id]);
+            // setPlayerTwoDots(prevDots => [...prevDots, dot_id]);
             setPlayerTwoChipsAvailables(playerTwoChipsAvailables - 1);
 
         }
@@ -235,9 +243,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
             });
         });
 
-        console.log("VEIO ATE AQUI");
-        if (dotPoints.makeARow(dotClicked, playerTurn, getDot)) {
-
+        if (gamePoints.rowCombined(dotClicked, playerTurn, getDot)) {
+            console.log("SET EAT TIME TRUE");
             blinkDotsToEat(playerTurn);
             setEatTime(true);
 
