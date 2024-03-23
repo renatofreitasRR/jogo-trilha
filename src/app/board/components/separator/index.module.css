@@ -3,28 +3,28 @@
 
     border: 1px solid black;
     width: 100%;
-    max-width: 150px;
+    max-width: 163px;
     z-index: 10;
 }
 
 .separator_container.left{
     top: '50%';
-    left: calc(50% - 150px);
+    left: calc(50% - 170px);
     transform: translate(-50%, -50%);
 }
 
 .separator_container.right{
     top: '50%';
-    left: calc(50% + 150px);
+    left: calc(50% + 170px);
     transform: translate(-50%, -50%);
 }
 
 .separator_container.top{
-    top: calc(50% - 150px);
+    top: calc(50% - 170px);
     transform: rotate(90deg);
 }
 
 .separator_container.bottom{
-    top: calc(50% + 150px);
+    top: calc(50% + 170px);
     transform: rotate(90deg);
 }
