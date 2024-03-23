@@ -4,7 +4,7 @@ export interface DotType {
     main_layer: number;
     layers: number[];
     can_join: number[];
-    has_piece: boolean;
+    has_piece?: boolean;
     player?: 1 | 2;
-    blink_dot: boolean;
+    blink_dot?: boolean;
 }

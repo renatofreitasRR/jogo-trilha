@@ -32,6 +32,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
     const [playerOneChipsAvailables, setPlayerOneChipsAvailables] = useState(9);
     const [playerTwoChipsAvailables, setPlayerTwoChipsAvailables] = useState(9);
     const [playerTurn, setPlayerTurn] = useState<1 | 2>(1);
+    const [eatTime, setEatTime] = useState(false);
 
     function loadDots() {
         const dots_data = dots_json;
@@ -55,7 +56,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
         setBoardDots(arrays_joined);
     }
 
-    function resetDots() {
+    function resetBlink() {
         setBoardDots(prevDots => {
             return prevDots.map(dot => {
                 return { ...dot, blink_dot: false };
@@ -100,6 +101,20 @@ export function BoardProvider({ children }: BoardProviderProps) {
         }
     }
 
+    function blinkDotsToEat(player: 1 | 2) {
+        boardDots.filter(x => x.has_piece === true && x.player != player).map(dot_filter => {
+            setBoardDots(prevDots => {
+                return prevDots.map(dot_prev => {
+                    if (dot_prev.id === dot_filter.id) {
+                        return { ...dot_prev, blink_dot: true };
+                    } else {
+                        return dot_prev;
+                    }
+                });
+            });
+        })
+    }
+
     function moveDot(move_to_dot: DotType) {
         const last_dot = getDot(currentDotClicked as string);
 
@@ -124,13 +139,38 @@ export function BoardProvider({ children }: BoardProviderProps) {
         });
     }
 
+    function eatDot(dot_to_eat: DotType) {
+
+        setBoardDots(prevDots => {
+            return prevDots.map(dot => {
+                if (dot.id === dot_to_eat.id) {
+                    return { ...dot, has_piece: false, player: undefined };
+                } else {
+                    return dot;
+                }
+            });
+        });
+
+        setEatTime(false);
+    }
+
     function clickInDot(dot_id: string) {
+
 
         const dotClicked = getDot(dot_id);
 
+        console.log("clickInDot DOT", dotClicked);
+
+
         const dotPoints = new GamePoints();
 
-        dotPoints.makeARow(dotClicked, playerTurn, getDot);
+        if (eatTime) {
+            eatDot(dotClicked);
+            resetBlink();
+            changeTurn();
+
+            return;
+        }
 
         if (GameRules.canChangeToLevelTwo(playerOneChipsAvailables, playerTwoChipsAvailables, level))
             setLevels(2);
@@ -139,7 +179,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
             if (GameRules.canBlink(dotClicked, playerTurn)) {
 
-                resetDots();
+                resetBlink();
                 setCurrentDotClicked(dot_id);
                 blinkNeighbourhoods(dotClicked);
 
@@ -149,7 +189,16 @@ export function BoardProvider({ children }: BoardProviderProps) {
             if (GameRules.canMove(dotClicked, level)) {
 
                 moveDot(dotClicked);
-                resetDots();
+
+                if (dotPoints.makeARow(dotClicked, playerTurn, getDot)) {
+
+                    blinkDotsToEat(playerTurn);
+                    setEatTime(true);
+
+                    return;
+                }
+
+                resetBlink();
                 changeTurn();
 
                 return;
@@ -176,13 +225,22 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         setBoardDots(prevDots => {
             return prevDots.map(dot => {
-                if (dot.id === dot_id && !dot.has_piece) {
+                if (dot.id === dot_id) {
                     return { ...dot, has_piece: true, player: currentPlayer };
                 } else {
                     return dot;
                 }
             });
         });
+
+        console.log("VEIO ATE AQUI");
+        if (dotPoints.makeARow(dotClicked, playerTurn, getDot)) {
+
+            blinkDotsToEat(playerTurn);
+            setEatTime(true);
+
+            return;
+        }
 
         changeTurn();
     }

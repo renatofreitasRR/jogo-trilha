@@ -23,7 +23,7 @@ export class GameRules {
 
         const isPlayerOne = playerTurn === 1;
 
-        if (dotClicked.hasOwnProperty('has_piece') || dotClicked?.has_piece)
+        if (dotClicked?.has_piece === true)
             return false;
 
         if (isPlayerOne && playerOneChipsAvailable == 0)
@@ -43,6 +43,13 @@ export class GameRules {
             return false;
     }
 
+    static canEat(playerTurn: 1 | 2, dotClicked: DotType): boolean {
+
+        if (dotClicked.has_piece === true && dotClicked.player != playerTurn)
+            return true;
+
+        return false;
+    }
 
     static canChangeToLevelThree(gameLevel: 1 | 2 | 3, playerTurn: 1 | 2,): boolean {
 

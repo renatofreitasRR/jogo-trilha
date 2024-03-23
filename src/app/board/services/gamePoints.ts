@@ -27,30 +27,33 @@ export class GamePoints {
         return matchingArrays;
     }
 
-    makeARow(dot: DotType, playerTurn: 1 | 2, getDot: (dot_id: string) => DotType) {
-        console.log("DOT CLICKED", dot);
-
-        const combinationsMatched = this.getMatchingLayers(dot);
+    makeARow(dot_clicked: DotType, playerTurn: 1 | 2, getDot: (dot_id: string) => DotType): boolean {
+        const combinationsMatched = this.getMatchingLayers(dot_clicked);
+        let rowMaked = false;
 
         combinationsMatched.forEach(combinations => {
             const dots: DotType[] = [];
 
-            combinations.forEach(dot_id => {
+            combinations.filter(id => String(id) != dot_clicked.id).forEach(dot_id => {
                 const dot = getDot(String(dot_id));
 
                 dots.push(dot);
             });
 
+            console.log("DOTS", dots);
+            console.log("DOTS EVERY", dots.every(dot => (dot.hasOwnProperty('has_piece') || dot?.has_piece) && dot.player === playerTurn));
+
             if (
                 dots.every(
                     dot =>
-                        (dot.hasOwnProperty('has_piece') || dot?.has_piece) &&
-                        dot.player === playerTurn)
+                        (dot.hasOwnProperty('has_piece') || dot?.has_piece) && dot.player === playerTurn) && dot_clicked.player == undefined
             )
-                console.log("TEM TODAS");
+                rowMaked = true;
 
-            console.log("dots", dots);
         });
+
+        console.log("RETURNED", rowMaked);
+        return rowMaked;
     }
 
 }
