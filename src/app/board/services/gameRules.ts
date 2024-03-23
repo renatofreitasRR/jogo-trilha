@@ -19,9 +19,12 @@ export class GameRules {
         return false;
     }
 
-    static canPutDot(playerTurn: 1 | 2, dotClicked: DotType, playerOneChipsAvailable: number, playerTwoChipsAvailable: number): boolean {
+    static canPutDot(playerTurn: 1 | 2, dotClicked: DotType, playerOneChipsAvailable: number, playerTwoChipsAvailable: number, eatTime: boolean): boolean {
 
         const isPlayerOne = playerTurn === 1;
+
+        if (eatTime === true)
+            return false;
 
         if (dotClicked?.has_piece === true)
             return false;
@@ -43,9 +46,9 @@ export class GameRules {
             return false;
     }
 
-    static canEat(playerTurn: 1 | 2, dotClicked: DotType): boolean {
+    static canEat(eatTime: boolean, playerTurn: 1 | 2, dotClicked: DotType): boolean {
 
-        if (dotClicked.has_piece === true && dotClicked.player != playerTurn)
+        if (eatTime === true && dotClicked.has_piece === true && dotClicked.player != playerTurn)
             return true;
 
         return false;

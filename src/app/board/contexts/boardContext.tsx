@@ -164,13 +164,15 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         const dotPoints = new GamePoints();
 
-        if (eatTime) {
+        if (GameRules.canEat(eatTime, playerTurn, dotClicked)) {
+
             eatDot(dotClicked);
             resetBlink();
             changeTurn();
 
             return;
         }
+
 
         if (GameRules.canChangeToLevelTwo(playerOneChipsAvailables, playerTwoChipsAvailables, level))
             setLevels(2);
@@ -208,7 +210,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         //LVL 1
 
-        if (GameRules.canPutDot(playerTurn, dotClicked, playerOneChipsAvailables, playerTwoChipsAvailables) === false)
+        if (GameRules.canPutDot(playerTurn, dotClicked, playerOneChipsAvailables, playerTwoChipsAvailables, eatTime) === false)
             return;
 
         const isPlayerOne = playerTurn === 1;
