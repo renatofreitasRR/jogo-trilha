@@ -1,7 +1,7 @@
 'use client'
 import { useContext } from 'react';
 import { BoardContext } from '../../contexts/boardContext';
-import { DotType } from '../../interfaces/dot_type';
+import { DotType } from '../../interfaces/dotType';
 import styles from './index.module.css';
 
 interface DotProps {

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { BoardContext, BoardProvider } from "../../contexts/boardContext";
-import Chip from "../chip";
+import Chip from "../Chip";
 import styles from "./index.module.css";
 
 interface ChipAvailableProps {

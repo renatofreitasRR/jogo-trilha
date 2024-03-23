@@ -1,10 +1,10 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import { DotType } from '../interfaces/dot_type';
+import { DotType } from '../interfaces/dotType';
 
 import dots_json from "../../../../data/data.json";
-import combinations_json from "../../../../data/combinations.json";
-import { LayerCombinationsType } from '../interfaces/dot_combination_type';
+import { LayerCombinationsType } from '../interfaces/dotCombinationType';
 import { GameRules } from '../services/gameRules';
+import { GamePoints } from '../services/gamePoints';
 
 interface BoardContextProps {
     boardDots: DotType[];
@@ -127,6 +127,10 @@ export function BoardProvider({ children }: BoardProviderProps) {
     function clickInDot(dot_id: string) {
 
         const dotClicked = getDot(dot_id);
+
+        const dotPoints = new GamePoints();
+
+        dotPoints.makeARow(dotClicked, playerTurn, getDot);
 
         if (GameRules.canChangeToLevelTwo(playerOneChipsAvailables, playerTwoChipsAvailables, level))
             setLevels(2);

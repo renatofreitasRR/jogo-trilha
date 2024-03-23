@@ -1,6 +1,6 @@
 'use client'
 import { useContext } from "react";
-import Dot from "../dot";
+import Dot from "../Dot";
 import styles from "./index.module.css";
 import { BoardContext } from "../../contexts/boardContext";
 

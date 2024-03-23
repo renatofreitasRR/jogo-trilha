@@ -1,12 +1,12 @@
 'use client'
 import { useContext } from "react";
-import Chip from "./components/chip";
-import Layer from "./components/layer";
-import Separator from "./components/separator";
+import Chip from "./components/Chip";
+import Layer from "./components/Layer";
+import Separator from "./components/Separator";
 import { BoardContext, BoardProvider } from "./contexts/boardContext";
 import styles from './page.module.css';
-import ChipAvailable from "./components/chipaside";
-import { PlayerTurn } from "./components/playerturn";
+import ChipAvailable from "./components/ChipAside";
+import { PlayerTurn } from "./components/PlayerTurn";
 
 export default function Board() {
 

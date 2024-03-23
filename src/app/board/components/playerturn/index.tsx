@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { BoardContext } from "../../contexts/boardContext";
 import styles from "./index.module.css";
-import Chip from "../chip";
+import Chip from "../Chip";
 
 export function PlayerTurn() {
 

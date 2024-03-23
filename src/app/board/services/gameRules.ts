@@ -1,4 +1,4 @@
-import { DotType } from "../interfaces/dot_type";
+import { DotType } from "../interfaces/dotType";
 
 export class GameRules {
 
@@ -38,6 +38,15 @@ export class GameRules {
     static canChangeToLevelTwo(playerOneChipsAvailable: number, playerTwoChipsAvailable: number, gameLevel: 1 | 2 | 3): boolean {
 
         if (gameLevel == 1 && (playerOneChipsAvailable == 0 || playerTwoChipsAvailable == 0))
+            return true;
+        else
+            return false;
+    }
+
+
+    static canChangeToLevelThree(gameLevel: 1 | 2 | 3, playerTurn: 1 | 2,): boolean {
+
+        if (gameLevel == 2)
             return true;
         else
             return false;
