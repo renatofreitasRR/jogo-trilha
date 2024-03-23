@@ -1,10 +1,10 @@
 'use client'
-import Layer from "./components/layer";
-import Separator from "./components/separator";
+import Layer from "./components/Layer";
+import Separator from "./components/Separator";
 import { BoardProvider } from "./contexts/boardContext";
 import styles from './page.module.css';
 import ChipAvailable from "./components/ChipAside";
-import { PlayerTurn } from "./components/playerturn";
+import { PlayerTurn } from "./components/PlayerTurn";
 
 export default function Board() {
 
