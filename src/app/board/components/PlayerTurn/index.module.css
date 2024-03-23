@@ -1,0 +1,9 @@
+.player_turn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player_turn h2{
+    margin-right: 8px;
+}
