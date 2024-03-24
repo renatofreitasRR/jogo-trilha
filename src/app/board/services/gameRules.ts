@@ -38,11 +38,7 @@ export class GameRules {
     }
 
     static canChangeToLevelTwo(playerOneChipsAvailable: number, playerTwoChipsAvailable: number, gameLevel: 1 | 2 | 3): boolean {
-
-        if (gameLevel == 1 && (playerOneChipsAvailable == 0 || playerTwoChipsAvailable == 0))
-            return true;
-        else
-            return false;
+        return gameLevel == 1 && (playerOneChipsAvailable == 0 || playerTwoChipsAvailable == 0);
     }
 
     static canEat(eatTime: boolean, playerTurn: 1 | 2, dotClicked: DotType): boolean {
