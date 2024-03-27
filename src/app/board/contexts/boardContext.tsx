@@ -23,10 +23,7 @@ interface BoardProviderProps {
 
 export function BoardProvider({ children }: BoardProviderProps) {
     const [boardDots, setBoardDots] = useState<DotType[]>([]);
-    const [layersCombinations, setLayersCombinations] = useState<LayerCombinationsType[]>([]);
     const [currentPlayer, setCurrentPlayer] = useState<1 | 2>(1);
-    const [playerOneDots, setPlayerOneDots] = useState<string[]>([]);
-    const [playerTwoDots, setPlayerTwoDots] = useState<string[]>([]);
     const [currentDotClicked, setCurrentDotClicked] = useState<string | undefined>(undefined);
     const [level, setLevels] = useState<1 | 2 | 3>(1);
     const [playerOneChipsAvailables, setPlayerOneChipsAvailables] = useState(9);
@@ -56,128 +53,121 @@ export function BoardProvider({ children }: BoardProviderProps) {
         setBoardDots(arrays_joined);
     }
 
-    function resetBlink() {
-        setBoardDots(prevDots => {
-            return prevDots.map(dot => {
-                return { ...dot, blink_dot: false };
-            });
+    function resetBlink(current_dots: DotType[]): DotType[] {
+        const result = current_dots.map(dot => {
+            return { ...dot, blink_dot: false };
         });
+
+        return result;
     }
 
-    function getDot(dot_id: string): DotType {
-        const dot = boardDots.find(dot => dot.id == dot_id);
+    function getDot(dot_id: string, currentDots: DotType[]): DotType {
+        const dot = currentDots.find(dot => dot.id == dot_id);
 
         return dot as DotType;
     }
 
     function changeTurn() {
-        if (playerTurn == 1) {
+        if (playerTurn == 1)
             setPlayerTurn(2);
-            setCurrentPlayer(2);
-        }
-        else {
+        else
             setPlayerTurn(1);
-            setCurrentPlayer(1);
-        }
+
     }
 
-    function blinkNeighbourhoods(dotClicked: DotType) {
-
+    function blinkNeighbourhoods(dotClicked: DotType, currentDots: DotType[]): DotType[] {
+        let dots = currentDots;
         if (dotClicked?.has_piece) {
             dotClicked.can_join.map(neighbourhood_id => {
-                const dotNeighbourhood = getDot(neighbourhood_id.toString());
+                const dotNeighbourhood = getDot(neighbourhood_id.toString(), currentDots);
                 if (!dotNeighbourhood.hasOwnProperty('has_piece') || dotNeighbourhood.has_piece === false) {
-                    setBoardDots(prevDots => {
-                        return prevDots.map(dot => {
-                            if (dot.id === dotNeighbourhood.id) {
-                                return { ...dot, blink_dot: true };
-                            } else {
-                                return dot;
-                            }
-                        });
+                    dots = dots.map(dot => {
+                        if (dot.id === dotNeighbourhood.id) {
+                            return { ...dot, blink_dot: true };
+                        } else {
+                            return dot;
+                        }
                     });
                 }
             })
         }
+        return dots;
     }
 
-    function blinkDotsToEat(player: 1 | 2) {
-
+    function blinkDotsToEat(player: 1 | 2, currentDots: DotType[]): DotType[] {
         const gamePoints = new GamePoints();
 
+        return currentDots.map(dot_prev => {
+            const dotIsInRow = gamePoints.dotToEatIsInARowCombination(dot_prev, currentDots, getDot);
 
-        boardDots.filter(x => x.has_piece === true && x.player != player).map(dot_filter => {
-            setBoardDots(prevDots => {
-                return prevDots.map(dot_prev => {
-                    const dotIsInRow = gamePoints.dotToEatIsInARowCombination(dot_prev, getDot);
-
-                    if (dot_prev.id === dot_filter.id && dotIsInRow === false) {
-                        return { ...dot_prev, blink_dot: true };
-                    } else {
-                        return dot_prev;
-                    }
-                });
-            });
+            if (dotIsInRow === false && dot_prev.has_piece === true && dot_prev.player != player) {
+                return { ...dot_prev, blink_dot: true };
+            } else {
+                return dot_prev;
+            }
         });
-
 
     }
 
-    function moveDot(move_to_dot: DotType) {
-        const last_dot = getDot(currentDotClicked as string);
+    function moveDot(move_to_dot: DotType, currentDots: DotType[]): DotType[] {
+        const last_dot = getDot(currentDotClicked as string, currentDots);
+        let dots = currentDots;
 
-        setBoardDots(prevDots => {
-            return prevDots.map(dot => {
-                if (dot.id === last_dot.id) {
-                    return { ...dot, has_piece: false };
-                } else {
-                    return dot;
-                }
-            });
+        console.log("LAST DOT", last_dot);
+
+        dots = dots.map(dot => {
+            if (dot.id === last_dot.id) {
+                console.log("ALTERADO", dot);
+                return { ...dot, has_piece: false, player: undefined };
+            } else {
+                return dot;
+            }
         });
 
-        setBoardDots(prevDots => {
-            return prevDots.map(dot => {
-                if (dot.id === move_to_dot.id) {
-                    return { ...dot, has_piece: true, player: currentPlayer, blink_dot: false };
-                } else {
-                    return dot;
-                }
-            });
+        dots = dots.map(dot => {
+            if (dot.id === move_to_dot.id) {
+                return { ...dot, has_piece: true, player: playerTurn, blink_dot: false };
+            } else {
+                return dot;
+            }
         });
+
+        console.log("DOTS MOVED", dots);
+
+        return dots;
     }
 
-    function eatDot(dot_to_eat: DotType) {
+    function eatDot(dot_to_eat: DotType, current_dots: DotType[]): DotType[] {
 
-        setBoardDots(prevDots => {
-            return prevDots.map(dot => {
-                if (dot.id === dot_to_eat.id) {
-                    return { ...dot, has_piece: false, player: undefined };
-                } else {
-                    return dot;
-                }
-            });
+        const result = current_dots.map(dot => {
+            if (dot.id === dot_to_eat.id) {
+                return { ...dot, has_piece: false, player: undefined };
+            } else {
+                return dot;
+            }
         });
 
-        setEatTime(false);
+        return result;
     }
 
     function clickInDot(dot_id: string) {
-        const dotClicked = getDot(dot_id);
+        let currentDots = boardDots;
+        let currentEatTime = eatTime;
 
+        const dotClicked = getDot(dot_id, currentDots);
         const gamePoints = new GamePoints();
 
-        if (eatTime && (gamePoints.hasPlayerEnemyDotsToEat(eatTime, boardDots, playerTurn) === false)) {
-            console.log("SET EAT TIME FALSE");
-            setEatTime(false);
+        if (currentEatTime && (gamePoints.hasPlayerEnemyDotsToEat(currentEatTime, currentDots, playerTurn) === false)) {
+            currentEatTime = false;
         }
 
-        if (GameRules.canEat(eatTime, playerTurn, dotClicked)) {
+        if (GameRules.canEat(currentEatTime, playerTurn, dotClicked)) {
 
-            eatDot(dotClicked);
-            resetBlink();
+            currentDots = eatDot(dotClicked, currentDots);
+            currentDots = resetBlink(currentDots);
+            setBoardDots(currentDots);
+            setEatTime(false);
             changeTurn();
-
             return;
         }
 
@@ -189,27 +179,35 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
             if (GameRules.canBlink(dotClicked, playerTurn)) {
 
-                resetBlink();
+                currentDots = resetBlink(currentDots);
+                currentDots = blinkNeighbourhoods(dotClicked, currentDots);
+
                 setCurrentDotClicked(dot_id);
-                blinkNeighbourhoods(dotClicked);
+                setBoardDots(currentDots);
+                setEatTime(currentEatTime);
 
                 return;
             }
 
             if (GameRules.canMove(dotClicked, level)) {
 
-                moveDot(dotClicked);
+                currentDots = moveDot(dotClicked, currentDots);
 
-                if (gamePoints.rowCombined(dotClicked, playerTurn, getDot)) {
+                if (gamePoints.rowCombined(dotClicked, playerTurn, currentDots, getDot)) {
 
-                    blinkDotsToEat(playerTurn);
+                    currentDots = blinkDotsToEat(playerTurn, currentDots);
+
                     setEatTime(true);
+                    setBoardDots(currentDots);
 
                     return;
                 }
 
-                resetBlink();
+                currentDots = resetBlink(currentDots);
                 changeTurn();
+
+                setBoardDots(currentDots);
+                setEatTime(currentEatTime);
 
                 return;
 
@@ -218,40 +216,40 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         //LVL 1
 
-        if (GameRules.canPutDot(playerTurn, dotClicked, playerOneChipsAvailables, playerTwoChipsAvailables, eatTime) === false)
+        if (GameRules.canPutDot(playerTurn, dotClicked, playerOneChipsAvailables, playerTwoChipsAvailables, currentEatTime) === false)
             return;
 
         const isPlayerOne = playerTurn === 1;
 
         if (isPlayerOne) {
-            // setPlayerOneDots(prevDots => [...prevDots, dot_id]);
             setPlayerOneChipsAvailables(playerOneChipsAvailables - 1);
         }
         else {
-            // setPlayerTwoDots(prevDots => [...prevDots, dot_id]);
             setPlayerTwoChipsAvailables(playerTwoChipsAvailables - 1);
-
         }
 
-        setBoardDots(prevDots => {
-            return prevDots.map(dot => {
-                if (dot.id === dot_id) {
-                    return { ...dot, has_piece: true, player: currentPlayer };
-                } else {
-                    return dot;
-                }
-            });
+        currentDots = currentDots.map(dot => {
+            if (dot.id === dot_id) {
+                return { ...dot, has_piece: true, player: playerTurn };
+            } else {
+                return dot;
+            }
         });
 
-        if (gamePoints.rowCombined(dotClicked, playerTurn, getDot)) {
-            console.log("SET EAT TIME TRUE");
-            blinkDotsToEat(playerTurn);
+        if (gamePoints.rowCombined(dotClicked, playerTurn, currentDots, getDot)) {
+
+            currentDots = blinkDotsToEat(playerTurn, currentDots);
+
             setEatTime(true);
+            setBoardDots(currentDots);
 
             return;
         }
 
+        console.log("Current DOTS", currentDots);
+
         changeTurn();
+        setBoardDots(currentDots);
     }
 
     useEffect(() => {

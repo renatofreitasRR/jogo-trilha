@@ -56,7 +56,7 @@ export class GamePoints {
         return hasEnemyDotsToEat;
     }
 
-    dotToEatIsInARowCombination(dot_clicked: DotType, getDot: (dot_id: string) => DotType): boolean {
+    dotToEatIsInARowCombination(dot_clicked: DotType, currentDots: DotType[], getDot: (dot_id: string, currentDots: DotType[]) => DotType): boolean {
         const combinationsMatched = this.getDotMatchingLayers(dot_clicked);
         let dotIsInARow = false;
 
@@ -64,7 +64,7 @@ export class GamePoints {
             const dots: DotType[] = [];
 
             combinations.filter(id => String(id) != dot_clicked.id).forEach(dot_id => {
-                const dot = getDot(String(dot_id));
+                const dot = getDot(String(dot_id), currentDots);
 
                 dots.push(dot);
             });
@@ -81,7 +81,7 @@ export class GamePoints {
         return dotIsInARow;
     }
 
-    rowCombined(dot_clicked: DotType, playerTurn: 1 | 2, getDot: (dot_id: string) => DotType): boolean {
+    rowCombined(dot_clicked: DotType, playerTurn: 1 | 2, currentDots: DotType[], getDot: (dot_id: string, currentDots: DotType[]) => DotType): boolean {
         const combinationsMatched = this.getDotMatchingLayers(dot_clicked);
         let rowMaked = false;
 
@@ -89,7 +89,7 @@ export class GamePoints {
             const dots: DotType[] = [];
 
             combinations.filter(id => String(id) != dot_clicked.id).forEach(dot_id => {
-                const dot = getDot(String(dot_id));
+                const dot = getDot(String(dot_id), currentDots);
 
                 dots.push(dot);
             });
