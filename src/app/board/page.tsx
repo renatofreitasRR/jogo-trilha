@@ -39,9 +39,7 @@ export default function Board() {
                     </main>
                     <ChipAvailable player={2} />
                 </div>
-
             </div>
         </BoardProvider>
-
     );
 }

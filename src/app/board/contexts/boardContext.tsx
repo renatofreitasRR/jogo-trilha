@@ -2,16 +2,17 @@ import { ReactNode, createContext, useContext, useEffect, useState } from 'react
 import { DotType } from '../interfaces/dotType';
 
 import dots_json from "../../../../data/data.json";
-import { LayerCombinationsType } from '../interfaces/dotCombinationType';
 import { GameRules } from '../services/gameRules';
 import { GamePoints } from '../services/gamePoints';
 
 interface BoardContextProps {
-    boardDots: DotType[];
     clickInDot: (dot_id: string) => void;
+    boardDots: DotType[];
     playerTurn: 1 | 2;
+    playerWin: 1 | 2 | undefined;
     playerOneChipsAvailables: number;
     playerTwoChipsAvailables: number;
+    gameOver: boolean;
 }
 
 export const BoardContext = createContext({} as BoardContextProps);
@@ -23,13 +24,14 @@ interface BoardProviderProps {
 
 export function BoardProvider({ children }: BoardProviderProps) {
     const [boardDots, setBoardDots] = useState<DotType[]>([]);
-    const [currentPlayer, setCurrentPlayer] = useState<1 | 2>(1);
+    const [playerWin, setPlayerWin] = useState<1 | 2 | undefined>(undefined);
     const [currentDotClicked, setCurrentDotClicked] = useState<string | undefined>(undefined);
     const [level, setLevels] = useState<1 | 2 | 3>(1);
     const [playerOneChipsAvailables, setPlayerOneChipsAvailables] = useState(9);
     const [playerTwoChipsAvailables, setPlayerTwoChipsAvailables] = useState(9);
     const [playerTurn, setPlayerTurn] = useState<1 | 2>(1);
     const [eatTime, setEatTime] = useState(false);
+    const [gameOver, setGameOver] = useState(false);
 
     function loadDots() {
         const dots_data = dots_json;
@@ -51,6 +53,18 @@ export function BoardProvider({ children }: BoardProviderProps) {
             .concat(dots_in_layer_3_array)
 
         setBoardDots(arrays_joined);
+    }
+
+    function resetAll() {
+        loadDots();
+        setPlayerOneChipsAvailables(9);
+        setPlayerTwoChipsAvailables(9);
+        setEatTime(false);
+        setLevels(1);
+        setCurrentDotClicked(undefined);
+        setPlayerWin(undefined);
+        setPlayerTurn(1);
+        setGameOver(false);
     }
 
     function resetBlink(current_dots: DotType[]): DotType[] {
@@ -113,8 +127,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
         const last_dot = getDot(currentDotClicked as string, currentDots);
         let dots = currentDots;
 
-        console.log("LAST DOT", last_dot);
-
         dots = dots.map(dot => {
             if (dot.id === last_dot.id) {
                 console.log("ALTERADO", dot);
@@ -131,8 +143,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 return dot;
             }
         });
-
-        console.log("DOTS MOVED", dots);
 
         return dots;
     }
@@ -166,6 +176,17 @@ export function BoardProvider({ children }: BoardProviderProps) {
             currentDots = eatDot(dotClicked, currentDots);
             currentDots = resetBlink(currentDots);
             setBoardDots(currentDots);
+
+            if (level == 2 && gamePoints.gameOver(playerTurn, currentDots)) {
+                setGameOver(true);
+                setPlayerWin(playerTurn);
+                alert(`Fim de Jogo, vitória do jogador ${playerTurn}`);
+
+                resetAll();
+
+                return;
+            }
+
             setEatTime(false);
             changeTurn();
             return;
@@ -264,6 +285,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                     playerTwoChipsAvailables,
                     boardDots,
                     playerTurn,
+                    gameOver,
+                    playerWin,
                     clickInDot
                 }}>
             {children}

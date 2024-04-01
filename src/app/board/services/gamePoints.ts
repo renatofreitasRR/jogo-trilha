@@ -106,4 +106,15 @@ export class GamePoints {
         return rowMaked;
     }
 
+    gameOver(playerTurn: 1 | 2, currentDots: DotType[]): boolean {
+        const enemy = playerTurn === 1 ? 2 : 1;
+
+        const enemyDots = currentDots
+            .filter(x => x.player === enemy)
+            .length;
+
+        console.log("ENEMY DOTS GAME OVER", enemyDots);
+
+        return enemyDots < 3;
+    }
 }
