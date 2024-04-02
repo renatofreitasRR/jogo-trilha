@@ -1,7 +1,6 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { DotType } from '../interfaces/dotType';
-
-import dots_json from "../../../../data/data.json";
+import dots_json from "../../../../../data/data.json";
 import { GameRules } from '../services/gameRules';
 import { GamePoints } from '../services/gamePoints';
 
@@ -110,7 +109,11 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
     function blinkDotsToEat(player: 1 | 2, currentDots: DotType[]): DotType[] {
         const gamePoints = new GamePoints();
+
         const playerEnemy = player == 1 ? 2 : 1;
+
+        // if (gamePoints.allEnemyDotsIsInARowCombination(player, currentDots, getDot))
+        //     return blinkAllEnemyDots(player, currentDots);
 
         return currentDots.map(dot_prev => {
             const dotIsInRow = gamePoints.dotToEatIsInARowCombination(dot_prev, currentDots, getDot);
@@ -121,7 +124,19 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 return dot_prev;
             }
         });
+    }
 
+    function blinkAllEnemyDots(player: 1 | 2, currentDots: DotType[]): DotType[] {
+
+        const playerEnemy = player == 1 ? 2 : 1;
+
+        return currentDots.map(dot_prev => {
+            if (dot_prev.player == playerEnemy) {
+                return { ...dot_prev, blink_dot: true };
+            } else {
+                return dot_prev;
+            }
+        });
     }
 
     function moveDot(move_to_dot: DotType, currentDots: DotType[]): DotType[] {
@@ -130,7 +145,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         dots = dots.map(dot => {
             if (dot.id === last_dot.id) {
-                console.log("ALTERADO", dot);
                 return { ...dot, has_piece: false, player: undefined };
             } else {
                 return dot;
@@ -165,8 +179,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
         let currentDots = boardDots;
         let currentEatTime = eatTime;
 
-        console.log("CURRENT DOTS PART 1", currentDots);
-
         const dotClicked = getDot(dot_id, currentDots);
         const gamePoints = new GamePoints();
 
@@ -179,8 +191,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
             currentDots = eatDot(dotClicked, currentDots);
             currentDots = resetBlink(currentDots);
             setBoardDots(currentDots);
-
-            console.log("CURRENT DOTS PART 2", currentDots);
 
             if (level == 2 && gamePoints.gameOver(playerTurn, currentDots)) {
                 setGameOver(true);
@@ -212,8 +222,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 setBoardDots(currentDots);
                 setEatTime(currentEatTime);
 
-                console.log("CURRENT DOTS PART 3", currentDots);
-
                 return;
             }
 
@@ -224,8 +232,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 if (gamePoints.rowCombined(dotClicked, playerTurn, currentDots, getDot)) {
                     currentDots = resetBlink(currentDots);
                     currentDots = blinkDotsToEat(playerTurn, currentDots);
-
-                    console.log("CURRENT DOTS PART 4", currentDots);
 
                     setEatTime(true);
                     setBoardDots(currentDots);
@@ -238,8 +244,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
                 setBoardDots(currentDots);
                 setEatTime(currentEatTime);
-
-                console.log("CURRENT DOTS PART 5", currentDots);
 
                 return;
 
@@ -272,15 +276,11 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
             currentDots = blinkDotsToEat(playerTurn, currentDots);
 
-            console.log("CURRENT DOTS PART 6", currentDots);
-
             setEatTime(true);
             setBoardDots(currentDots);
 
             return;
         }
-
-        console.log("CURRENT DOTS PART 7", currentDots);
 
         changeTurn();
         setBoardDots(currentDots);

@@ -1,4 +1,4 @@
-import combinations_json from "../../../../data/combinations.json";
+import combinations_json from "../../../../../data/combinations.json";
 import { LayerCombinationsType } from "../interfaces/dotCombinationType";
 import { DotType } from "../interfaces/dotType";
 
@@ -81,6 +81,21 @@ export class GamePoints {
         return dotIsInARow;
     }
 
+    allEnemyDotsIsInARowCombination(player: 1 | 2, currentDots: DotType[], getDot: (dot_id: string, currentDots: DotType[]) => DotType): boolean {
+        const gamePoints = new GamePoints();
+        const playerEnemy = player == 1 ? 2 : 1;
+
+        currentDots.forEach(dot_prev => {
+            const dotIsInRow = gamePoints.dotToEatIsInARowCombination(dot_prev, currentDots, getDot);
+
+            if (dotIsInRow === false && dot_prev.has_piece === true && dot_prev.player == playerEnemy) {
+                return false;
+            }
+        });
+
+        return true;
+    }
+
     rowCombined(dot_clicked: DotType, playerTurn: 1 | 2, currentDots: DotType[], getDot: (dot_id: string, currentDots: DotType[]) => DotType): boolean {
         const combinationsMatched = this.getDotMatchingLayers(dot_clicked);
         let rowMaked = false;
@@ -112,8 +127,6 @@ export class GamePoints {
         const enemyDots = currentDots
             .filter(x => x.player === enemy)
             .length;
-
-        console.log("ENEMY DOTS GAME OVER", enemyDots);
 
         return enemyDots < 3;
     }
