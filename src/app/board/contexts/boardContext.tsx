@@ -110,11 +110,12 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
     function blinkDotsToEat(player: 1 | 2, currentDots: DotType[]): DotType[] {
         const gamePoints = new GamePoints();
+        const playerEnemy = player == 1 ? 2 : 1;
 
         return currentDots.map(dot_prev => {
             const dotIsInRow = gamePoints.dotToEatIsInARowCombination(dot_prev, currentDots, getDot);
 
-            if (dotIsInRow === false && dot_prev.has_piece === true && dot_prev.player != player) {
+            if (dotIsInRow === false && dot_prev.has_piece === true && dot_prev.player == playerEnemy) {
                 return { ...dot_prev, blink_dot: true };
             } else {
                 return dot_prev;
@@ -164,6 +165,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
         let currentDots = boardDots;
         let currentEatTime = eatTime;
 
+        console.log("CURRENT DOTS PART 1", currentDots);
+
         const dotClicked = getDot(dot_id, currentDots);
         const gamePoints = new GamePoints();
 
@@ -176,6 +179,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
             currentDots = eatDot(dotClicked, currentDots);
             currentDots = resetBlink(currentDots);
             setBoardDots(currentDots);
+
+            console.log("CURRENT DOTS PART 2", currentDots);
 
             if (level == 2 && gamePoints.gameOver(playerTurn, currentDots)) {
                 setGameOver(true);
@@ -207,6 +212,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 setBoardDots(currentDots);
                 setEatTime(currentEatTime);
 
+                console.log("CURRENT DOTS PART 3", currentDots);
+
                 return;
             }
 
@@ -215,8 +222,10 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 currentDots = moveDot(dotClicked, currentDots);
 
                 if (gamePoints.rowCombined(dotClicked, playerTurn, currentDots, getDot)) {
-
+                    currentDots = resetBlink(currentDots);
                     currentDots = blinkDotsToEat(playerTurn, currentDots);
+
+                    console.log("CURRENT DOTS PART 4", currentDots);
 
                     setEatTime(true);
                     setBoardDots(currentDots);
@@ -229,6 +238,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
                 setBoardDots(currentDots);
                 setEatTime(currentEatTime);
+
+                console.log("CURRENT DOTS PART 5", currentDots);
 
                 return;
 
@@ -261,13 +272,15 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
             currentDots = blinkDotsToEat(playerTurn, currentDots);
 
+            console.log("CURRENT DOTS PART 6", currentDots);
+
             setEatTime(true);
             setBoardDots(currentDots);
 
             return;
         }
 
-        console.log("Current DOTS", currentDots);
+        console.log("CURRENT DOTS PART 7", currentDots);
 
         changeTurn();
         setBoardDots(currentDots);
