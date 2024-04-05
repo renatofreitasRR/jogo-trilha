@@ -17,6 +17,7 @@ export const CountdownTimer = ({ targetDate }) => {
     if (seconds <= 0) {
         //se os segundos se esgotaram...
 
+        //ToDo: implementar virar turno
         //ToDo: avaliar mostrar algo quando esgotar o tempo?
     } else {
         //ainda tem tempo
