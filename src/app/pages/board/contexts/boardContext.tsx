@@ -86,6 +86,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
         else
             setPlayerTurn(1);
 
+        resetTimer();
     }
 
     function blinkNeighbourhoods(dotClicked: DotType, currentDots: DotType[]): DotType[] {
@@ -173,6 +174,10 @@ export function BoardProvider({ children }: BoardProviderProps) {
         });
 
         return result;
+    }
+
+    function resetTimer() {
+        //ToDo: resetar o timer quando o turno virar
     }
 
     function clickInDot(dot_id: string) {

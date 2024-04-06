@@ -1,0 +1,16 @@
+.show_counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.5rem;
+}
+
+.show_counter>p {
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+
+.show_counter>span {
+    margin-left: 0.1rem;
+    font-size: 1.3rem;
+}
