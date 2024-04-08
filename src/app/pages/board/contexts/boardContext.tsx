@@ -3,8 +3,11 @@ import { DotType } from '../interfaces/dotType';
 import dots_json from "../../../../../data/data.json";
 import { GameRules } from '../services/gameRules';
 import { GamePoints } from '../services/gamePoints';
+import { useCountdown } from '../hooks/useCountdown';
 
 interface BoardContextProps {
+    resetTimer: () => void;
+    changeTurn: () => void;
     clickInDot: (dot_id: string) => void;
     boardDots: DotType[];
     playerTurn: 1 | 2;
@@ -12,6 +15,7 @@ interface BoardContextProps {
     playerOneChipsAvailables: number;
     playerTwoChipsAvailables: number;
     gameOver: boolean;
+    turnTime: number;
 }
 
 export const BoardContext = createContext({} as BoardContextProps);
@@ -31,6 +35,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
     const [playerTurn, setPlayerTurn] = useState<1 | 2>(1);
     const [eatTime, setEatTime] = useState(false);
     const [gameOver, setGameOver] = useState(false);
+    const { resetTimer, seconds } = useCountdown(changeTurn);
 
     function loadDots() {
         const dots_data = dots_json;
@@ -176,9 +181,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
         return result;
     }
 
-    function resetTimer() {
-        //ToDo: resetar o timer quando o turno virar
-    }
 
     function clickInDot(dot_id: string) {
         let currentDots = boardDots;
@@ -305,7 +307,10 @@ export function BoardProvider({ children }: BoardProviderProps) {
                     playerTurn,
                     gameOver,
                     playerWin,
-                    clickInDot
+                    turnTime: seconds,
+                    clickInDot,
+                    changeTurn,
+                    resetTimer
                 }}>
             {children}
         </BoardContext.Provider>
