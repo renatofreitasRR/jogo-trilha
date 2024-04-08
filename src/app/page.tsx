@@ -4,13 +4,24 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <main className={styles.container}>
-      <h1>Bem vindo</h1>
-      <Link className={styles.link} href='pages/board'>
-        <strong>Multiplayer Local</strong>
-      </Link>
-      <Link className={`${styles.link} ${styles.link_disabled}`} title='Em desenvolvimento' href='#'>
-        <strong>Multiplayer Online</strong>
-      </Link>
-    </main>
+      <div className={styles.machine}>
+        <div className={styles.screen}>
+          <div className={styles.menu}>
+            <Link
+              href="/pages/board"
+              className={`${styles.button_play} ${styles.button_menu}`}
+            />
+            <Link
+              href="#"
+              className={`${styles.button_rank} ${styles.button_menu}`}
+            />
+            <Link
+              href="#"
+              className={`${styles.button_store} ${styles.button_menu}`}
+            />
+          </div>
+        </div>
+      </div>
+    </main >
   );
 }

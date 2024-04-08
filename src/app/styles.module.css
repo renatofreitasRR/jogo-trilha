@@ -1,17 +1,13 @@
 .container{
-    margin: 0;
-    padding: 0;
-
+    background-image: url(../../public/assets/Background.png);
+    background-position: center;
+    background-size: cover;
+    width: 100vw;
+    height: 101vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 80vh;
-    width:  100%;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    position: relative;
+    align-items: center; 
+    position: relative; 
 }
 
 .link{
@@ -48,4 +44,104 @@
 
 .link + .link{
     margin-top: 10px;
+}
+
+.machine {
+    width: 100vw;
+    height: 101vh;
+    background-image: url(../../public/assets/Maquina.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
+.screen
+{
+    width: 39vw;
+    height: 45vh;
+    position: absolute;
+    top: 52%;
+    left: 51.5%;
+    transform: translate(-50%, -50%);
+}
+
+.button_login
+{
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    background-image: url(../../public/assets/registro.png);
+    background-size: cover;
+}
+
+.button_login:hover
+{
+    cursor: pointer;
+    background-image: url(../../public/assets/registroPressionado.png);
+}
+
+.menu
+{
+    width: 39vw;
+    height: 45vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button_menu
+{
+    width: 11vw;
+    height: 4vw;
+    display: block;
+    position: relative;
+    background-color: transparent;
+    cursor: pointer;
+    margin-top: 2vh;
+    border: none;
+}
+
+.button_play
+{
+    background-image: url(../../public/assets/Jogar.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.button_play:hover
+{
+    background-image: url(../../public/assets/JogarSelecionado.png);
+}
+
+.button_rank
+{
+    background-image: url(../../public/assets/Rank.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.button_rank:hover
+{
+    background-image: url(../../public/assets/RankSelecionado.png);
+}
+
+.button_store
+{
+    background-image: url(../../public/assets/Loja.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.button_store:hover
+{
+    background-image: url(../../public/assets/LojaSelecionado.png);
 }
