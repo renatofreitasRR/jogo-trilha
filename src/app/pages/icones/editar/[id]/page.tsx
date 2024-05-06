@@ -73,7 +73,7 @@ const IconeEdit: React.FC = () => {
   };
 
   return (
-    <Box>
+    <Box p={8}>
       {!icone ? (
         <div>Carregando...</div>
       ) : (

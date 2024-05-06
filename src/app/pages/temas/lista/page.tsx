@@ -19,25 +19,23 @@ import Link from "next/link";
 import { api } from "@/app/services/api";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
-interface Image {
+interface Tema {
   id?: number;
-  imgnome: string;
-  imgurl: string;
-  imgpreco: number;
   tmacodigo: number;
+  tmanome: string;
 }
 
-const ImageList: React.FC = () => {
-  const [images, setImages] = useState<Image[]>([]);
+const TemasList: React.FC = () => {
+  const [temas, setTemas] = useState<Tema[]>([]);
   const toast = useToast();
 
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await api.get("/images");
-        setImages(response.data);
+        const response = await api.get("/temas");
+        setTemas(response.data);
       } catch (error) {
-        console.error("Erro ao buscar imagens:", error);
+        console.error("Erro ao buscar tenas:", error);
       }
     };
 
@@ -46,7 +44,7 @@ const ImageList: React.FC = () => {
 
   async function handleDelete(id: any) {
     try {
-      await api.delete(`/images/${id}`);
+      await api.delete(`/temas/${id}`);
 
       toast({
         title: "Exclusão de Imagem",
@@ -56,8 +54,8 @@ const ImageList: React.FC = () => {
         isClosable: true,
       });
 
-      const filter = images.filter((x) => x.id != id);
-      setImages(filter);
+      const filter = temas.filter((x) => x.id != id);
+      setTemas(filter);
     } catch (error) {
       console.error("Erro ao atualizar imagem:", error);
     }
@@ -65,36 +63,23 @@ const ImageList: React.FC = () => {
 
   return (
     <Box p={8}>
-      <Heading mb={4}>Lista de Imagens</Heading>
+      <Heading mb={4}>Lista de Temas</Heading>
       <Button mt={4} mb={8} colorScheme="teal">
-        <Link href={`/pages/images/criar`}>Cadastrar</Link>
+        <Link href={`/pages/temas/criar`}>Cadastrar</Link>
       </Button>
       <Table variant="simple">
         <Thead>
           <Tr>
-            <Th>Imagem</Th>
             <Th>Nome</Th>
-            <Th>Preço</Th>
-            {/* <Th>Código do Tema</Th> */}
             <Th>Ações</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {images.map((image, index) => (
+          {temas.map((tema, index) => (
             <Tr key={index}>
+              <Td>{tema.tmanome}</Td>
               <Td>
-                <Image
-                  src={image.imgurl}
-                  alt={image.imgnome}
-                  boxSize="200px"
-                  objectFit="cover"
-                />
-              </Td>
-              <Td>{image.imgnome}</Td>
-              <Td>R${image.imgpreco.toFixed(2)}</Td>
-              {/* <Td>{image.tmacodigo}</Td> */}
-              <Td>
-                <Link href={`/pages/images/editar/${image.id}`}>
+                <Link href={`/pages/temas/editar/${tema.id}`}>
                   <EditIcon />
                 </Link>
                 {"      "}|{"      "}
@@ -102,7 +87,7 @@ const ImageList: React.FC = () => {
                   style={{
                     cursor: "pointer",
                   }}
-                  onClick={() => handleDelete(image.id ?? 0)}
+                  onClick={() => handleDelete(tema.id ?? 0)}
                 />
               </Td>
             </Tr>
@@ -113,4 +98,4 @@ const ImageList: React.FC = () => {
   );
 };
 
-export default ImageList;
+export default TemasList;

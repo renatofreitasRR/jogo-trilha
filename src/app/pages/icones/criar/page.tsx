@@ -45,7 +45,7 @@ const IconeCadastro: React.FC = () => {
   };
 
   return (
-    <Box>
+    <Box p={8}>
       <FormControl id="icnnome" mt={4}>
         <FormLabel>Nome do Ícone</FormLabel>
         <Input value={icnnome} onChange={(e) => setIcnnome(e.target.value)} />

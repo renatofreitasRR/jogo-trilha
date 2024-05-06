@@ -73,7 +73,7 @@ const ImageEdit: React.FC = () => {
   };
 
   return (
-    <Box>
+    <Box p={8}>
       {!image ? (
         <div>Carregando...</div>
       ) : (

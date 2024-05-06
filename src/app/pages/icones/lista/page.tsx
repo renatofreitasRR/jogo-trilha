@@ -64,9 +64,9 @@ const IconeList: React.FC = () => {
   }
 
   return (
-    <Box>
+    <Box p={8}>
       <Heading mb={4}>Lista de Ícones</Heading>
-      <Button mt={4} colorScheme="teal">
+      <Button mt={4} mb={8} colorScheme="teal">
         <Link href={`/pages/icones/criar`}>Cadastrar</Link>
       </Button>
       <Table variant="simple">

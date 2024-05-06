@@ -45,7 +45,7 @@ const ImageCadastro: React.FC = () => {
   };
 
   return (
-    <Box>
+    <Box p={8}>
       <FormControl id="imgnome" mt={4}>
         <FormLabel>Nome da Imagem</FormLabel>
         <Input value={imgnome} onChange={(e) => setImgnome(e.target.value)} />
