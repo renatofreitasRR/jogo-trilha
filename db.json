@@ -1,0 +1,188 @@
+{
+    "icones": [
+        {
+            "icncodigo": 1,
+            "icnnome": "icone1",
+            "icnurl": "https://cdn.pixabay.com/photo/2021/05/30/19/52/abstract-rainbow-6296890_1280.jpg",
+            "icnpreco": 10,
+            "tmacodigo": 1
+        },
+        {
+            "icncodigo": 2,
+            "icnnome": "icone2",
+            "icnurl": "https://cdn.pixabay.com/photo/2016/11/16/18/13/background-1829559_640.png",
+            "icnpreco": 20,
+            "tmacodigo": 2
+        },
+        {
+            "icncodigo": 3,
+            "icnnome": "icone3",
+            "icnurl": "https://cdn.pixabay.com/photo/2017/08/18/13/11/texture-2654900_640.jpg",
+            "icnpreco": 30,
+            "tmacodigo": 3
+        },
+        {
+            "icncodigo": 4,
+            "icnnome": "icone4",
+            "icnurl": "https://cdn.pixabay.com/photo/2015/11/09/23/02/background-1036112_640.png",
+            "icnpreco": 40,
+            "tmacodigo": 4
+        },
+        {
+            "icncodigo": 5,
+            "icnnome": "icone5",
+            "icnurl": "https://cdn.pixabay.com/photo/2015/11/09/23/02/background-1036109_640.jpg",
+            "icnpreco": 50,
+            "tmacodigo": 5
+        },
+        {
+            "icncodigo": 6,
+            "icnnome": "icone6",
+            "icnurl": "https://cdn.pixabay.com/photo/2015/11/09/23/01/background-1036108_640.png",
+            "icnpreco": 60,
+            "tmacodigo": 6
+        },
+        {
+            "icncodigo": 7,
+            "icnnome": "icone7",
+            "icnurl": "https://cdn.pixabay.com/photo/2017/02/16/16/27/radial-2071769_640.jpg",
+            "icnpreco": 70,
+            "tmacodigo": 7
+        },
+        {
+            "icncodigo": 8,
+            "icnnome": "icone8",
+            "icnurl": "https://cdn.pixabay.com/photo/2017/02/16/16/27/radial-2071766_640.jpg",
+            "icnpreco": 80,
+            "tmacodigo": 8
+        },
+        {
+            "icncodigo": 9,
+            "icnnome": "icone9",
+            "icnurl": "https://cdn.pixabay.com/photo/2017/01/30/14/30/court-2020949_640.jpg",
+            "icnpreco": 90,
+            "tmacodigo": 9
+        },
+        {
+            "icncodigo": 10,
+            "icnnome": "icone10",
+            "icnurl": "https://cdn.pixabay.com/photo/2016/04/17/06/46/lady-1334259_640.jpg",
+            "icnpreco": 100,
+            "tmacodigo": 10
+        }
+    ],
+    "temas": [
+        {
+            "tmacodigo": 1,
+            "tmanome": "tema1"
+        },
+        {
+            "tmacodigo": 2,
+            "tmanome": "tema2"
+        },
+        {
+            "tmacodigo": 3,
+            "tmanome": "tema3"
+        },
+        {
+            "tmacodigo": 4,
+            "tmanome": "tema4"
+        },
+        {
+            "tmacodigo": 5,
+            "tmanome": "tema5"
+        },
+        {
+            "tmacodigo": 6,
+            "tmanome": "tema6"
+        },
+        {
+            "tmacodigo": 7,
+            "tmanome": "tema7"
+        },
+        {
+            "tmacodigo": 8,
+            "tmanome": "tema8"
+        },
+        {
+            "tmacodigo": 9,
+            "tmanome": "tema9"
+        },
+        {
+            "tmacodigo": 10,
+            "tmanome": "tema10"
+        }
+    ],
+    "images": [
+        {
+            "id": 1,
+            "imgnome": "imagem1",
+            "imgurl": "https://cdn.pixabay.com/photo/2017/02/16/17/10/dither-2071888_640.jpg",
+            "imgpreco": 10,
+            "tmacodigo": 1
+        },
+        {
+            "id": 2,
+            "imgnome": "imagem2",
+            "imgurl": "https://cdn.pixabay.com/photo/2017/07/01/16/00/background-2461867_640.png",
+            "imgpreco": 20,
+            "tmacodigo": 2
+        },
+        {
+            "id": 3,
+            "imgnome": "imagem3",
+            "imgurl": "https://cdn.pixabay.com/photo/2015/11/09/23/02/background-1036116_640.jpg",
+            "imgpreco": 30,
+            "tmacodigo": 3
+        },
+        {
+            "id": 4,
+            "imgnome": "imagem4",
+            "imgurl": "https://cdn.pixabay.com/photo/2017/02/23/20/40/blue-2093125_640.jpg",
+            "imgpreco": 40,
+            "tmacodigo": 4
+        },
+        {
+            "id": 5,
+            "imgnome": "imagem5",
+            "imgurl": "https://cdn.pixabay.com/photo/2016/07/15/23/53/guilloche-1520733_640.png",
+            "imgpreco": 50,
+            "tmacodigo": 5
+        },
+        {
+            "id": 6,
+            "imgnome": "imagem6",
+            "imgurl": "https://cdn.pixabay.com/photo/2015/11/09/23/02/background-1036114_640.png",
+            "imgpreco": 60,
+            "tmacodigo": 6
+        },
+        {
+            "id": 7,
+            "imgnome": "imagem7",
+            "imgurl": "https://cdn.pixabay.com/photo/2017/02/23/20/40/red-2093126_640.jpg",
+            "imgpreco": 70,
+            "tmacodigo": 7
+        },
+        {
+            "id": 8,
+            "imgnome": "imagem8",
+            "imgurl": "https://cdn.pixabay.com/photo/2017/02/16/17/04/radial-2071872_640.jpg",
+            "imgpreco": 80,
+            "tmacodigo": 8
+        },
+        {
+            "id": 9,
+            "imgnome": "imagem9",
+            "imgurl": "https://cdn.pixabay.com/photo/2020/06/19/20/11/ramadan-5318707_640.jpg",
+            "imgpreco": 90,
+            "tmacodigo": 9
+        },
+        {
+            "id": 10,
+            "imgnome": "imagem10",
+            "imgurl": "https://cdn.pixabay.com/photo/2015/11/09/23/01/background-1036107_640.png",
+            "imgpreco": 100,
+            "tmacodigo": 10
+        }
+    ]
+}

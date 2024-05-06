@@ -1,3 +1,4 @@
+import { ChakraProvider } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Roboto } from 'next/font/google'
 
@@ -24,7 +25,23 @@ export default function RootLayout({
           padding: 0,
         }}
         className={roboto.className}
-      >{children}</body>
+      >
+        <App>
+          {children}
+        </App>
+      </body>
     </html>
   );
+}
+
+function App({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <ChakraProvider>
+      {children}
+    </ChakraProvider>
+  )
 }
