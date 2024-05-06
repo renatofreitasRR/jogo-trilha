@@ -19,6 +19,7 @@ const ImageCadastro: React.FC = () => {
   const [imgnome, setImgnome] = useState("");
   const [imgurl, setImgUrl] = useState("");
   const [imgpreco, setImgpreco] = useState("");
+  const [tmacodigo, setTmaCodigo] = useState(1);
 
   const handleSave = async () => {
     try {
@@ -26,6 +27,7 @@ const ImageCadastro: React.FC = () => {
         imgnome,
         imgurl,
         imgpreco: Number(imgpreco),
+        tmacodigo,
       });
 
       toast({
@@ -62,6 +64,14 @@ const ImageCadastro: React.FC = () => {
           type="text"
           value={imgurl}
           onChange={(e) => setImgUrl(e.target.value)}
+        />
+      </FormControl>
+      <FormControl id="imgurl" mt={4}>
+        <FormLabel>ID do Tema</FormLabel>
+        <Input
+          type="number"
+          value={tmacodigo}
+          onChange={(e) => setTmaCodigo(Number(e.target.value))}
         />
       </FormControl>
       <Button mt={4} colorScheme="teal" onClick={handleSave}>

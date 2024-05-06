@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { api } from "@/app/services/api";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 interface Image {
   id?: number;
@@ -43,17 +44,20 @@ const ImageList: React.FC = () => {
     fetchImages();
   }, []);
 
-  async function handleDelete(id: number) {
+  async function handleDelete(id: any) {
     try {
       await api.delete(`/images/${id}`);
 
       toast({
-        title: "Atualização de Imagem",
-        description: "Dados atualizados com Sucesso",
+        title: "Exclusão de Imagem",
+        description: "Imagem excluída com Sucesso",
         status: "success",
         duration: 9000,
         isClosable: true,
       });
+
+      const filter = images.filter((x) => x.id != id);
+      setImages(filter);
     } catch (error) {
       console.error("Erro ao atualizar imagem:", error);
     }
@@ -71,7 +75,7 @@ const ImageList: React.FC = () => {
             <Th>Imagem</Th>
             <Th>Nome</Th>
             <Th>Preço</Th>
-            <Th>Código do Tema</Th>
+            {/* <Th>Código do Tema</Th> */}
             <Th>Ações</Th>
           </Tr>
         </Thead>
@@ -88,10 +92,18 @@ const ImageList: React.FC = () => {
               </Td>
               <Td>{image.imgnome}</Td>
               <Td>R${image.imgpreco.toFixed(2)}</Td>
-              <Td>{image.tmacodigo}</Td>
+              {/* <Td>{image.tmacodigo}</Td> */}
               <Td>
-                <Link href={`/pages/images/editar/${image.id}`}>Editar</Link>|
-                <span onClick={() => handleDelete(image.id ?? 0)}>Excluir</span>
+                <Link href={`/pages/images/editar/${image.id}`}>
+                  <EditIcon />
+                </Link>
+                {"      "}|{"      "}
+                <DeleteIcon
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleDelete(image.id ?? 0)}
+                />
               </Td>
             </Tr>
           ))}
