@@ -1,0 +1,23 @@
+.page_content{
+    margin: 0 auto;
+    width: 90%;
+}
+
+.page_division{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.board_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    width:  100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+

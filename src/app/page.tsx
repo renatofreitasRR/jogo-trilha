@@ -12,7 +12,7 @@ export default function Home() {
               className={`${styles.button_play} ${styles.button_menu}`}
             />
             <Link
-              href="#"
+              href="/pages/online/bypass"
               className={`${styles.button_rank} ${styles.button_menu}`}
             />
             <Link
