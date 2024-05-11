@@ -51,7 +51,7 @@ const IconeList: React.FC = () => {
 
   async function handleDelete(id: any) {
     try {
-      await api.delete(`/icones/${id}`);
+      await api.post(`/icones/delete/${id}`);
 
       toast({
         title: "Exclusão de Ícone",

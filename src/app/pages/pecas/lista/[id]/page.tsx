@@ -52,7 +52,7 @@ const PecaList: React.FC = () => {
 
   async function handleDelete(id: any) {
     try {
-      await api.delete(`/pecas/${id}`);
+      await api.post(`/pecas/delete/${id}`);
 
       toast({
         title: "Exclusão de Peça",

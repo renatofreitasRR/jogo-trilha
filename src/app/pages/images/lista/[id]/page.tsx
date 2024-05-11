@@ -40,6 +40,7 @@ const ImageList: React.FC = () => {
     const fetchImages = async () => {
       try {
         const response = await api.get(`/imagens/getallbytema/${id}`);
+        console.log("response imagens", response);
         setImages(response.data);
       } catch (error) {
         console.error("Erro ao buscar imagens:", error);
@@ -51,7 +52,7 @@ const ImageList: React.FC = () => {
 
   async function handleDelete(id: any) {
     try {
-      await api.delete(`/imagens/${id}`);
+      await api.post(`/imagens/delete/${id}`);
 
       toast({
         title: "Exclusão de Imagem",

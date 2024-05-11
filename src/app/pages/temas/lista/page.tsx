@@ -49,7 +49,7 @@ const TemasList: React.FC = () => {
 
   async function handleDelete(id: any) {
     try {
-      await api.delete(`/temas/${id}`);
+      await api.post(`/temas/delete/${id}`);
 
       toast({
         title: "Exclusão de Imagem",
