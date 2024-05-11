@@ -134,7 +134,7 @@ const Cadastro: React.FC = () => {
       <Divider my={4} />
       <FormControl id="tmanome" >
         <FormLabel>Nome do Tema</FormLabel>
-        <Input  {...register("tmanome", { required: true })} isInvalid={errors?.tmanome?.message} />
+        <Input  {...register("tmanome", { required: true })} isInvalid={errors?.tmanome?.message && errors?.tmanome?.message.length > 0 ? true : false} />
         {errors?.tmanome?.message && <span className={styles.error_message} >{errors?.tmanome?.message}</span>}
       </FormControl>
 
@@ -144,17 +144,17 @@ const Cadastro: React.FC = () => {
       <Divider my={4} />
       <FormControl id="icnnome" mt={4}>
         <FormLabel>Nome do Ícone</FormLabel>
-        <Input  {...register("icnnome", { required: true })} isInvalid={errors.icnnome?.message} />
+        <Input  {...register("icnnome", { required: true })} isInvalid={errors?.icnnome?.message && errors?.icnnome?.message.length > 0 ? true : false} />
         {errors?.icnnome?.message && <span className={styles.error_message}>{errors?.icnnome?.message}</span>}
       </FormControl>
       <FormControl id="icnpreco" mt={4}>
         <FormLabel>Preço do Ícone</FormLabel>
-        <Input type="number" {...register("icnpreco", { required: true })} isInvalid={errors.icnpreco?.message} />
+        <Input type="number" {...register("icnpreco", { required: true })} isInvalid={errors?.icnpreco?.message && errors?.icnpreco?.message.length > 0 ? true : false} />
         {errors?.icnpreco?.message && <span className={styles.error_message}>{errors?.icnpreco?.message}</span>}
       </FormControl>
       <FormControl id="icnurl" mt={4} >
         <FormLabel>URL do Ícone</FormLabel>
-        <Input type="text" {...register("icnurl", { required: true })} isInvalid={errors.icnurl?.message} />
+        <Input type="text" {...register("icnurl", { required: true })} isInvalid={errors?.icnurl?.message && errors?.icnurl?.message.length > 0 ? true : false} />
         {errors?.icnurl?.message && <span className={styles.error_message}>{errors?.icnurl?.message}</span>}
       </FormControl>
 
@@ -164,17 +164,17 @@ const Cadastro: React.FC = () => {
       <Divider my={4} />
       <FormControl id="imgnome" mt={4}>
         <FormLabel>Nome da Imagem</FormLabel>
-        <Input  {...register("imgnome", { required: true })} isInvalid={errors.imgnome?.message} />
+        <Input  {...register("imgnome", { required: true })} isInvalid={errors?.imgnome?.message && errors?.imgnome?.message.length > 0 ? true : false} />
         {errors?.imgnome?.message && <span className={styles.error_message}>{errors?.imgnome?.message}</span>}
       </FormControl>
       <FormControl id="imgpreco" mt={4}>
         <FormLabel>Preço da Imagem</FormLabel>
-        <Input type="number" {...register("imgpreco", { required: true })} isInvalid={errors.imgpreco?.message} />
+        <Input type="number" {...register("imgpreco", { required: true })} isInvalid={errors?.imgpreco?.message && errors?.imgpreco?.message.length > 0 ? true : false} />
         {errors?.imgpreco?.message && <span className={styles.error_message}>{errors?.imgpreco?.message}</span>}
       </FormControl>
       <FormControl id="imgurl" mt={4}>
         <FormLabel>URL da Imagem</FormLabel>
-        <Input type="text" {...register("imgurl", { required: true })} isInvalid={errors.imgurl?.message} />
+        <Input type="text" {...register("imgurl", { required: true })} isInvalid={errors?.imgurl?.message && errors?.imgurl?.message.length > 0 ? true : false} />
         {errors?.imgurl?.message && <span className={styles.error_message}>{errors?.imgurl?.message}</span>}
       </FormControl>
 
@@ -184,17 +184,17 @@ const Cadastro: React.FC = () => {
       <Divider my={4} />
       <FormControl id="pcanome" mt={4}>
         <FormLabel>Nome da Peça</FormLabel>
-        <Input  {...register("pcanome", { required: true })} isInvalid={errors.pcanome?.message} />
+        <Input  {...register("pcanome", { required: true })} isInvalid={errors?.pcanome?.message && errors?.pcanome?.message.length > 0 ? true : false} />
         {errors?.pcanome?.message && <span className={styles.error_message}>{errors?.pcanome?.message}</span>}
       </FormControl>
       <FormControl id="pcapreco" mt={4}>
         <FormLabel>Preço da Peça</FormLabel>
-        <Input type="number" {...register("pcapreco", { required: true })} isInvalid={errors.pcapreco?.message} />
+        <Input type="number" {...register("pcapreco", { required: true })} isInvalid={errors?.pcapreco?.message && errors?.pcapreco?.message.length > 0 ? true : false} />
         {errors?.pcapreco?.message && <span className={styles.error_message}>{errors?.pcapreco?.message}</span>}
       </FormControl>
       <FormControl id="pcaurl" mt={4}>
         <FormLabel>URL da Peça</FormLabel>
-        <Input type="text" {...register("pcaurl", { required: true })} isInvalid={errors.pcaurl?.message} />
+        <Input type="text" {...register("pcaurl", { required: true })} isInvalid={errors?.pcaurl?.message && errors?.pcaurl?.message.length > 0 ? true : false} />
         {errors?.pcaurl?.message && <span className={styles.error_message}>{errors?.pcaurl?.message}</span>}
       </FormControl>
 

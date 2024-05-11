@@ -124,12 +124,12 @@ const PecaEdicao: React.FC = () => {
 
           <FormControl id="imgnome" mt={4}>
             <FormLabel>Nome da Peça</FormLabel>
-            <Input {...register("pcanome", { required: true })} isInvalid={errors?.pcanome?.message} />
+            <Input {...register("pcanome", { required: true })} isInvalid={errors?.pcanome?.message && errors?.pcanome?.message.length > 0 ? true : false} />
             {errors?.pcanome?.message && <span className={styles.error_message} >{errors?.pcanome?.message}</span>}
           </FormControl>
           <FormControl id="imgurl" mt={4}>
             <FormLabel>URL da Imagem</FormLabel>
-            <Input type="text" {...register("pcaurl", { required: true })} isInvalid={errors?.pcaurl?.message} />
+            <Input type="text" {...register("pcaurl", { required: true })} isInvalid={errors?.pcaurl?.message && errors?.pcaurl?.message.length > 0 ? true : false} />
             {errors?.pcaurl?.message && <span className={styles.error_message} >{errors?.pcaurl?.message}</span>}
           </FormControl>
           <Button mt={4} colorScheme="teal" type="submit">

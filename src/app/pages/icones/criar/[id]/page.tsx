@@ -87,12 +87,12 @@ const IconeCadastro: React.FC = () => {
       </Breadcrumb>
       <FormControl id="imgnome" mt={4}>
         <FormLabel>Nome do ícone</FormLabel>
-        <Input {...register("icnnome", { required: true })} isInvalid={errors?.icnnome?.message} />
+        <Input {...register("icnnome", { required: true })} isInvalid={errors?.icnnome?.message && errors?.icnnome?.message?.length > 0 ? true : false} />
         {errors?.icnnome?.message && <span className={styles.error_message} >{errors?.icnnome?.message}</span>}
       </FormControl>
       <FormControl id="imgurl" mt={4}>
         <FormLabel>URL da Imagem</FormLabel>
-        <Input type="text" {...register("icnurl", { required: true })} isInvalid={errors?.icnurl?.message} />
+        <Input type="text" {...register("icnurl", { required: true })} isInvalid={errors?.icnurl?.message && errors?.icnurl?.message.length > 0 ? true : false} />
         {errors?.icnurl?.message && <span className={styles.error_message} >{errors?.icnurl?.message}</span>}
       </FormControl>
       <Button mt={4} colorScheme="teal" type="submit">

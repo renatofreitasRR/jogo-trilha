@@ -123,12 +123,12 @@ const ImagemEdicao: React.FC = () => {
 
           <FormControl id="imgnome" mt={4}>
             <FormLabel>Nome da Imagem</FormLabel>
-            <Input {...register("imgnome", { required: true })} isInvalid={errors?.imgnome?.message} />
+            <Input {...register("imgnome", { required: true })} isInvalid={errors?.imgnome?.message && errors?.imgnome?.message.length > 0 ? true : false} />
             {errors?.imgnome?.message && <span className={styles.error_message} >{errors?.imgnome?.message}</span>}
           </FormControl>
           <FormControl id="imgurl" mt={4}>
             <FormLabel>URL da Imagem</FormLabel>
-            <Input type="text" {...register("imgurl", { required: true })} isInvalid={errors?.imgurl?.message} />
+            <Input type="text" {...register("imgurl", { required: true })} isInvalid={errors?.imgurl?.message && errors?.imgurl?.message.length > 0 ? true : false} />
             {errors?.imgurl?.message && <span className={styles.error_message} >{errors?.imgurl?.message}</span>}
           </FormControl>
           <Button mt={4} colorScheme="teal" type="submit">
