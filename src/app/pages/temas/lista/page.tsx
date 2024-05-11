@@ -33,18 +33,18 @@ const TemasList: React.FC = () => {
   const toast = useToast();
 
   useEffect(() => {
-    const fetchImages = async () => {
+    const fetchTemas = async () => {
       try {
         const response = await api.get("/temas/getall");
 
         console.log("RESPONSE", response);
         setTemas(response.data);
       } catch (error) {
-        console.error("Erro ao buscar tenas:", error);
+        console.error("Erro ao buscar temas:", error);
       }
     };
 
-    fetchImages();
+    fetchTemas();
   }, []);
 
   async function handleDelete(id: any) {
@@ -52,8 +52,8 @@ const TemasList: React.FC = () => {
       await api.post(`/temas/delete/${id}`);
 
       toast({
-        title: "Exclusão de Imagem",
-        description: "Imagem excluída com Sucesso",
+        title: "Exclusão de Tema",
+        description: "Tema excluído com Sucesso",
         status: "success",
         duration: 9000,
         isClosable: true,
@@ -62,7 +62,7 @@ const TemasList: React.FC = () => {
       const filter = temas.filter((x) => x.tmacodigo != id);
       setTemas(filter);
     } catch (error) {
-      console.error("Erro ao atualizar imagem:", error);
+      console.error("Erro ao atualizar tema:", error);
     }
   }
 
