@@ -63,6 +63,15 @@ const TemasList: React.FC = () => {
       setTemas(filter);
     } catch (error) {
       console.error("Erro ao atualizar tema:", error);
+
+      toast({
+        title: "Exclusão de Tema",
+        description: "Erro ao excluir tema",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+
     }
   }
 
