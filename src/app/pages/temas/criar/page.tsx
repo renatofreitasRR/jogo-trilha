@@ -61,7 +61,6 @@ const Cadastro: React.FC = () => {
   const onSubmit = async (data: CadastroData) => {
     try {
 
-      console.log("DATA", data);
       const tema = {
         tmanome: data.tmanome,
         tmapreco: data.tmapreco
