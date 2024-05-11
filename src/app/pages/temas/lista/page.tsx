@@ -93,6 +93,7 @@ const TemasList: React.FC = () => {
         <Thead>
           <Tr>
             <Th>Nome</Th>
+            <Th>Preço</Th>
             <Th>Imagens</Th>
             <Th>Ícones</Th>
             <Th>Peças</Th>
@@ -103,6 +104,7 @@ const TemasList: React.FC = () => {
           {temas.map((tema, index) => (
             <Tr key={index}>
               <Td>{tema.tmanome}</Td>
+              <Td>{tema.tmapreco}</Td>
               <Td>
                 <Link href={`/pages/images/lista/${tema.tmacodigo}`}>
                   <ViewIcon />
