@@ -27,14 +27,12 @@ interface CadastroData {
   tmanome: string;
   icnnome: string;
   icnurl: string;
-  icnpreco: number;
   tmacodigo: number;
   imgnome: string;
   imgurl: string;
-  imgpreco: number;
+  tmapreco: number;
   pcanome: string;
   pcaurl: string;
-  pcapreco: number;
 }
 
 
@@ -45,13 +43,11 @@ const CadastroSchema = z.object({
   tmanome: z.string().min(1, { message: "Nome do Tema é obrigatório" }),
   icnnome: z.string().min(1, { message: "Nome do Ícone é obrigatório" }),
   icnurl: z.string().regex(urlPattern, { message: "URL do Ícone inválida" }),
-  icnpreco: z.coerce.number().positive({ message: "Preço do Ícone deve ser maior que 0" }),
+  tmapreco: z.coerce.number().positive({ message: "Preço do Ícone deve ser maior que 0" }),
   imgnome: z.string().min(1, { message: "Nome da Imagem é obrigatório" }),
   imgurl: z.string().regex(urlPattern, { message: "URL da Imagem inválida" }),
-  imgpreco: z.coerce.number().positive({ message: "Preço da Imagem deve ser maior que 0" }),
   pcanome: z.string().min(1, { message: "Nome da Peça é obrigatório" }),
   pcaurl: z.string().regex(urlPattern, { message: "URL da Peça inválida" }),
-  pcapreco: z.coerce.number().positive({ message: "Preço da Peça deve ser maior que 0" }),
 });
 
 
@@ -68,7 +64,7 @@ const Cadastro: React.FC = () => {
       console.log("DATA", data);
       const tema = {
         tmanome: data.tmanome,
-        tmapreco: data.icnpreco
+        tmapreco: data.tmapreco
       };
 
       const icone = {
@@ -137,6 +133,11 @@ const Cadastro: React.FC = () => {
         <Input  {...register("tmanome", { required: true })} isInvalid={errors?.tmanome?.message && errors?.tmanome?.message.length > 0 ? true : false} />
         {errors?.tmanome?.message && <span className={styles.error_message} >{errors?.tmanome?.message}</span>}
       </FormControl>
+      <FormControl id="icnpreco" mt={4}>
+        <FormLabel>Preço do Tema</FormLabel>
+        <Input type="number" {...register("tmapreco", { required: true })} isInvalid={errors?.tmapreco?.message && errors?.tmapreco?.message.length > 0 ? true : false} />
+        {errors?.tmapreco?.message && <span className={styles.error_message}>{errors?.tmapreco?.message}</span>}
+      </FormControl>
 
       <Heading as="h3" size="lg" mt={4}>
         Ícone
@@ -147,11 +148,7 @@ const Cadastro: React.FC = () => {
         <Input  {...register("icnnome", { required: true })} isInvalid={errors?.icnnome?.message && errors?.icnnome?.message.length > 0 ? true : false} />
         {errors?.icnnome?.message && <span className={styles.error_message}>{errors?.icnnome?.message}</span>}
       </FormControl>
-      <FormControl id="icnpreco" mt={4}>
-        <FormLabel>Preço do Ícone</FormLabel>
-        <Input type="number" {...register("icnpreco", { required: true })} isInvalid={errors?.icnpreco?.message && errors?.icnpreco?.message.length > 0 ? true : false} />
-        {errors?.icnpreco?.message && <span className={styles.error_message}>{errors?.icnpreco?.message}</span>}
-      </FormControl>
+
       <FormControl id="icnurl" mt={4} >
         <FormLabel>URL do Ícone</FormLabel>
         <Input type="text" {...register("icnurl", { required: true })} isInvalid={errors?.icnurl?.message && errors?.icnurl?.message.length > 0 ? true : false} />
@@ -167,11 +164,6 @@ const Cadastro: React.FC = () => {
         <Input  {...register("imgnome", { required: true })} isInvalid={errors?.imgnome?.message && errors?.imgnome?.message.length > 0 ? true : false} />
         {errors?.imgnome?.message && <span className={styles.error_message}>{errors?.imgnome?.message}</span>}
       </FormControl>
-      <FormControl id="imgpreco" mt={4}>
-        <FormLabel>Preço da Imagem</FormLabel>
-        <Input type="number" {...register("imgpreco", { required: true })} isInvalid={errors?.imgpreco?.message && errors?.imgpreco?.message.length > 0 ? true : false} />
-        {errors?.imgpreco?.message && <span className={styles.error_message}>{errors?.imgpreco?.message}</span>}
-      </FormControl>
       <FormControl id="imgurl" mt={4}>
         <FormLabel>URL da Imagem</FormLabel>
         <Input type="text" {...register("imgurl", { required: true })} isInvalid={errors?.imgurl?.message && errors?.imgurl?.message.length > 0 ? true : false} />
@@ -186,11 +178,6 @@ const Cadastro: React.FC = () => {
         <FormLabel>Nome da Peça</FormLabel>
         <Input  {...register("pcanome", { required: true })} isInvalid={errors?.pcanome?.message && errors?.pcanome?.message.length > 0 ? true : false} />
         {errors?.pcanome?.message && <span className={styles.error_message}>{errors?.pcanome?.message}</span>}
-      </FormControl>
-      <FormControl id="pcapreco" mt={4}>
-        <FormLabel>Preço da Peça</FormLabel>
-        <Input type="number" {...register("pcapreco", { required: true })} isInvalid={errors?.pcapreco?.message && errors?.pcapreco?.message.length > 0 ? true : false} />
-        {errors?.pcapreco?.message && <span className={styles.error_message}>{errors?.pcapreco?.message}</span>}
       </FormControl>
       <FormControl id="pcaurl" mt={4}>
         <FormLabel>URL da Peça</FormLabel>
