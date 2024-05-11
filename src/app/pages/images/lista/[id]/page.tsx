@@ -24,10 +24,10 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useParams } from "next/navigation";
 
 interface Image {
-  IMGCODIGO: number;
-  IMGNOME: string;
-  IMGURL: string;
-  TMACODIGO: number;
+  imgcodigo: number;
+  imgnome: string;
+  imgurl: string;
+  tmacodigo: number;
 }
 
 const ImageList: React.FC = () => {
@@ -61,7 +61,7 @@ const ImageList: React.FC = () => {
         isClosable: true,
       });
 
-      const filter = images.filter((x) => x.IMGCODIGO != id);
+      const filter = images.filter((x) => x.imgcodigo != id);
       setImages(filter);
     } catch (error) {
       console.error("Erro ao atualizar imagem:", error);
@@ -100,15 +100,15 @@ const ImageList: React.FC = () => {
             <Tr key={index}>
               <Td>
                 <Image
-                  src={image.IMGURL}
-                  alt={image.IMGNOME}
+                  src={image.imgurl}
+                  alt={image.imgnome}
                   boxSize="200px"
                   objectFit="cover"
                 />
               </Td>
-              <Td>{image.IMGNOME}</Td>
+              <Td>{image.imgnome}</Td>
               <Td>
-                <Link href={`/pages/images/editar/${image.IMGCODIGO}`}>
+                <Link href={`/pages/images/editar/${image.imgcodigo}`}>
                   <EditIcon />
                 </Link>
                 {"      "}|{"      "}
@@ -117,7 +117,7 @@ const ImageList: React.FC = () => {
                     style={{
                       cursor: "pointer",
                     }}
-                    onClick={() => handleDelete(image.IMGCODIGO ?? 0)}
+                    onClick={() => handleDelete(image.imgcodigo ?? 0)}
                   />
                 }
               </Td>

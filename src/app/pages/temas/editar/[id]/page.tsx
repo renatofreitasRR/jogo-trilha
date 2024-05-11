@@ -25,7 +25,7 @@ const ImageEdit: React.FC = () => {
   const { id } = params;
 
   const [tema, setTema] = useState<Tema | null>(null);
-  const [tmanome, setTmanome] = useState("");
+  const [tmanome, settmanome] = useState("");
 
   useEffect(() => {
     const fetchTemas = async () => {
@@ -33,7 +33,7 @@ const ImageEdit: React.FC = () => {
         const response = await api.get(`/temas?id=${id}`);
 
         setTema(response.data[0]);
-        setTmanome(response.data[0].tmanome);
+        settmanome(response.data[0].tmanome);
       } catch (error) {
         console.error("Erro ao buscar temas:", error);
       }
@@ -75,7 +75,7 @@ const ImageEdit: React.FC = () => {
             <FormLabel>Nome do Tema</FormLabel>
             <Input
               value={tmanome}
-              onChange={(e) => setTmanome(e.target.value)}
+              onChange={(e) => settmanome(e.target.value)}
             />
           </FormControl>
           <Button mt={4} colorScheme="teal" onClick={handleSave}>

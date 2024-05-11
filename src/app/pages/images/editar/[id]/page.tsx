@@ -34,7 +34,7 @@ const ImagemCadastroSchema = z.object({
 const ImagemEdicao: React.FC = () => {
   const toast = useToast();
   const router = useRouter();
-  const [tmacodigo, setTmacodigo] = useState<number>(0);
+  const [tmacodigo, settmacodigo] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<CadastroData>({
     resolver: zodResolver(ImagemCadastroSchema)
@@ -53,9 +53,9 @@ const ImagemEdicao: React.FC = () => {
 
           console.log("IMAGEM", imagem);
 
-          setValue("imgnome", imagem.IMGNOME);
-          setValue("imgurl", imagem.IMGURL);
-          setTmacodigo(imagem.TMACODIGO);
+          setValue("imgnome", imagem.imgnome);
+          setValue("imgurl", imagem.imgurl);
+          settmacodigo(imagem.tmacodigo);
 
         });
       }

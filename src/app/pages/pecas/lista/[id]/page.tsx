@@ -24,10 +24,10 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useParams } from "next/navigation";
 
 interface Peca {
-  PCACODIGO: number;
-  PCANOME: string;
-  PCAURL: string;
-  TMACODIGO: number;
+  pcacodigo: number;
+  pcanome: string;
+  pcaurl: string;
+  tmacodigo: number;
 }
 
 const PecaList: React.FC = () => {
@@ -62,7 +62,7 @@ const PecaList: React.FC = () => {
         isClosable: true,
       });
 
-      const filter = pecas.filter((x) => x.PCACODIGO != id);
+      const filter = pecas.filter((x) => x.pcacodigo != id);
       setPecas(filter);
     } catch (error) {
       console.error("Erro ao atualizar peça:", error);
@@ -100,15 +100,15 @@ const PecaList: React.FC = () => {
             <Tr key={index}>
               <Td>
                 <Peca
-                  src={peca.PCAURL}
-                  alt={peca.PCANOME}
+                  src={peca.pcaurl}
+                  alt={peca.pcanome}
                   boxSize="200px"
                   objectFit="cover"
                 />
               </Td>
-              <Td>{peca.PCANOME}</Td>
+              <Td>{peca.pcanome}</Td>
               <Td>
-                <Link href={`/pages/pecas/editar/${peca.PCACODIGO}`}>
+                <Link href={`/pages/pecas/editar/${peca.pcacodigo}`}>
                   <EditIcon />
                 </Link>
                 {"      "}|{"      "}
@@ -119,7 +119,7 @@ const PecaList: React.FC = () => {
                     style={{
                       cursor: "pointer",
                     }}
-                    onClick={() => handleDelete(peca.PCACODIGO ?? 0)}
+                    onClick={() => handleDelete(peca.pcacodigo ?? 0)}
                   />
                 }
 

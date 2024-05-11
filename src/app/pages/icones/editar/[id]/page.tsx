@@ -34,7 +34,7 @@ const IconeCadastroSchema = z.object({
 const IconeEdicao: React.FC = () => {
   const toast = useToast();
   const router = useRouter();
-  const [tmacodigo, setTmacodigo] = useState<number>(0);
+  const [tmacodigo, settmacodigo] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<CadastroData>({
     resolver: zodResolver(IconeCadastroSchema)
@@ -53,9 +53,9 @@ const IconeEdicao: React.FC = () => {
 
           console.log("ICONE", icone);
 
-          setValue("icnnome", icone.ICNNOME);
-          setValue("icnurl", icone.ICNURL);
-          setTmacodigo(icone.TMACODIGO);
+          setValue("icnnome", icone.icnnome);
+          setValue("icnurl", icone.icnurl);
+          settmacodigo(icone.tmacodigo);
 
         });
       }

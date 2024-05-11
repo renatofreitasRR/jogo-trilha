@@ -33,7 +33,7 @@ const PecaCadastroSchema = z.object({
 
 const PecaEdicao: React.FC = () => {
   const toast = useToast();
-  const [tmacodigo, setTmacodigo] = useState<number>(0);
+  const [tmacodigo, settmacodigo] = useState<number>(0);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<CadastroData>({
@@ -53,9 +53,9 @@ const PecaEdicao: React.FC = () => {
 
           console.log("PECA", peca);
 
-          setValue("pcanome", peca.PCANOME);
-          setValue("pcaurl", peca.PCAURL);
-          setTmacodigo(peca.TMACODIGO);
+          setValue("pcanome", peca.pcanome);
+          setValue("pcaurl", peca.pcaurl);
+          settmacodigo(peca.tmacodigo);
 
         });
       }

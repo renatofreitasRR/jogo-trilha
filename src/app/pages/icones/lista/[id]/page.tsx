@@ -24,10 +24,10 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useParams } from "next/navigation";
 
 interface Icone {
-  ICNCODIGO: number;
-  ICNNOME: string;
-  ICNURL: string;
-  TMACODIGO: number;
+  icncodigo: number;
+  icnnome: string;
+  icnurl: string;
+  tmacodigo: number;
 }
 
 const IconeList: React.FC = () => {
@@ -61,7 +61,7 @@ const IconeList: React.FC = () => {
         isClosable: true,
       });
 
-      const filter = icones.filter((x) => x.ICNCODIGO != id);
+      const filter = icones.filter((x) => x.icncodigo != id);
       setIcones(filter);
     } catch (error) {
       console.error("Erro ao atualizar ícone:", error);
@@ -100,15 +100,15 @@ const IconeList: React.FC = () => {
             <Tr key={index}>
               <Td>
                 <Icone
-                  src={icone.ICNURL}
-                  alt={icone.ICNNOME}
+                  src={icone.icnurl}
+                  alt={icone.icnnome}
                   boxSize="200px"
                   objectFit="cover"
                 />
               </Td>
-              <Td>{icone.ICNNOME}</Td>
+              <Td>{icone.icnnome}</Td>
               <Td>
-                <Link href={`/pages/icones/editar/${icone.ICNCODIGO}`}>
+                <Link href={`/pages/icones/editar/${icone.icncodigo}`}>
                   <EditIcon />
                 </Link>
                 {"      "}|{"      "}
@@ -118,7 +118,7 @@ const IconeList: React.FC = () => {
                     style={{
                       cursor: "pointer",
                     }}
-                    onClick={() => handleDelete(icone.ICNCODIGO ?? 0)}
+                    onClick={() => handleDelete(icone.icncodigo ?? 0)}
                   />
                 }
               </Td>

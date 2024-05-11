@@ -23,9 +23,9 @@ import { api } from "@/app/services/api";
 import { DeleteIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 
 interface Tema {
-  TMACODIGO: number;
-  TMAPRECO: number;
-  TMANOME: string;
+  tmacodigo: number;
+  tmapreco: number;
+  tmanome: string;
 }
 
 const TemasList: React.FC = () => {
@@ -59,7 +59,7 @@ const TemasList: React.FC = () => {
         isClosable: true,
       });
 
-      const filter = temas.filter((x) => x.TMACODIGO != id);
+      const filter = temas.filter((x) => x.tmacodigo != id);
       setTemas(filter);
     } catch (error) {
       console.error("Erro ao atualizar imagem:", error);
@@ -102,24 +102,24 @@ const TemasList: React.FC = () => {
         <Tbody>
           {temas.map((tema, index) => (
             <Tr key={index}>
-              <Td>{tema.TMANOME}</Td>
+              <Td>{tema.tmanome}</Td>
               <Td>
-                <Link href={`/pages/images/lista/${tema.TMACODIGO}`}>
+                <Link href={`/pages/images/lista/${tema.tmacodigo}`}>
                   <ViewIcon />
                 </Link>
               </Td>
               <Td>
-                <Link href={`/pages/icones/lista/${tema.TMACODIGO}`}>
+                <Link href={`/pages/icones/lista/${tema.tmacodigo}`}>
                   <ViewIcon />
                 </Link>
               </Td>
               <Td>
-                <Link href={`/pages/pecas/lista/${tema.TMACODIGO}`}>
+                <Link href={`/pages/pecas/lista/${tema.tmacodigo}`}>
                   <ViewIcon />
                 </Link>
               </Td>
               <Td>
-                <Link href={`/pages/temas/editar/${tema.TMACODIGO}`}>
+                <Link href={`/pages/temas/editar/${tema.tmacodigo}`}>
                   <EditIcon />
                 </Link>
                 {"      "}|{"      "}
@@ -127,7 +127,7 @@ const TemasList: React.FC = () => {
                   style={{
                     cursor: "pointer",
                   }}
-                  onClick={() => handleDelete(tema.TMACODIGO ?? 0)}
+                  onClick={() => handleDelete(tema.tmacodigo ?? 0)}
                 />
               </Td>
             </Tr>
