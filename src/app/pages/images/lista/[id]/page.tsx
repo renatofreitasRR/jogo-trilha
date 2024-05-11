@@ -14,27 +14,32 @@ import {
   Heading,
   useToast,
   Button,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { api } from "@/app/services/api";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { useParams } from "next/navigation";
 
 interface Image {
-  id?: number;
-  imgnome: string;
-  imgurl: string;
-  imgpreco: number;
-  tmacodigo: number;
+  IMGCODIGO: number;
+  IMGNOME: string;
+  IMGURL: string;
+  TMACODIGO: number;
 }
 
 const ImageList: React.FC = () => {
   const [images, setImages] = useState<Image[]>([]);
   const toast = useToast();
+  const params = useParams();
+  const { id } = params;
 
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await api.get("/images");
+        const response = await api.get(`/imagens/getallbytema/${id}`);
         setImages(response.data);
       } catch (error) {
         console.error("Erro ao buscar imagens:", error);
@@ -46,7 +51,7 @@ const ImageList: React.FC = () => {
 
   async function handleDelete(id: any) {
     try {
-      await api.delete(`/images/${id}`);
+      await api.delete(`/imagens/${id}`);
 
       toast({
         title: "Exclusão de Imagem",
@@ -56,7 +61,7 @@ const ImageList: React.FC = () => {
         isClosable: true,
       });
 
-      const filter = images.filter((x) => x.id != id);
+      const filter = images.filter((x) => x.IMGCODIGO != id);
       setImages(filter);
     } catch (error) {
       console.error("Erro ao atualizar imagem:", error);
@@ -65,17 +70,28 @@ const ImageList: React.FC = () => {
 
   return (
     <Box p={8}>
+      <Breadcrumb mt={4} mb={4}>
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} href='/pages/temas/lista'>Temas</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem isCurrentPage>
+          <BreadcrumbLink href='#'>Imagens</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+
       <Heading mb={4}>Lista de Imagens</Heading>
-      <Button mt={4} mb={8} colorScheme="teal">
-        <Link href={`/pages/images/criar`}>Cadastrar</Link>
-      </Button>
+      <Link href={`/pages/images/criar/${id}`}>
+        <Button mt={4} mb={8} colorScheme="teal">
+          Cadastrar
+        </Button>
+      </Link>
+
       <Table variant="simple">
         <Thead>
           <Tr>
             <Th>Imagem</Th>
             <Th>Nome</Th>
-            <Th>Preço</Th>
-            {/* <Th>Código do Tema</Th> */}
             <Th>Ações</Th>
           </Tr>
         </Thead>
@@ -84,26 +100,26 @@ const ImageList: React.FC = () => {
             <Tr key={index}>
               <Td>
                 <Image
-                  src={image.imgurl}
-                  alt={image.imgnome}
+                  src={image.IMGURL}
+                  alt={image.IMGNOME}
                   boxSize="200px"
                   objectFit="cover"
                 />
               </Td>
-              <Td>{image.imgnome}</Td>
-              <Td>R${image.imgpreco.toFixed(2)}</Td>
-              {/* <Td>{image.tmacodigo}</Td> */}
+              <Td>{image.IMGNOME}</Td>
               <Td>
-                <Link href={`/pages/images/editar/${image.id}`}>
+                <Link href={`/pages/images/editar/${image.IMGCODIGO}`}>
                   <EditIcon />
                 </Link>
                 {"      "}|{"      "}
-                <DeleteIcon
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleDelete(image.id ?? 0)}
-                />
+                {images.length > 1 &&
+                  <DeleteIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleDelete(image.IMGCODIGO ?? 0)}
+                  />
+                }
               </Td>
             </Tr>
           ))}

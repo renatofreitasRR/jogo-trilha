@@ -1,119 +1,144 @@
-"use client";
+"use client"
+
 import { useState, useEffect } from "react";
 import {
   Box,
-  Image as Icone,
   Input,
   Button,
   FormControl,
   FormLabel,
   useToast,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Link,
 } from "@chakra-ui/react";
 import { useParams, useRouter } from "next/navigation";
 import { api } from "@/app/services/api";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import styles from './styles.module.css';
+import { Spinner } from '@chakra-ui/react'
 
-interface Icone {
+interface CadastroData {
   icnnome: string;
   icnurl: string;
-  icnpreco: number;
-  tmacodigo: number;
 }
 
-const IconeEdit: React.FC = () => {
+const IconeCadastroSchema = z.object({
+  icnnome: z.string().min(1, { message: "Nome do Ícone é obrigatório" }),
+  icnurl: z.string().regex(/.*\.(jpg|gif|png|jpeg)$/, { message: "URL da Imagem inválida" }),
+});
+
+const IconeEdicao: React.FC = () => {
   const toast = useToast();
   const router = useRouter();
+  const [tmacodigo, setTmacodigo] = useState<number>(0);
+  const [loading, setLoading] = useState(false);
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<CadastroData>({
+    resolver: zodResolver(IconeCadastroSchema)
+  });
   const params = useParams();
   const { id } = params;
 
-  const [icone, setIcone] = useState<Icone | null>(null);
-  const [icnnome, setIcnnome] = useState("");
-  const [icnurl, setIcnUrl] = useState("");
-  const [icnpreco, setIcnpreco] = useState(0);
-
   useEffect(() => {
-    const fetchIcone = async () => {
-      try {
-        const response = await api.get(`/icones?id=${id}`);
 
-        setIcone(response.data[0]);
-        setIcnnome(response.data[0].icnnome);
-        setIcnpreco(response.data[0].icnpreco);
-        setIcnUrl(response.data[0].icnurl);
-      } catch (error) {
-        console.error("Erro ao buscar ícone:", error);
+    function getIcone() {
+      setLoading(true);
+
+      try {
+        api.get(`/icones/${id}`).then(response => {
+          const icone = response.data[0];
+
+          console.log("ICONE", icone);
+
+          setValue("icnnome", icone.ICNNOME);
+          setValue("icnurl", icone.ICNURL);
+          setTmacodigo(icone.TMACODIGO);
+
+        });
       }
-    };
+      catch (err: any) {
+      }
+      finally {
+        setLoading(false);
+      }
+
+    }
 
     if (id) {
-      fetchIcone();
+      getIcone()
     }
+
   }, [id]);
 
-  const handleSave = async () => {
+  const onSubmit = async (data: CadastroData) => {
     try {
-      await api.patch(`/icones/${id}`, {
-        ...icone,
-        icnurl: icnurl,
-        icnnome: icnnome,
-        icnpreco: icnpreco,
+      await api.post(`/icones/update/${id}`, {
+        ...data,
       });
 
       toast({
-        title: "Atualização de Ícone",
-        description: "Dados atualizados com Sucesso",
+        title: "Edição de Ícone",
+        description: "Ícone editado com sucesso",
         status: "success",
         duration: 9000,
         isClosable: true,
       });
 
-      router.push("/pages/icones/lista");
+      router.back();
     } catch (error) {
-      console.error("Erro ao atualizar ícones:", error);
+      console.error("Erro ao editar ícone:", error);
+
+      toast({
+        title: "Error",
+        description: "Erro ao realizar ação",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
   return (
-    <Box p={8}>
-      {!icone ? (
-        <div>Carregando...</div>
+    <>
+      {loading ? (
+        <Spinner size='xl' />
       ) : (
-        <>
-          <Icone
-            src={icone.icnurl}
-            alt={icone.icnnome}
-            boxSize="200px"
-            objectFit="cover"
-          />
+        <Box p={8} as="form" onSubmit={handleSubmit(onSubmit)}>
+          <Breadcrumb mt={4} mb={4}>
+            <BreadcrumbItem>
+              <BreadcrumbLink as={Link} href='/pages/temas/lista'>Temas</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem>
+              <BreadcrumbLink as={Link} href={`/pages/icones/lista/${tmacodigo}`}>Ícones</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink href='#'>Editar</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
           <FormControl id="icnnome" mt={4}>
             <FormLabel>Nome do Ícone</FormLabel>
-            <Input
-              value={icnnome}
-              onChange={(e) => setIcnnome(e.target.value)}
-            />
+            <Input {...register("icnnome", { required: true })} isInvalid={errors?.icnnome?.message} />
+            {errors?.icnnome?.message && <span className={styles.error_message} >{errors?.icnnome?.message}</span>}
           </FormControl>
-          <FormControl id="icnpreco" mt={4}>
-            <FormLabel>Preço do Ícone</FormLabel>
-            <Input
-              type="number"
-              value={icnpreco}
-              onChange={(e) => setIcnpreco(Number(e.target.value))}
-            />
+          <FormControl id="icnurl" mt={4}>
+            <FormLabel>URL da Imagem</FormLabel>
+            <Input type="text" {...register("icnurl", { required: true })} isInvalid={errors?.icnurl?.message} />
+            {errors?.icnurl?.message && <span className={styles.error_message} >{errors?.icnurl?.message}</span>}
           </FormControl>
-          <FormControl id="icnpreco" mt={4}>
-            <FormLabel>URL do Ícone</FormLabel>
-            <Input
-              type="text"
-              value={icnurl}
-              onChange={(e) => setIcnUrl(e.target.value)}
-            />
-          </FormControl>
-          <Button mt={4} colorScheme="teal" onClick={handleSave}>
+          <Button mt={4} colorScheme="teal" type="submit">
             Salvar
           </Button>
-        </>
-      )}
-    </Box>
+        </Box>
+      )
+      }
+    </>
+
   );
 };
 
-export default IconeEdit;
+export default IconeEdicao;

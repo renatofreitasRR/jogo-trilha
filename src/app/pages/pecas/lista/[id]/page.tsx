@@ -14,27 +14,33 @@ import {
   Heading,
   useToast,
   Button,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { api } from "@/app/services/api";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { useParams } from "next/navigation";
 
 interface Peca {
-  id?: number;
-  pcanome: string;
-  pcaurl: string;
-  pcapreco: number;
-  tmacodigo: number;
+  PCACODIGO: number;
+  PCANOME: string;
+  PCAURL: string;
+  TMACODIGO: number;
 }
 
 const PecaList: React.FC = () => {
   const [pecas, setPecas] = useState<Peca[]>([]);
   const toast = useToast();
+  const params = useParams();
+  const { id } = params;
 
   useEffect(() => {
     const fetchPecas = async () => {
       try {
-        const response = await api.get("/pecas");
+        const response = await api.get(`/pecas/getallbytema/${id}`);
+
         setPecas(response.data);
       } catch (error) {
         console.error("Erro ao buscar peças:", error);
@@ -56,7 +62,7 @@ const PecaList: React.FC = () => {
         isClosable: true,
       });
 
-      const filter = pecas.filter((x) => x.id != id);
+      const filter = pecas.filter((x) => x.PCACODIGO != id);
       setPecas(filter);
     } catch (error) {
       console.error("Erro ao atualizar peça:", error);
@@ -65,17 +71,27 @@ const PecaList: React.FC = () => {
 
   return (
     <Box p={8}>
+      <Breadcrumb mt={4} mb={4}>
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} href='/pages/temas/lista'>Temas</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem isCurrentPage>
+          <BreadcrumbLink href='#'>Peças</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
       <Heading mb={4}>Lista de Peças</Heading>
-      <Button mt={4} mb={8} colorScheme="teal">
-        <Link href={`/pages/pecas/criar`}>Cadastrar</Link>
-      </Button>
+      <Link href={`/pages/pecas/criar/${id}`}>
+        <Button mt={4} mb={8} colorScheme="teal">
+          Cadastrar
+        </Button>
+      </Link>
+
       <Table variant="simple">
         <Thead>
           <Tr>
             <Th>Imagem</Th>
             <Th>Nome</Th>
-            <Th>Preço</Th>
-            {/* <Th>Código do Tema</Th> */}
             <Th>Ações</Th>
           </Tr>
         </Thead>
@@ -84,26 +100,29 @@ const PecaList: React.FC = () => {
             <Tr key={index}>
               <Td>
                 <Peca
-                  src={peca.pcaurl}
-                  alt={peca.pcanome}
+                  src={peca.PCAURL}
+                  alt={peca.PCANOME}
                   boxSize="200px"
                   objectFit="cover"
                 />
               </Td>
-              <Td>{peca.pcanome}</Td>
-              <Td>R${peca.pcapreco.toFixed(2)}</Td>
-              {/* <Td>{image.tmacodigo}</Td> */}
+              <Td>{peca.PCANOME}</Td>
               <Td>
-                <Link href={`/pages/pecas/editar/${peca.id}`}>
+                <Link href={`/pages/pecas/editar/${peca.PCACODIGO}`}>
                   <EditIcon />
                 </Link>
                 {"      "}|{"      "}
-                <DeleteIcon
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleDelete(peca.id ?? 0)}
-                />
+
+                {
+                  pecas.length > 1 &&
+                  <DeleteIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleDelete(peca.PCACODIGO ?? 0)}
+                  />
+                }
+
               </Td>
             </Tr>
           ))}

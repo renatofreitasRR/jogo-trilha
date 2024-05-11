@@ -14,27 +14,32 @@ import {
   Heading,
   useToast,
   Button,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { api } from "@/app/services/api";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { useParams } from "next/navigation";
 
 interface Icone {
-  id?: number;
-  icnnome: string;
-  icnurl: string;
-  icnpreco: number;
-  tmacodigo: number;
+  ICNCODIGO: number;
+  ICNNOME: string;
+  ICNURL: string;
+  TMACODIGO: number;
 }
 
 const IconeList: React.FC = () => {
   const [icones, setIcones] = useState<Icone[]>([]);
   const toast = useToast();
+  const params = useParams();
+  const { id } = params;
 
   useEffect(() => {
     const fetchIcones = async () => {
       try {
-        const response = await api.get("/icones");
+        const response = await api.get(`/icones/getallbytema/${id}`);
         setIcones(response.data);
       } catch (error) {
         console.error("Erro ao buscar ícones:", error);
@@ -56,7 +61,7 @@ const IconeList: React.FC = () => {
         isClosable: true,
       });
 
-      const filter = icones.filter((x) => x.id != id);
+      const filter = icones.filter((x) => x.ICNCODIGO != id);
       setIcones(filter);
     } catch (error) {
       console.error("Erro ao atualizar ícone:", error);
@@ -65,17 +70,28 @@ const IconeList: React.FC = () => {
 
   return (
     <Box p={8}>
+      <Breadcrumb mt={4} mb={4}>
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} href='/pages/temas/lista'>Temas</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem isCurrentPage>
+          <BreadcrumbLink href='#'>Ícones</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+
       <Heading mb={4}>Lista de Ícones</Heading>
-      <Button mt={4} mb={8} colorScheme="teal">
-        <Link href={`/pages/icones/criar`}>Cadastrar</Link>
-      </Button>
+      <Link href={`/pages/icones/criar/${id}`}>
+        <Button mt={4} mb={8} colorScheme="teal">
+          Cadastrar
+        </Button>
+      </Link>
+
       <Table variant="simple">
         <Thead>
           <Tr>
             <Th>Imagem</Th>
             <Th>Nome</Th>
-            <Th>Preço</Th>
-            {/* <Th>Código do Tema</Th> */}
             <Th>Ações</Th>
           </Tr>
         </Thead>
@@ -84,26 +100,27 @@ const IconeList: React.FC = () => {
             <Tr key={index}>
               <Td>
                 <Icone
-                  src={icone.icnurl}
-                  alt={icone.icnnome}
+                  src={icone.ICNURL}
+                  alt={icone.ICNNOME}
                   boxSize="200px"
                   objectFit="cover"
                 />
               </Td>
-              <Td>{icone.icnnome}</Td>
-              <Td>R${icone.icnpreco.toFixed(2)}</Td>
-              {/* <Td>{image.tmacodigo}</Td> */}
+              <Td>{icone.ICNNOME}</Td>
               <Td>
-                <Link href={`/pages/icones/editar/${icone.id}`}>
+                <Link href={`/pages/icones/editar/${icone.ICNCODIGO}`}>
                   <EditIcon />
                 </Link>
                 {"      "}|{"      "}
-                <DeleteIcon
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleDelete(icone.id ?? 0)}
-                />
+
+                {icones.length > 1 &&
+                  <DeleteIcon
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleDelete(icone.ICNCODIGO ?? 0)}
+                  />
+                }
               </Td>
             </Tr>
           ))}

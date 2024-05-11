@@ -14,15 +14,18 @@ import {
   Heading,
   useToast,
   Button,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { api } from "@/app/services/api";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 
 interface Tema {
-  id?: number;
-  tmacodigo: number;
-  tmanome: string;
+  TMACODIGO: number;
+  TMAPRECO: number;
+  TMANOME: string;
 }
 
 const TemasList: React.FC = () => {
@@ -32,7 +35,9 @@ const TemasList: React.FC = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await api.get("/temas");
+        const response = await api.get("/temas/getall");
+
+        console.log("RESPONSE", response);
         setTemas(response.data);
       } catch (error) {
         console.error("Erro ao buscar tenas:", error);
@@ -54,7 +59,7 @@ const TemasList: React.FC = () => {
         isClosable: true,
       });
 
-      const filter = temas.filter((x) => x.id != id);
+      const filter = temas.filter((x) => x.TMACODIGO != id);
       setTemas(filter);
     } catch (error) {
       console.error("Erro ao atualizar imagem:", error);
@@ -63,23 +68,58 @@ const TemasList: React.FC = () => {
 
   return (
     <Box p={8}>
+
+      <Breadcrumb mt={4} mb={4}>
+        {/* <BreadcrumbItem>
+          <BreadcrumbLink href='#'>Home</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem>
+          <BreadcrumbLink href='#'>Docs</BreadcrumbLink>
+        </BreadcrumbItem> */}
+
+        <BreadcrumbItem isCurrentPage>
+          <BreadcrumbLink href='#'>Temas</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+
       <Heading mb={4}>Lista de Temas</Heading>
-      <Button mt={4} mb={8} colorScheme="teal">
-        <Link href={`/pages/temas/criar`}>Cadastrar</Link>
-      </Button>
+      <Link href={`/pages/temas/criar`}>
+        <Button mt={4} mb={8} colorScheme="teal">
+          Cadastrar
+        </Button>
+      </Link>
       <Table variant="simple">
         <Thead>
           <Tr>
             <Th>Nome</Th>
+            <Th>Imagens</Th>
+            <Th>Ícones</Th>
+            <Th>Peças</Th>
             <Th>Ações</Th>
           </Tr>
         </Thead>
         <Tbody>
           {temas.map((tema, index) => (
             <Tr key={index}>
-              <Td>{tema.tmanome}</Td>
+              <Td>{tema.TMANOME}</Td>
               <Td>
-                <Link href={`/pages/temas/editar/${tema.id}`}>
+                <Link href={`/pages/images/lista/${tema.TMACODIGO}`}>
+                  <ViewIcon />
+                </Link>
+              </Td>
+              <Td>
+                <Link href={`/pages/icones/lista/${tema.TMACODIGO}`}>
+                  <ViewIcon />
+                </Link>
+              </Td>
+              <Td>
+                <Link href={`/pages/pecas/lista/${tema.TMACODIGO}`}>
+                  <ViewIcon />
+                </Link>
+              </Td>
+              <Td>
+                <Link href={`/pages/temas/editar/${tema.TMACODIGO}`}>
                   <EditIcon />
                 </Link>
                 {"      "}|{"      "}
@@ -87,7 +127,7 @@ const TemasList: React.FC = () => {
                   style={{
                     cursor: "pointer",
                   }}
-                  onClick={() => handleDelete(tema.id ?? 0)}
+                  onClick={() => handleDelete(tema.TMACODIGO ?? 0)}
                 />
               </Td>
             </Tr>
