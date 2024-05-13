@@ -4,21 +4,47 @@ import { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signal
 import { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useState } from "react";
 import { DotType } from "../interfaces/dotType";
 import dots_json from "../../../../../../data/data.json";
-import { useParams } from "next/navigation";
-import { getLocalItem } from "@/app/utils/localStorage";
+import { useParams, useRouter } from "next/navigation";
+import { getLocalItem } from "@/app/utils/sessionStorage";
 import { Player } from "../interfaces/player";
 
+
+interface BoardStates {
+    boardDots: DotType[];
+    playerOneChipsAvailables: number;
+    playerTwoChipsAvailables: number;
+    gameOver: boolean;
+    playerTurn: string;
+    canStart: boolean;
+    awaitTurn: boolean;
+    eatTime: boolean;
+}
 
 interface WebSocketContextProps {
     canStart: boolean;
     playerTurn: string;
-    sendMessage: (obj: any) => Promise<void>;
+    sendMessage: (states: BoardStates) => Promise<void>;
     firstPlayer: Player | undefined;
     secondPlayer: Player | undefined;
     setPlayerTurn: Dispatch<SetStateAction<string>>
     connection: HubConnection | null;
+    awaitTurn: boolean;
     boardDots: DotType[];
     loadDots: () => void;
+    currentDotClicked: string | undefined;
+    setCurrentDotClicked: Dispatch<SetStateAction<string | undefined>>;
+    level: 1 | 2 | 3;
+    setLevels: Dispatch<SetStateAction<1 | 2 | 3>>;
+    playerOneChipsAvailables: number;
+    setPlayerOneChipsAvailables: Dispatch<SetStateAction<number>>;
+    playerTwoChipsAvailables: number;
+    setPlayerTwoChipsAvailables: Dispatch<SetStateAction<number>>;
+    eatTime: boolean;
+    setEatTime: Dispatch<SetStateAction<boolean>>;
+    gameOver: boolean;
+    setGameOver: Dispatch<SetStateAction<boolean>>;
+    playerWin: 1 | 2 | undefined;
+    setPlayerWin: Dispatch<SetStateAction<1 | 2 | undefined>>;
 }
 
 export const WebSocketContext = createContext({} as WebSocketContextProps);
@@ -35,7 +61,16 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
     const [firstPlayer, setFirstPlayer] = useState<Player | undefined>(undefined);
     const [secondPlayer, setSecondPlayer] = useState<Player | undefined>(undefined);
     const [canStart, setCanStart] = useState(false);
+    const [awaitTurn, setAwaitTurn] = useState(false);
+    const [playerWin, setPlayerWin] = useState<1 | 2 | undefined>(undefined);
+    const [currentDotClicked, setCurrentDotClicked] = useState<string | undefined>(undefined);
+    const [level, setLevels] = useState<1 | 2 | 3>(1);
+    const [playerOneChipsAvailables, setPlayerOneChipsAvailables] = useState(9);
+    const [playerTwoChipsAvailables, setPlayerTwoChipsAvailables] = useState(9);
+    const [eatTime, setEatTime] = useState(false);
+    const [gameOver, setGameOver] = useState(false);
     const params = useParams();
+    const router = useRouter();
     const { room } = params;
 
     function loadDots() {
@@ -70,47 +105,53 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
             .configureLogging(LogLevel.Information)
             .build();
 
-        connect.on("ReceivedMessage", (dots: DotType[]) => {
-            setBoardDots(dots);
+        connect.on("ReceivedMessage", (states: BoardStates) => {
+            setAwaitTurn(false);
+
+            setBoardDots(states.boardDots);
+            setPlayerTurn(states.playerTurn);
+            setAwaitTurn(states.awaitTurn);
+            setCanStart(states.canStart);
+            setEatTime(states.eatTime);
+            setPlayerOneChipsAvailables(states.playerOneChipsAvailables);
+            setPlayerTwoChipsAvailables(states.playerTwoChipsAvailables);
+            setGameOver(states.gameOver);
 
         });
 
-        connect.on("HasOtherPlayerInRoom", (result: boolean) => {
-            console.log("HasOtherPlayerInRoom", result);
+        connect.on("Disconnect", (value: boolean) => {
+            // router.push('/pages/online/bypass');
+        });
 
-            if (result) {
-                const connection: Player = {
-                    connectionId: connect.connectionId,
-                    id: 2,
-                    name: `${getLocalItem("nome")}-${connect.connectionId}`
-                }
+        connect.on("Players", (result: Player[]) => {
+            if (result.length > 1) {
 
-                console.log("PLAYER TWO", connection);
+                const one = result[0];
+                const two = result[1];
 
-                setFirstPlayer(connection)
+                console.log("Players", result);
+
+                setFirstPlayer(one);
+                setSecondPlayer(two);
+
+                setPlayerTurn(result[0].id ?? "")
+
+                // if (connect?.connectionId == one.id)
+                // setAwaitTurn(false);
+
                 setCanStart(true);
-            }
-            else {
-
-                const connection: Player = {
-                    connectionId: connect.connectionId,
-                    id: 1,
-                    name: `${getLocalItem("nome")}-${connect.connectionId}`
-                }
-
-                console.log("PLAYER ONE", connection);
-
-                setPlayerTurn(connect.connectionId ?? "");
-                setSecondPlayer(connection)
             }
         });
 
         connect.onclose(e => {
+            console.log("CLOSE");
             setConnection(null);
         });
 
+        const userNickName = getLocalItem("nome");
+
         await connect.start();
-        await connect.invoke("JoinRoom", { room });
+        await connect.invoke("JoinRoom", { room, userNickName });
         setConnection(connect);
     }
 
@@ -119,10 +160,12 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
         joinRoom();
     }, []);
 
-    const sendMessage = async (dots: any) => {
+    const sendMessage = async (states: BoardStates) => {
         if (connection) {
-            console.log("CONNECTION ID", connection.connectionId);
-            await connection.send("SendMessage", dots);
+            await connection.send("SendMessage", states);
+        }
+        else {
+            "BOLOLO HAHA"
         }
     };
 
@@ -139,15 +182,31 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
     return (<WebSocketContext.Provider
         value={
             {
-                canStart,
+                setPlayerTurn,
+                loadDots,
                 sendMessage,
+                setPlayerWin,
+                setCurrentDotClicked,
+                setEatTime,
+                setGameOver,
+                setLevels,
+                setPlayerOneChipsAvailables,
+                setPlayerTwoChipsAvailables,
+                awaitTurn,
+                canStart,
                 connection,
                 boardDots,
-                setPlayerTurn,
                 playerTurn,
                 firstPlayer,
                 secondPlayer,
-                loadDots
+                currentDotClicked,
+                eatTime,
+                gameOver,
+                level,
+                playerOneChipsAvailables,
+                playerTwoChipsAvailables,
+                playerWin,
+
             }}>
         {children}
     </WebSocketContext.Provider>

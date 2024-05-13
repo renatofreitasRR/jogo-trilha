@@ -46,7 +46,7 @@ export class GamePoints {
     }
 
     hasPlayerEnemyDotsToEat(eatTime: boolean, boardDots: DotType[], playerTurn: string, firstPlayer: Player, secondPlayer: Player): boolean {
-        const playerEnemy = playerTurn == firstPlayer?.connectionId ? secondPlayer?.connectionId : firstPlayer?.connectionId;
+        const playerEnemy = playerTurn == firstPlayer?.id ? secondPlayer?.id : firstPlayer?.id;
 
         let hasEnemyDotsToEat = false;
 
@@ -85,7 +85,7 @@ export class GamePoints {
 
     allEnemyDotsIsInARowCombination(playerTurn: string, currentDots: DotType[], firstPlayer: Player, secondPlayer: Player, getDot: (dot_id: string, currentDots: DotType[]) => DotType): boolean {
         const gamePoints = new GamePoints();
-        const playerEnemy = playerTurn == firstPlayer?.connectionId ? secondPlayer?.connectionId : firstPlayer?.connectionId;
+        const playerEnemy = playerTurn == firstPlayer?.id ? secondPlayer?.id : firstPlayer?.id;
 
         currentDots.forEach(dot_prev => {
             const dotIsInRow = gamePoints.dotToEatIsInARowCombination(dot_prev, currentDots, getDot);
@@ -124,7 +124,7 @@ export class GamePoints {
     }
 
     gameOver(playerTurn: string, currentDots: DotType[], firstPlayer: Player, secondPlayer: Player): boolean {
-        const playerEnemy = playerTurn == firstPlayer?.connectionId ? secondPlayer?.connectionId : firstPlayer?.connectionId;
+        const playerEnemy = playerTurn == firstPlayer?.id ? secondPlayer?.id : firstPlayer?.id;
 
         const enemyDots = currentDots
             .filter(x => x.player === playerEnemy)

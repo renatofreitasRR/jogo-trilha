@@ -21,7 +21,7 @@ export class GameRules {
     }
 
     static canPutDot(playerTurn: string, dotClicked: DotType, playerOneChipsAvailable: number, playerTwoChipsAvailable: number, eatTime: boolean, firstPlayer: Player, secondPlayer: Player): boolean {
-        const isPlayerOne = playerTurn === firstPlayer.connectionId;
+        const isPlayerOne = playerTurn === firstPlayer.id;
 
         if (eatTime === true)
             return false;

@@ -7,8 +7,6 @@ import { WebSocketContext } from './webSocketContext';
 import { Player } from '../interfaces/player';
 
 interface BoardContextProps {
-    resetTimer: () => void;
-    changeTurn: () => void;
     clickInDot: (dot_id: string) => void;
     boardDots: DotType[];
     playerTurn: string;
@@ -16,7 +14,6 @@ interface BoardContextProps {
     playerOneChipsAvailables: number;
     playerTwoChipsAvailables: number;
     gameOver: boolean;
-    turnTime: number;
 }
 
 export const BoardContext = createContext({} as BoardContextProps);
@@ -27,15 +24,33 @@ interface BoardProviderProps {
 }
 
 export function BoardProvider({ children }: BoardProviderProps) {
-    const { sendMessage, loadDots, boardDots, playerTurn, firstPlayer, setPlayerTurn, secondPlayer } = useContext(WebSocketContext);
-    const [playerWin, setPlayerWin] = useState<1 | 2 | undefined>(undefined);
-    const [currentDotClicked, setCurrentDotClicked] = useState<string | undefined>(undefined);
-    const [level, setLevels] = useState<1 | 2 | 3>(1);
-    const [playerOneChipsAvailables, setPlayerOneChipsAvailables] = useState(9);
-    const [playerTwoChipsAvailables, setPlayerTwoChipsAvailables] = useState(9);
-    const [eatTime, setEatTime] = useState(false);
-    const [gameOver, setGameOver] = useState(false);
-    const { resetTimer, seconds } = useCountdown(changeTurn);
+    const {
+        sendMessage,
+        loadDots,
+        boardDots,
+        playerTurn,
+        firstPlayer,
+        setPlayerTurn,
+        secondPlayer,
+        awaitTurn,
+        canStart,
+        connection,
+        currentDotClicked,
+        eatTime,
+        gameOver,
+        level,
+        playerOneChipsAvailables,
+        playerTwoChipsAvailables,
+        setCurrentDotClicked,
+        setEatTime,
+        setGameOver,
+        setLevels,
+        setPlayerOneChipsAvailables,
+        setPlayerTwoChipsAvailables,
+        playerWin,
+        setPlayerWin
+    } = useContext(WebSocketContext);
+
 
     function resetAll() {
         loadDots();
@@ -64,12 +79,16 @@ export function BoardProvider({ children }: BoardProviderProps) {
     }
 
     function changeTurn() {
-        if (playerTurn == firstPlayer?.connectionId)
-            setPlayerTurn(secondPlayer?.connectionId ?? "");
-        else
-            setPlayerTurn(firstPlayer?.connectionId ?? "");
 
-        resetTimer();
+        if (playerTurn == firstPlayer?.id) {
+            setPlayerTurn(secondPlayer?.id ?? "");
+            return secondPlayer?.id
+        }
+        else {
+            setPlayerTurn(firstPlayer?.id ?? "");
+            return firstPlayer?.id ?? "";
+        }
+
     }
 
     function blinkNeighbourhoods(dotClicked: DotType, currentDots: DotType[]): DotType[] {
@@ -94,7 +113,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
     function blinkDotsToEat(player: string, currentDots: DotType[]): DotType[] {
         const gamePoints = new GamePoints();
 
-        const playerEnemy = player == firstPlayer?.connectionId ? secondPlayer?.connectionId : firstPlayer?.connectionId;
+        const playerEnemy = player == firstPlayer?.id ? secondPlayer?.id : firstPlayer?.id;
 
         // if (gamePoints.allEnemyDotsIsInARowCombination(player, currentDots, getDot))
         //     return blinkAllEnemyDots(player, currentDots);
@@ -112,7 +131,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
     function blinkAllEnemyDots(player: string, currentDots: DotType[]): DotType[] {
 
-        const playerEnemy = player == firstPlayer?.connectionId ? secondPlayer?.connectionId : firstPlayer?.connectionId;
+        const playerEnemy = player == firstPlayer?.id ? secondPlayer?.id : firstPlayer?.id;
 
         return currentDots.map(dot_prev => {
             if (dot_prev.player == playerEnemy) {
@@ -163,32 +182,68 @@ export function BoardProvider({ children }: BoardProviderProps) {
     function clickInDot(dot_id: string) {
         let currentDots = boardDots;
         let currentEatTime = eatTime;
+        let currentPlayerTurn = playerTurn;
+
+        if (connection?.connectionId != playerTurn)
+            return;
 
         //TO DO
         // if (currentPlayer != playerTurn)
         //     return;
 
-        sendMessage(boardDots);
+        sendMessage({
+            boardDots: currentDots,
+            awaitTurn: false,
+            canStart: true,
+            eatTime: false,
+            gameOver: false,
+            playerOneChipsAvailables: playerOneChipsAvailables,
+            playerTwoChipsAvailables: playerTwoChipsAvailables,
+            playerTurn: currentPlayerTurn
+        });
 
         const dotClicked = getDot(dot_id, currentDots);
         const gamePoints = new GamePoints();
 
-        if (currentEatTime && (gamePoints.hasPlayerEnemyDotsToEat(currentEatTime, currentDots, playerTurn, firstPlayer as Player, secondPlayer as Player) === false)) {
+
+        if (currentEatTime && (gamePoints.hasPlayerEnemyDotsToEat(currentEatTime, currentDots, currentPlayerTurn, firstPlayer as Player, secondPlayer as Player) === false)) {
             currentEatTime = false;
         }
 
-        if (GameRules.canEat(currentEatTime, playerTurn, dotClicked)) {
+
+        if (GameRules.canEat(currentEatTime, currentPlayerTurn, dotClicked)) {
 
             currentDots = eatDot(dotClicked, currentDots);
             currentDots = resetBlink(currentDots);
-            sendMessage(currentDots);
 
-            if (level == 2 && gamePoints.gameOver(playerTurn, currentDots, firstPlayer as Player, secondPlayer as Player)) {
+            sendMessage({
+                boardDots: currentDots,
+                awaitTurn: false,
+                canStart: true,
+                eatTime: currentEatTime,
+                gameOver: false,
+                playerOneChipsAvailables: playerOneChipsAvailables,
+                playerTwoChipsAvailables: playerTwoChipsAvailables,
+                playerTurn: currentPlayerTurn
+            });
+
+            if (level == 2 && gamePoints.gameOver(currentPlayerTurn, currentDots, firstPlayer as Player, secondPlayer as Player)) {
                 setGameOver(true);
 
                 //TO DO
                 setPlayerWin(1);
-                alert(`Fim de Jogo, vitória do jogador ${playerTurn}`);
+                alert(`Fim de Jogo, vitória do jogador ${currentPlayerTurn}`);
+
+                sendMessage({
+                    boardDots: currentDots,
+                    awaitTurn: false,
+                    canStart: true,
+                    eatTime: currentEatTime,
+                    gameOver: true,
+                    playerOneChipsAvailables: playerOneChipsAvailables,
+                    playerTwoChipsAvailables: playerTwoChipsAvailables,
+                    playerTurn: currentPlayerTurn
+                });
 
                 resetAll();
 
@@ -196,9 +251,23 @@ export function BoardProvider({ children }: BoardProviderProps) {
             }
 
             setEatTime(false);
-            changeTurn();
+
+            currentPlayerTurn = changeTurn() ?? "";
+
+            sendMessage({
+                boardDots: currentDots,
+                awaitTurn: false,
+                canStart: true,
+                eatTime: currentEatTime,
+                gameOver: true,
+                playerOneChipsAvailables: playerOneChipsAvailables,
+                playerTwoChipsAvailables: playerTwoChipsAvailables,
+                playerTurn: currentPlayerTurn
+            });
+
             return;
         }
+
 
 
         if (GameRules.canChangeToLevelTwo(playerOneChipsAvailables, playerTwoChipsAvailables, level))
@@ -206,14 +275,28 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         if (level === 2) {
 
-            if (GameRules.canBlink(dotClicked, playerTurn)) {
+            if (GameRules.canBlink(dotClicked, currentPlayerTurn)) {
+
+
 
                 currentDots = resetBlink(currentDots);
                 currentDots = blinkNeighbourhoods(dotClicked, currentDots);
 
                 setCurrentDotClicked(dot_id);
-                sendMessage(currentDots);
+
+                sendMessage({
+                    boardDots: currentDots,
+                    awaitTurn: false,
+                    canStart: true,
+                    eatTime: currentEatTime,
+                    gameOver: true,
+                    playerOneChipsAvailables: playerOneChipsAvailables,
+                    playerTwoChipsAvailables: playerTwoChipsAvailables,
+                    playerTurn: currentPlayerTurn
+                });
+
                 setEatTime(currentEatTime);
+
 
                 return;
             }
@@ -222,21 +305,43 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
                 currentDots = moveDot(dotClicked, currentDots);
 
-                if (gamePoints.rowCombined(dotClicked, playerTurn, currentDots, getDot)) {
+                if (gamePoints.rowCombined(dotClicked, currentPlayerTurn, currentDots, getDot)) {
                     currentDots = resetBlink(currentDots);
-                    currentDots = blinkDotsToEat(playerTurn, currentDots);
+                    currentDots = blinkDotsToEat(currentPlayerTurn, currentDots);
 
                     setEatTime(true);
-                    sendMessage(currentDots);
+
+                    sendMessage({
+                        boardDots: currentDots,
+                        awaitTurn: false,
+                        canStart: true,
+                        eatTime: true,
+                        gameOver: true,
+                        playerOneChipsAvailables: playerOneChipsAvailables,
+                        playerTwoChipsAvailables: playerTwoChipsAvailables,
+                        playerTurn: currentPlayerTurn
+                    });
 
                     return;
                 }
 
-                currentDots = resetBlink(currentDots);
-                changeTurn();
 
-                sendMessage(currentDots);
-                setEatTime(currentEatTime);
+                currentDots = resetBlink(currentDots);
+                currentPlayerTurn = changeTurn() ?? "";
+
+                sendMessage({
+                    boardDots: currentDots,
+                    awaitTurn: false,
+                    canStart: true,
+                    eatTime: false,
+                    gameOver: true,
+                    playerOneChipsAvailables: playerOneChipsAvailables,
+                    playerTwoChipsAvailables: playerTwoChipsAvailables,
+                    playerTurn: currentPlayerTurn
+                });
+
+                setEatTime(false);
+
 
                 return;
 
@@ -248,7 +353,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
         if (GameRules.canPutDot(playerTurn, dotClicked, playerOneChipsAvailables, playerTwoChipsAvailables, currentEatTime, firstPlayer as Player, secondPlayer as Player) === false)
             return;
 
-        const isPlayerOne = playerTurn == firstPlayer?.connectionId;
+        const isPlayerOne = currentPlayerTurn == firstPlayer?.id;
 
         if (isPlayerOne) {
             setPlayerOneChipsAvailables(playerOneChipsAvailables - 1);
@@ -259,24 +364,45 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         currentDots = currentDots.map(dot => {
             if (dot.id === dot_id) {
-                return { ...dot, has_piece: true, player: playerTurn };
+                return { ...dot, has_piece: true, player: currentPlayerTurn };
             } else {
                 return dot;
             }
         });
 
-        if (gamePoints.rowCombined(dotClicked, playerTurn, currentDots, getDot)) {
+        if (gamePoints.rowCombined(dotClicked, currentPlayerTurn, currentDots, getDot)) {
 
-            currentDots = blinkDotsToEat(playerTurn, currentDots);
+            currentDots = blinkDotsToEat(currentPlayerTurn, currentDots);
 
             setEatTime(true);
-            sendMessage(currentDots);
+
+
+            sendMessage({
+                boardDots: currentDots,
+                awaitTurn: false,
+                canStart: true,
+                eatTime: true,
+                gameOver: true,
+                playerOneChipsAvailables: playerOneChipsAvailables,
+                playerTwoChipsAvailables: playerTwoChipsAvailables,
+                playerTurn: currentPlayerTurn
+            });
 
             return;
         }
 
-        changeTurn();
-        sendMessage(currentDots);
+        currentPlayerTurn = changeTurn() ?? "";
+
+        sendMessage({
+            boardDots: currentDots,
+            awaitTurn: false,
+            canStart: true,
+            eatTime: currentEatTime,
+            gameOver: true,
+            playerOneChipsAvailables: playerOneChipsAvailables,
+            playerTwoChipsAvailables: playerTwoChipsAvailables,
+            playerTurn: currentPlayerTurn
+        });
     }
 
     useEffect(() => {
@@ -293,10 +419,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
                     playerTurn,
                     gameOver,
                     playerWin,
-                    turnTime: seconds,
                     clickInDot,
-                    changeTurn,
-                    resetTimer
                 }}>
             {children}
         </BoardContext.Provider>

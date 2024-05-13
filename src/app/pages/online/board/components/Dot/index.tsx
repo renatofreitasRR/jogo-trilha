@@ -29,8 +29,8 @@ export default function Dot({ dot }: DotProps) {
             ${styles.dot_container}
             ${styles[dot.positions[0]]}
             ${styles[dot.positions[1]]}
-            ${playerTurn === firstPlayer?.connectionId ? styles.player_one : styles.player_two}
-            ${dot.has_piece && dot.player === firstPlayer?.connectionId ? styles.player_one_dot : dot.has_piece ? styles.player_two_dot : ''}
+            ${playerTurn === firstPlayer?.id ? styles.player_one : styles.player_two}
+            ${dot.has_piece && dot.player === firstPlayer?.id ? styles.player_one_dot : dot.has_piece ? styles.player_two_dot : ''}
             `}
             onClick={() => clickInDot(dot.id)}
             title='Botão'

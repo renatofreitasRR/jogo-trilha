@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from 'next/navigation'
-import { setLocalItem } from "@/app/utils/localStorage";
+import { setLocalItem } from "@/app/utils/sessionStorage";
 
 
 export default function ByPass() {

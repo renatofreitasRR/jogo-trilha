@@ -10,7 +10,7 @@ import { WebSocketProvider } from "../contexts/webSocketContext";
 import { useParams } from 'next/navigation';
 import { AwaitModal } from "../components/AwaitModal";
 import { ChakraProvider } from '@chakra-ui/react'
-import { getLocalItem } from "@/app/utils/localStorage";
+import { getLocalItem } from "@/app/utils/sessionStorage";
 
 export default function BoardOnline() {
 
@@ -55,7 +55,7 @@ export default function BoardOnline() {
                             <ChipAvailable player={2} />
                         </div>
                     </div>
-                    <AwaitModal />
+                    {/* <AwaitModal /> */}
                 </BoardProvider>
             </WebSocketProvider>
         </ChakraProvider>
