@@ -5,7 +5,6 @@ import { BoardProvider } from "../contexts/boardContext";
 import styles from './page.module.css';
 import ChipAvailable from "../components/ChipAside";
 import { PlayerTurn } from "../components/PlayerTurn";
-import { CountdownTimer } from "../components/Timer/CountdownTimer"
 import { WebSocketProvider } from "../contexts/webSocketContext";
 import { useParams } from 'next/navigation';
 import { AwaitModal } from "../components/AwaitModal";
@@ -25,7 +24,6 @@ export default function BoardOnline() {
                     <PlayerTurn />
                     <h1>Usuário: {getLocalItem("nome")}</h1>
                     <h1>Room {room}</h1>
-                    {/* <CountdownTimer /> */}
                     <div className={styles.page_content}>
                         <div className={styles.page_division}>
                             <ChipAvailable player={1} />
