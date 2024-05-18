@@ -101,7 +101,7 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
         console.log("JOINING ROOMM");
 
         const connect = new HubConnectionBuilder()
-            .withUrl("http://localhost:7194/game")
+            .withUrl(`${process.env.API_ROUTE}/game`)
             .configureLogging(LogLevel.Information)
             .build();
 
