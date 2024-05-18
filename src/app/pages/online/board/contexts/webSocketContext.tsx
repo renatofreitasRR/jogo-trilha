@@ -96,63 +96,69 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
     }
 
     async function joinRoom() {
-        closeConnection();
+        try {
+            closeConnection();
 
-        console.log("JOINING ROOMM");
+            console.log("JOINING ROOMM");
 
-        const connect = new HubConnectionBuilder()
-            .withUrl(`${process.env.API_ROUTE}/game`)
-            .configureLogging(LogLevel.Information)
-            .build();
+            const connect = new HubConnectionBuilder()
+                .withUrl(`${process.env.API_ROUTE}/game`)
+                .configureLogging(LogLevel.Information)
+                .build();
 
-        connect.on("ReceivedMessage", (states: BoardStates) => {
-            setAwaitTurn(false);
+            connect.on("ReceivedMessage", (states: BoardStates) => {
+                setAwaitTurn(false);
 
-            setBoardDots(states.boardDots);
-            setPlayerTurn(states.playerTurn);
-            setAwaitTurn(states.awaitTurn);
-            setCanStart(states.canStart);
-            setEatTime(states.eatTime);
-            setPlayerOneChipsAvailables(states.playerOneChipsAvailables);
-            setPlayerTwoChipsAvailables(states.playerTwoChipsAvailables);
-            setGameOver(states.gameOver);
+                setBoardDots(states.boardDots);
+                setPlayerTurn(states.playerTurn);
+                setAwaitTurn(states.awaitTurn);
+                setCanStart(states.canStart);
+                setEatTime(states.eatTime);
+                setPlayerOneChipsAvailables(states.playerOneChipsAvailables);
+                setPlayerTwoChipsAvailables(states.playerTwoChipsAvailables);
+                setGameOver(states.gameOver);
 
-        });
+            });
 
-        connect.on("Disconnect", (value: boolean) => {
-            // router.push('/pages/online/bypass');
-        });
+            connect.on("Disconnect", (value: boolean) => {
+                // router.push('/pages/online/bypass');
+            });
 
-        connect.on("Players", (result: Player[]) => {
-            if (result.length > 1) {
+            connect.on("Players", (result: Player[]) => {
+                if (result.length > 1) {
 
-                const one = result[0];
-                const two = result[1];
+                    const one = result[0];
+                    const two = result[1];
 
-                console.log("Players", result);
+                    console.log("Players", result);
 
-                setFirstPlayer(one);
-                setSecondPlayer(two);
+                    setFirstPlayer(one);
+                    setSecondPlayer(two);
 
-                setPlayerTurn(result[0].id ?? "")
+                    setPlayerTurn(result[0].id ?? "")
 
-                // if (connect?.connectionId == one.id)
-                // setAwaitTurn(false);
+                    // if (connect?.connectionId == one.id)
+                    // setAwaitTurn(false);
 
-                setCanStart(true);
-            }
-        });
+                    setCanStart(true);
+                }
+            });
 
-        connect.onclose(e => {
-            console.log("CLOSE");
-            setConnection(null);
-        });
+            connect.onclose(e => {
+                console.log("CLOSE");
+                setConnection(null);
+            });
 
-        const userNickName = getLocalItem("nome");
+            const userNickName = getLocalItem("nome");
 
-        await connect.start();
-        await connect.invoke("JoinRoom", { room, userNickName });
-        setConnection(connect);
+            await connect.start();
+            await connect.invoke("JoinRoom", { room, userNickName });
+            setConnection(connect);
+        }
+        catch (err: any) {
+            console.log("WEB SOCKET ERROR", err)
+        }
+
     }
 
     useEffect(() => {
