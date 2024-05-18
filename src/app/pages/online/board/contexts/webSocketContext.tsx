@@ -104,7 +104,7 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
             console.log("ROUTE", process.env.API_ROUTE);
 
             const connect = new HubConnectionBuilder()
-                .withUrl(`${process.env.API_ROUTE}/game`)
+                .withUrl(`${process.env.WEBSOCKET_ROUTE}/game`)
                 .configureLogging(LogLevel.Information)
                 .build();
 
