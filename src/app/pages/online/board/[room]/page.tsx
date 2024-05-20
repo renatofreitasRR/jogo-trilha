@@ -53,7 +53,7 @@ export default function BoardOnline() {
                             <ChipAvailable player={2} />
                         </div>
                     </div>
-                    {/* <AwaitModal /> */}
+                    <AwaitModal />
                 </BoardProvider>
             </WebSocketProvider>
         </ChakraProvider>

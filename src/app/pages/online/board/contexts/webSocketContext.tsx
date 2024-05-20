@@ -99,10 +99,6 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
         try {
             closeConnection();
 
-            console.log("JOINING ROOMM");
-
-            console.log("ROUTE", process.env.API_ROUTE);
-
             const connect = new HubConnectionBuilder()
                 .withUrl(`${process.env.WEBSOCKET_ROUTE}/game`)
                 .configureLogging(LogLevel.Information)
