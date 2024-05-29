@@ -8,7 +8,7 @@ const useCountdown = (changeTurn: () => void) => {
     useEffect(() => {
         if (countDown <= 0) {
             resetTimer();
-            // changeTurn();
+            changeTurn();
         }
         else {
             const interval = setInterval(() => {
