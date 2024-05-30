@@ -19,7 +19,7 @@ export default function ByPass() {
     return (
         <main>
             <section>
-                <h1>Bem vindo ao Jogo Trilha Online!</h1>
+                <h1>Bem vindo ao Jogo Trilha Online! dadasada</h1>
                 <form onSubmit={submitForm}>
                     <input
                         type="text"
