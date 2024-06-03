@@ -1,8 +1,147 @@
-.error_message{
-    color: red;
+.container{
+    background-image: url(../../../../public/assets/Background.png);
+    background-position: center;
+    background-size: cover;
+    width: 100vw;
+    height: 101vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    position: relative; 
 }
 
+.link{
+    cursor: pointer;
 
-.text_bold{
+    text-decoration: none;
+    color: black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+    font-size: 1rem;
+
+    width: 200px;
+    height: 50px;
+
+    outline: 0;
+
+    border-radius: 50px;
+    background: #66f56f;
+    box-shadow: inset 28px 28px 56px #57d05e,
+                inset -28px -28px 56px #75ff80;
+}
+
+.link_disabled{
+    cursor: not-allowed;
+
+    background: #dedede;
+    box-shadow: inset 28px 28px 56px #bdbdbd,
+            inset -28px -28px 56px #ffffff;
+}
+
+.link + .link{
+    margin-top: 10px;
+}
+
+.machine {
+    width: 100vw;
+    height: 101vh;
+    background-image: url(../../../../public/assets/Maquina.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
+.screen
+{
+    width: 37vw;
+    height: 30vh;
+    position: absolute;
+    top: 20%;
+    left: 51.5%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.menu
+{
+    width: 39vw;
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+/* Arte botão salvar aqui */
+.button_salvar
+{
+    height: 40px;
+    width: 30%;
+    background-color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-top: 20px;
+} 
+
+.button_salvar:hover
+{
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+/* Arte botão voltar aqui */
+.button_voltar
+{
+    height: 40px;
+    width: 30%;
+    background-color: white;
+    border-radius: 10px;
     font-weight: bold;
 }
+
+.button_voltar:hover
+{
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.input_cadastrar{
+    width: 80%;
+    height: 10%;
+    padding: 7px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+.label_cadastro{
+    font-weight: bold;
+    font-size: 25px;
+    padding: 10px;
+}
+
+.error_message {
+    color: white ;
+    font-size: 12px;
+    font-style: italic;
+    margin-top: 53.5px;
+    position: fixed;
+    width: 50%;
+    left: 25%;
+}
+
+.form_cadastro{
+    left: 15%;
+    margin-top: -35px;
+} 
