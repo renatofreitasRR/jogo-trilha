@@ -26,6 +26,7 @@ interface CadastroData {
   pcaurl: string;
 }
 
+//ToDo: teste
 const PecaCadastroSchema = z.object({
   pcanome: z.string().min(1, { message: "Nome da Peça é obrigatório" }),
   pcaurl: z.string().regex(/.*\.(jpg|gif|png|jpeg)$/, { message: "URL da Imagem inválida" }),
