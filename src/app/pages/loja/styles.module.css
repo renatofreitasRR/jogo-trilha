@@ -1,0 +1,263 @@
+
+
+#Conteiner {
+    background-image: url(img/Background.png);
+    background-position: center;
+    background-size: cover;
+    width: 100vw;
+    height: 101vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    position: relative; 
+}
+
+#Maquina {
+    width: 100vw;
+    height: 101vh;
+    background-image: url(img/Maquina.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
+#Tela
+{
+    width: 39vw;
+    height: 45vh;
+    position: absolute;
+    top: 52%;
+    left: 51.5%;
+    transform: translate(-50%, -50%);
+}
+
+#Login
+{
+    width: 4vw;
+    height: 4vw;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 0.3vw;
+    margin-top: 2vh;
+}
+
+#BotaoLogin
+{
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    background-image: url(img/registro.png);
+    background-size: cover;
+}
+
+#BotaoLogin:hover
+{
+    cursor: pointer;
+    background-image: url(img/registroPressionado.png);
+}
+
+#Menu
+{
+    width: 39vw;
+    height: 45vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#SaldoImg
+{
+        width: 9vw;
+        height: 3.5vw;
+        position: absolute;
+        top: -1vh;
+        right: 0.5vw;
+        margin-left: 0.6vw;
+        margin-top: 2vh;
+        background-image: url(img/Saldo.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+}
+
+#SaldoTxt
+{
+    position: absolute;
+    top: 60%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 3vh;
+    font-family: Game;
+    color: #FFB629;
+}
+
+@font-face {
+    font-family: Game;
+    src: url(/fonts/PressStart2P.ttf);
+  }
+  
+
+.BotaoMenu
+{
+    width: 11vw;
+    height: 4vw;
+    display: block;
+    position: relative;
+    background-color: transparent;
+    cursor: pointer;
+    margin-top: 2vh;
+    border: none;
+}
+
+#BotaoJogar
+{
+    background-image: url(img/Jogar.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#BotaoJogar:hover
+{
+    background-image: url(img/JogarSelecionado.png);
+}
+
+#BotaoRank
+{
+    background-image: url(img/Rank.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#BotaoRank:hover
+{
+    background-image: url(img/RankSelecionado.png);
+}
+
+#BotaoLoja
+{
+    background-image: url(img/Loja.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#BotaoLoja:hover
+{
+    background-image: url(img/LojaSelecionado.png);
+}
+
+#Voltar
+{
+    width: 3vw;
+    height: 3vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 0.6vw;
+    margin-top: 2vh;
+}
+
+#BotaoVoltar
+{
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    background-image: url(img/Voltar.png);
+    background-size: cover;
+    cursor: pointer;
+}
+
+#BotaoVoltar:hover
+{
+    background-image: url(img/VoltarSelecionado.png);
+}
+
+#BotaoPasse
+{
+    background-image: url(img/Passe.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#BotaoPasse:hover
+{
+    background-image: url(img/PasseSelecionado.png);
+}
+
+#BotaoItens:hover
+{
+    background-image: url(img/ItensSelecionado.png);
+}
+#BotaoItens
+{
+    background-image: url(img/Itens.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#Logo
+{
+    width: 28.2vw;
+    height: 13vh;
+    z-index: 9999;
+    position: fixed;
+    margin-left: 36.6%;
+    cursor: pointer;
+}
+
+#AreaPacotes
+{
+    width: 39vw;
+    height: 45vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Pacote
+{
+    margin-top: 7vh;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    height: 33vh;
+    width: 16vw;
+    background-image: url(img/PacoteJetsons.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+
+#Flinstones
+{
+    background-image: url(img/PacoteFlinstones.png);
+}
+
+#Flinstones:hover
+{
+    background-image: url(img/FlinstonesSelecionado.png);
+}
+
+#Jetsons
+{
+    background-image: url(img/PacoteJetsons.png);
+
+}
+
+#Jetsons:hover
+{
+    background-image: url(img/JetsonsSelecionado.png);
+}
