@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 import styles from '../../styles.module.css';
 
 const Loja: React.FC = () => {
@@ -6,11 +7,11 @@ const Loja: React.FC = () => {
 
     return (
         <>
-            
+
             {/*ARRUMAR O HREF AQUI, TEM QUE VOLTAR A PAGINA PRINCIPAL*/}
-            <a href="../../page.tsx">
+            <Link href="/">
                 <div id={styles["Logo"]}> </div>
-            </a> 
+            </Link>
 
             <div id={styles["Conteiner"]}>
                 <div id={styles["Maquina"]}>
@@ -18,25 +19,25 @@ const Loja: React.FC = () => {
 
                         {/*ARRUMAR O HREF AQUI, TEM QUE VOLTAR A PAGINA PRINCIPAL*/}
 
-                        <a href='../../page.tsx' id={styles["Voltar"]}>
+                        <Link href='../../page.tsx' id={styles["Voltar"]}>
                             <div id={styles["BotaoVoltar"]}>   </div>
-                        </a>
-                        
+                        </Link>
+
                         <div id={styles["SaldoImg"]}>
                             <div id={styles["SaldoTxt"]}>
                                 {/*AQUI VAI A FUNÇÃO QUE DEVE RETORNAR O SALDO NA CONTA DO USUÁRIO*/}
                                 {/*AQUI TAMBÉM PRECISA LINKAR COM A TELA DE SALDO, PRA UM HREF */}
-                                9999 
+                                9999
                             </div>
                         </div>
                         <div id={styles["AreaPacotes"]}>
-                            <a href="../../pages/jetsonsCompra">
+                            <Link href="../../pages/jetsonsCompra">
                                 <div className={styles.Pacote} id={styles["Jetsons"]}> </div>
-                            </a>
+                            </Link>
 
-                            <a href="../../pages/flinstonesCompra">
+                            <Link href="../../pages/flinstonesCompra">
                                 <div className={styles.Pacote} id={styles["Flinstones"]}> </div>
-                            </a>
+                            </Link>
                         </div>
 
 
