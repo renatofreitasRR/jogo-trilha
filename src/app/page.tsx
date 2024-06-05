@@ -16,7 +16,7 @@ export default function Home() {
               className={`${styles.button_rank} ${styles.button_menu}`}
             />
             <Link
-              href="#"
+              href="/pages/loja"
               className={`${styles.button_store} ${styles.button_menu}`}
             />
           </div>
