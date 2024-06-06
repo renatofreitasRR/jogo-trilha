@@ -17,9 +17,7 @@ const Loja: React.FC = () => {
                 <div id={styles["Maquina"]}>
                     <div id={styles["Tela"]}>
 
-                        {/*ARRUMAR O HREF AQUI, TEM QUE VOLTAR A PAGINA PRINCIPAL*/}
-
-                        <Link href='../../page.tsx' id={styles["Voltar"]}>
+                        <Link href='../../' id={styles["Voltar"]}>
                             <div id={styles["BotaoVoltar"]}>   </div>
                         </Link>
 
@@ -30,6 +28,7 @@ const Loja: React.FC = () => {
                                 9999
                             </div>
                         </div>
+                        
                         <div id={styles["AreaPacotes"]}>
                             <Link href="../../pages/jetsonsCompra">
                                 <div className={styles.Pacote} id={styles["Jetsons"]}> </div>
@@ -39,7 +38,6 @@ const Loja: React.FC = () => {
                                 <div className={styles.Pacote} id={styles["Flinstones"]}> </div>
                             </Link>
                         </div>
-
 
                     </div>
                 </div>

@@ -1,0 +1,7 @@
+.pacote_container{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+
+    margin-left: 18px;
+}

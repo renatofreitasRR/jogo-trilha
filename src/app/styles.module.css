@@ -250,6 +250,56 @@
     color: #FFB629;
 }
 
+#TextoSelecionePacote {
+    position: absolute;
+    top: 30%;
+    left: 2%;
+    text-align: center;
+    font-size: 2.2vh;
+    font-family: Game;
+    color: #FFB629;
+    background-image: url(../../public/assets/textBackground.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#TextoPacotesDisponiveis {
+    position: absolute;
+    top: 40%;
+    left: 2%;
+    text-align: center;
+    font-size: 2.2vh;
+    font-family: Game;
+    color: #FFB629;
+    background-image: url(../../public/assets/textBackground.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#IconePerfilFrame {
+    background-image: url(../../public/assets/frame.png);
+    position: absolute;
+    width: 10vw;
+    height: 4vw;
+    margin-top: 1vh;
+    left: 42.5%;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#IconePerfilFrameMenuInicial {
+    background-image: url(../../public/assets/frame.png);
+    position: absolute;
+    width: 10vw;
+    height: 4vw;
+    margin-top: 2vh;
+    margin-left: 2vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 @font-face {
     font-family: Game;
     src: url(../../public/fonts/PressStart2P.ttf);
