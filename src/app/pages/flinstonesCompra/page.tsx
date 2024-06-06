@@ -2,15 +2,15 @@
 import Link from 'next/link';
 import styles from '../../styles.module.css';
 
-const Perfil: React.FC = () => {
+const Flinstones: React.FC = () => {
 
 
     return (
         <>
-            <h1>Perfil</h1>
+            <h1>NOT IMPLEMENTED</h1>
         </>
     );
 };
 
-export default Perfil;
+export default Flinstones;
 

@@ -42,10 +42,9 @@ const Jetsons: React.FC = () => {
                         </div>
 
 
-                        <Link href='../../pages/Perfil'>
+                        <Link href='../../pages/perfil'>
                             <div id={styles["BotaoComprar"]}></div>
                             {/*AQUI VAI A FUNÇÃO QUE DEVE EFETUAR A COMPRA*/}
-                            {/*AQUI TAMBÉM PRECISA LINKAR COM A TELA DE PERFIL, PRA UM HREF */}
                         </Link>
 
 
