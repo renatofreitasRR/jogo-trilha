@@ -1,6 +1,6 @@
 .dot_container{
-    width: 47px;
-    height: 47px;
+    width: 50px;
+    height: 50px;
 
     display: flex;
     align-items: center;
@@ -8,13 +8,32 @@
 
     position: absolute;
 
-    background: linear-gradient(145deg, #CACCCF, #FFFFFF);
-    border-radius: 100%;
-    box-shadow: 9.91px 9.91px 15px #D9DADE, -9.91px -9.91px 15px #FFFFFF;
+    /* background: linear-gradient(145deg, #CACCCF, #FFFFFF); */
+    /* border-radius: 100%; */
+    /* box-shadow: 9.91px 9.91px 15px #D9DADE, -9.91px -9.91px 15px #FFFFFF; */
 
     z-index: 100;
 
     border: 0;
+}
+
+.dot_image{
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.dot_image_gray{
+    background-image: url('../../../../../../public/assets/dot/gray_circle.svg');
+}
+
+.dot_image_blue{
+    background-image: url('../../../../../../public/assets/dot/blue_circle.svg')!important;
+}
+
+.dot_image_red{
+    background-image: url('../../../../../../public/assets/dot/red_circle.svg')!important;
 }
 
 .player_one:hover{
@@ -27,17 +46,6 @@
     cursor: pointer;
     /* box-shadow: inset 9.91px 9.91px 15px #d45e5e, inset -9.91px -9.91px 15px #fe7070;
     background: linear-gradient(145deg, #ff7a7a, #bd5454); */
-}
-
-
-.player_one_dot{
-    box-shadow: inset 9.91px 9.91px 15px #775ED4, inset -9.91px -9.91px 15px #8F70FE;
-    background: linear-gradient(145deg, #9C7AFF, #6A54BD);
-}
-
-.player_two_dot{
-    box-shadow: inset 9.91px 9.91px 15px #d45e5e, inset -9.91px -9.91px 15px #fe7070;
-    background: linear-gradient(145deg, #ff7a7a, #bd5454);
 }
 
 

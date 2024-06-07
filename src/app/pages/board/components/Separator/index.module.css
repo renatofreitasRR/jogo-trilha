@@ -1,7 +1,7 @@
 .separator_container{
     position: absolute;
 
-    border: 1px solid black;
+    border: 2px solid black;
     width: 100%;
     max-width: 163px;
     z-index: 10;

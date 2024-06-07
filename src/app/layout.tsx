@@ -1,8 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import type { Metadata } from "next";
-import { Roboto } from 'next/font/google'
+import { Press_Start_2P } from 'next/font/google'
 
-const roboto = Roboto({
+const pressStart = Press_Start_2P({
   weight: '400',
   subsets: ['latin'],
 })
@@ -24,7 +24,7 @@ export default function RootLayout({
           margin: 0,
           padding: 0,
         }}
-        className={roboto.className}
+        className={pressStart.className}
       >
         <App>
           {children}
