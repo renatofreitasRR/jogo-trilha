@@ -2,11 +2,6 @@ import PerfilFrame from './pages/perfil/components/perfilFrame';
 import styles from './styles.module.css';
 import Link from 'next/link'
 
-export function getUrlIconePefil() {
-  //ToDo: Implementar pegar do banco a url do ícone do perfil do usuário
-  return 'https://img.lovepik.com/png/20231028/Cartoon-cute-pixel-style-art-dog-Pixel-puppy-Yellow-dog_383168_wh860.png'; //Mockado
-}
-
 export default function Home() {
   return (
     <main className={styles.container}>
@@ -14,7 +9,7 @@ export default function Home() {
         <div className={styles.screen}>
           <div id={styles["IconePerfilFrameMenuInicial"]}>
             <Link href="/pages/perfil">
-              <PerfilFrame url={getUrlIconePefil()}>
+              <PerfilFrame url={'https://img.lovepik.com/png/20231028/Cartoon-cute-pixel-style-art-dog-Pixel-puppy-Yellow-dog_383168_wh860.png'}>
               </PerfilFrame>
             </Link>
           </div>

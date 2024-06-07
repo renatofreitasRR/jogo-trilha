@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import styles from '../../styles.module.css';
 import SelecaoPacote from './components/selecaoPacote';
 import PerfilFrame from './components/perfilFrame';
-import { getUrlIconePefil } from '@/app/page';
 
 const Perfil: React.FC = () => {
     var [pacotesDisponiveis, setPacotesDisponiveis] = useState(["jetsons", "flinstones"]); //Mockado
@@ -58,7 +57,7 @@ const Perfil: React.FC = () => {
                         </div>
 
                         <div id={styles["IconePerfilFrame"]}>
-                            <PerfilFrame url={getUrlIconePefil()}>
+                            <PerfilFrame url={'https://img.lovepik.com/png/20231028/Cartoon-cute-pixel-style-art-dog-Pixel-puppy-Yellow-dog_383168_wh860.png'}>
                             </PerfilFrame>
                         </div>
 
