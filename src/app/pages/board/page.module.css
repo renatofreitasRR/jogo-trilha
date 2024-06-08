@@ -4,7 +4,8 @@
 }
 
 .page_content::before{
-    background-image: url('../../../../public/assets/background/1311265.png');
+    /* background-image: transparent url('../../../../public/assets/background/1311265.png'); */
+    background-image: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), url('../../../../public/assets/background/1311265.png');
     content: "";
     background-position: 100%;
     background-repeat: no-repeat;
@@ -14,7 +15,6 @@
     right: 0px;
     bottom: 0px;
     left: 0px;
-    opacity: 0.6;
 }
 
 .page_division{

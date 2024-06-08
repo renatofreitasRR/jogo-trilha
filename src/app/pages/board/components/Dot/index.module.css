@@ -8,17 +8,12 @@
 
     position: absolute;
 
-    /* background: linear-gradient(145deg, #CACCCF, #FFFFFF); */
-    /* border-radius: 100%; */
-    /* box-shadow: 9.91px 9.91px 15px #D9DADE, -9.91px -9.91px 15px #FFFFFF; */
-
     z-index: 100;
 
     border: 0;
 }
 
 .dot_image{
-    
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

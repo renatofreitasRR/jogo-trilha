@@ -6,10 +6,11 @@ import styles from './page.module.css';
 import ChipAvailable from "./components/ChipAside";
 import { PlayerTurn } from "./components/PlayerTurn";
 import { CountdownTimer } from "./components/Timer/CountdownTimer"
+import { useState, useEffect, useRef } from "react";
 
 export default function Board() {
     return (
-        <div className={styles.page_background}>
+        <div>
             <BoardProvider>
                 <PlayerTurn />
                 <CountdownTimer />
@@ -41,6 +42,11 @@ export default function Board() {
                         </main>
                         <ChipAvailable player={2} />
                     </div>
+                    <audio
+                        muted
+                        src='/sounds/play.mp3'
+                        controls
+                    />
                 </div>
             </BoardProvider>
         </div>

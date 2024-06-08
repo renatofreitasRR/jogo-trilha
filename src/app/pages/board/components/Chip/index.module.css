@@ -1,19 +1,19 @@
 .chip_container{
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 100%;
+    z-index: 100;
     border: 0;
 }
 
 .chip_image{
     background-position: center;
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
 }
 
 .chip_image_blue{

@@ -23,6 +23,8 @@ export default function RootLayout({
         style={{
           margin: 0,
           padding: 0,
+          width: "100vw",
+          height: "100vh"
         }}
         className={pressStart.className}
       >

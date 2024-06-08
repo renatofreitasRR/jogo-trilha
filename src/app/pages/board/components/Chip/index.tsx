@@ -12,6 +12,7 @@ export default function Chip({ player }: ChipProps) {
             type='button'
             title='chip'
             className={`
+                ${styles.chip_image}
                 ${styles.chip_container}
                 ${player == 1 ? styles.chip_image_blue : styles.chip_image_red}
             `}
