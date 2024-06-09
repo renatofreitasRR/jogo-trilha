@@ -4,8 +4,7 @@
 }
 
 .page_content::before{
-    /* background-image: transparent url('../../../../public/assets/background/1311265.png'); */
-    background-image: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), url('../../../../public/assets/background/1311265.png');
+    background-image: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.1)), url('../../../../public/assets/background/1311265.png');
     content: "";
     background-position: 100%;
     background-repeat: no-repeat;

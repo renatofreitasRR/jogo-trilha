@@ -12,7 +12,7 @@ export function PlayerTurn() {
 
     return (
         <div className={styles.player_turn}>
-            <h2>Turno Jogador {playerTurn == firstPlayer?.id ? firstPlayer.userNickName : secondPlayer?.userNickName}</h2>
+            <h2 className={styles.player_name}>Turno Jogador {playerTurn == firstPlayer?.id ? firstPlayer.userNickName : secondPlayer?.userNickName}</h2>
             <Chip playerColor={playerTurn == firstPlayer?.id ? "blue" : "red"} />
         </div>
     )

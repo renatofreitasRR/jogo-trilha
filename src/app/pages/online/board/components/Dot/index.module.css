@@ -8,13 +8,31 @@
 
     position: absolute;
 
-    background: linear-gradient(145deg, #CACCCF, #FFFFFF);
+    /* background: linear-gradient(145deg, #CACCCF, #FFFFFF);
     border-radius: 100%;
-    box-shadow: 9.91px 9.91px 15px #D9DADE, -9.91px -9.91px 15px #FFFFFF;
+    box-shadow: 9.91px 9.91px 15px #D9DADE, -9.91px -9.91px 15px #FFFFFF; */
 
     z-index: 100;
 
     border: 0;
+}
+
+.dot_image{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.dot_image_gray{
+    background-image: url('../../../../../../../public/assets/dot/gray_circle.svg');
+}
+
+.dot_image_blue{
+    background-image: url('../../../../../../../public/assets/dot/blue_circle.svg')!important;
+}
+
+.dot_image_red{
+    background-image: url('../../../../../../../public/assets/dot/red_circle.svg')!important;
 }
 
 .player_one:hover{

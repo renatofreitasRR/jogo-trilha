@@ -22,7 +22,7 @@ export default function BoardOnline() {
             <WebSocketProvider>
                 <BoardProvider>
                     <PlayerTurn />
-                    <h1>Usuário: {getLocalItem("nome")}</h1>
+                    <h1 className={styles.user}>Usuário: {getLocalItem("nome")}</h1>
                     <h1>Room {room}</h1>
                     <div className={styles.page_content}>
                         <div className={styles.page_division}>
@@ -52,6 +52,11 @@ export default function BoardOnline() {
                             </main>
                             <ChipAvailable player={2} />
                         </div>
+                        <audio
+                            muted
+                            src='/sounds/play.mp3'
+                            controls
+                        />
                     </div>
                     <AwaitModal />
                 </BoardProvider>

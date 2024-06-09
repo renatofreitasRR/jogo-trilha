@@ -30,9 +30,8 @@ export default function ChipAvailable({ player }: ChipAvailableProps) {
 
     return (
         <aside className={styles.chips_container}>
-            <h2>Jogador Nº {player}</h2>
             {getChips().map((_, index) => (
-                <Chip playerColor={player == 1 ? 'red' : 'blue'} key={index} />
+                <Chip playerColor={player == 1 ? 'blue' : 'red'} key={index} />
             ))}
         </aside>
     );

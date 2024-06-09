@@ -19,7 +19,10 @@ export default function Chip({ playerColor }: ChipProps) {
             type='button'
             className={`
                 ${styles.chip_container}
-                ${playerColor == 'blue' ? styles.chip_player_one : styles.chip_player_two}
+
+                ${styles.chip_image}
+                ${styles.chip_container}
+                ${playerColor == 'blue' ? styles.chip_image_blue : styles.chip_image_red}
             `}
         >
             <div>

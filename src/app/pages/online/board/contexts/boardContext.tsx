@@ -183,6 +183,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
         let currentDots = boardDots;
         let currentEatTime = eatTime;
         let currentPlayerTurn = playerTurn;
+        let currentPlayerOneChipsAvailable = playerOneChipsAvailables;
+        let currentPlayerTwoChipsAvailable = playerTwoChipsAvailables;
 
         if (connection?.connectionId != playerTurn)
             return;
@@ -197,8 +199,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
             canStart: true,
             eatTime: false,
             gameOver: false,
-            playerOneChipsAvailables: playerOneChipsAvailables,
-            playerTwoChipsAvailables: playerTwoChipsAvailables,
+            playerOneChipsAvailables: currentPlayerOneChipsAvailable,
+            playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
             playerTurn: currentPlayerTurn
         });
 
@@ -270,7 +272,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
 
 
-        if (GameRules.canChangeToLevelTwo(playerOneChipsAvailables, playerTwoChipsAvailables, level))
+        if (GameRules.canChangeToLevelTwo(currentPlayerOneChipsAvailable, currentPlayerTwoChipsAvailable, level))
             setLevels(2);
 
         if (level === 2) {
@@ -350,16 +352,18 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         //LVL 1
 
-        if (GameRules.canPutDot(playerTurn, dotClicked, playerOneChipsAvailables, playerTwoChipsAvailables, currentEatTime, firstPlayer as Player, secondPlayer as Player) === false)
+        if (GameRules.canPutDot(playerTurn, dotClicked, currentPlayerOneChipsAvailable, currentPlayerTwoChipsAvailable, currentEatTime, firstPlayer as Player, secondPlayer as Player) === false)
             return;
 
         const isPlayerOne = currentPlayerTurn == firstPlayer?.id;
 
         if (isPlayerOne) {
-            setPlayerOneChipsAvailables(playerOneChipsAvailables - 1);
+            currentPlayerOneChipsAvailable = currentPlayerOneChipsAvailable - 1;
+            setPlayerOneChipsAvailables(currentPlayerOneChipsAvailable - 1);
         }
         else {
-            setPlayerTwoChipsAvailables(playerTwoChipsAvailables - 1);
+            currentPlayerTwoChipsAvailable = currentPlayerTwoChipsAvailable - 1;
+            setPlayerTwoChipsAvailables(currentPlayerTwoChipsAvailable - 1);
         }
 
         currentDots = currentDots.map(dot => {
@@ -383,8 +387,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 canStart: true,
                 eatTime: true,
                 gameOver: true,
-                playerOneChipsAvailables: playerOneChipsAvailables,
-                playerTwoChipsAvailables: playerTwoChipsAvailables,
+                playerOneChipsAvailables: currentPlayerOneChipsAvailable,
+                playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
                 playerTurn: currentPlayerTurn
             });
 
@@ -399,8 +403,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
             canStart: true,
             eatTime: currentEatTime,
             gameOver: true,
-            playerOneChipsAvailables: playerOneChipsAvailables,
-            playerTwoChipsAvailables: playerTwoChipsAvailables,
+            playerOneChipsAvailables: currentPlayerOneChipsAvailable,
+            playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
             playerTurn: currentPlayerTurn
         });
     }

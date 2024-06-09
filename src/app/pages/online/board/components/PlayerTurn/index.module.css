@@ -2,8 +2,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    z-index: 1000;
 }
 
 .player_turn h2{
     margin-right: 8px;
+}
+
+.player_name{
+    z-index: 1000;
 }
