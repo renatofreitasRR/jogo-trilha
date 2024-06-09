@@ -14,23 +14,12 @@ export default function Dot({ dot }: DotProps) {
         playerTurn
     } = useContext(BoardContext);
 
-    let audio = new Audio('/sounds/click.wav');
-
-    // const audioRef: any = useRef();
-
-    const play = () => {
-        audio.play()
-    }
-
-    function selectDot(id: string) {
-        clickInDot(id);
-        play();
-    }
-
-
     return (
-        <>
+        <div
+            onClick={() => clickInDot(dot.id)}
+        >
             <button
+                type='button'
                 className={`
                 ${styles.dot_image}
                 ${styles.dot_image_gray}
@@ -41,13 +30,13 @@ export default function Dot({ dot }: DotProps) {
                 ${playerTurn === 1 ? styles.player_one : styles.player_two}
                 ${dot.has_piece && dot.player === 1 ? styles.dot_image_blue : dot.has_piece ? styles.dot_image_red : ''}
                 `}
-                onClick={() => selectDot(dot.id)}
+
                 title='Botão'
             >
                 <div>
                     <strong>{dot.id}</strong>
                 </div>
             </button>
-        </>
+        </div>
     );
 }
