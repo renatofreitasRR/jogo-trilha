@@ -11,7 +11,7 @@ interface BoardContextProps {
     clickInDot: (dot_id: string) => void;
     boardDots: DotType[];
     playerTurn: string;
-    playerWin: 1 | 2 | undefined;
+    playerWin: string | undefined;
     playerOneChipsAvailables: number;
     playerTwoChipsAvailables: number;
     gameOver: boolean;
@@ -206,7 +206,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
             gameOver: false,
             playerOneChipsAvailables: currentPlayerOneChipsAvailable,
             playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
-            playerTurn: currentPlayerTurn
+            playerTurn: currentPlayerTurn,
+            playerWin: undefined
         });
 
         const dotClicked = getDot(dot_id, currentDots);
@@ -231,13 +232,14 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 gameOver: false,
                 playerOneChipsAvailables: currentPlayerOneChipsAvailable,
                 playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
-                playerTurn: currentPlayerTurn
+                playerTurn: currentPlayerTurn,
+                playerWin: undefined
             });
 
             if (level == 2 && gamePoints.gameOver(currentPlayerTurn, currentDots, firstPlayer as Player, secondPlayer as Player)) {
                 setGameOver(true);
 
-                alert(`Fim de Jogo, vitória do jogador ${currentPlayerTurn == firstPlayer?.id ? firstPlayer?.userNickName : secondPlayer?.userNickName} `);
+                setPlayerWin(currentPlayerTurn);
                 playWinAudio();
 
                 sendMessage({
@@ -248,7 +250,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                     gameOver: true,
                     playerOneChipsAvailables: currentPlayerOneChipsAvailable,
                     playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
-                    playerTurn: currentPlayerTurn
+                    playerTurn: currentPlayerTurn,
+                    playerWin: currentPlayerTurn
                 });
 
                 resetAll();
@@ -268,7 +271,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 gameOver: true,
                 playerOneChipsAvailables: currentPlayerOneChipsAvailable,
                 playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
-                playerTurn: currentPlayerTurn
+                playerTurn: currentPlayerTurn,
+                playerWin: undefined
             });
 
             return;
@@ -296,7 +300,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                     gameOver: true,
                     playerOneChipsAvailables: playerOneChipsAvailables,
                     playerTwoChipsAvailables: playerTwoChipsAvailables,
-                    playerTurn: currentPlayerTurn
+                    playerTurn: currentPlayerTurn,
+                    playerWin: undefined
                 });
 
                 setEatTime(currentEatTime);
@@ -323,7 +328,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                         gameOver: true,
                         playerOneChipsAvailables: playerOneChipsAvailables,
                         playerTwoChipsAvailables: playerTwoChipsAvailables,
-                        playerTurn: currentPlayerTurn
+                        playerTurn: currentPlayerTurn,
+                        playerWin: undefined
                     });
 
                     return;
@@ -341,7 +347,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                     gameOver: true,
                     playerOneChipsAvailables: playerOneChipsAvailables,
                     playerTwoChipsAvailables: playerTwoChipsAvailables,
-                    playerTurn: currentPlayerTurn
+                    playerTurn: currentPlayerTurn,
+                    playerWin: undefined
                 });
 
                 setEatTime(false);
@@ -395,7 +402,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 gameOver: true,
                 playerOneChipsAvailables: currentPlayerOneChipsAvailable,
                 playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
-                playerTurn: currentPlayerTurn
+                playerTurn: currentPlayerTurn,
+                playerWin: undefined
             });
 
             return;
@@ -411,7 +419,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
             gameOver: true,
             playerOneChipsAvailables: currentPlayerOneChipsAvailable,
             playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
-            playerTurn: currentPlayerTurn
+            playerTurn: currentPlayerTurn,
+            playerWin: undefined
         });
     }
 

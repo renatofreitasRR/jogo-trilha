@@ -10,6 +10,7 @@ import { Player } from "../interfaces/player";
 
 
 interface BoardStates {
+    playerWin: string | undefined;
     boardDots: DotType[];
     playerOneChipsAvailables: number;
     playerTwoChipsAvailables: number;
@@ -43,8 +44,8 @@ interface WebSocketContextProps {
     setEatTime: Dispatch<SetStateAction<boolean>>;
     gameOver: boolean;
     setGameOver: Dispatch<SetStateAction<boolean>>;
-    playerWin: 1 | 2 | undefined;
-    setPlayerWin: Dispatch<SetStateAction<1 | 2 | undefined>>;
+    playerWin: string | undefined;
+    setPlayerWin: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const WebSocketContext = createContext({} as WebSocketContextProps);
@@ -62,7 +63,7 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
     const [secondPlayer, setSecondPlayer] = useState<Player | undefined>(undefined);
     const [canStart, setCanStart] = useState(false);
     const [awaitTurn, setAwaitTurn] = useState(false);
-    const [playerWin, setPlayerWin] = useState<1 | 2 | undefined>(undefined);
+    const [playerWin, setPlayerWin] = useState<string | undefined>(undefined);
     const [currentDotClicked, setCurrentDotClicked] = useState<string | undefined>(undefined);
     const [level, setLevels] = useState<1 | 2 | 3>(1);
     const [playerOneChipsAvailables, setPlayerOneChipsAvailables] = useState(9);
@@ -115,6 +116,7 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
                 setPlayerOneChipsAvailables(states.playerOneChipsAvailables);
                 setPlayerTwoChipsAvailables(states.playerTwoChipsAvailables);
                 setGameOver(states.gameOver);
+                setPlayerWin(states.playerWin);
 
             });
 

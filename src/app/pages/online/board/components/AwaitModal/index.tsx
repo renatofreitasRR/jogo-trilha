@@ -6,8 +6,6 @@ export function AwaitModal() {
     const { onClose } = useDisclosure()
     const { canStart } = useContext(WebSocketContext);
 
-    console.log("CAN START", canStart);
-
     return (
         <>
             <Modal

@@ -10,6 +10,8 @@ import { useParams } from 'next/navigation';
 import { AwaitModal } from "../components/AwaitModal";
 import { ChakraProvider } from '@chakra-ui/react'
 import { getLocalItem } from "@/app/utils/sessionStorage";
+import { WinModal } from "../components/WinModal";
+import { LoseModal } from "../components/LoseModal";
 
 export default function BoardOnline() {
 
@@ -59,6 +61,8 @@ export default function BoardOnline() {
                         />
                     </div>
                     <AwaitModal />
+                    <WinModal />
+                    <LoseModal />
                 </BoardProvider>
             </WebSocketProvider>
         </ChakraProvider>
