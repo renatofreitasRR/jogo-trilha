@@ -290,8 +290,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
             }
         });
 
-        console.log("CHEGOU ATÉ O AUDIO");
-
         playClickAudio();
 
         if (gamePoints.rowCombined(dotClicked, playerTurn, currentDots, getDot)) {

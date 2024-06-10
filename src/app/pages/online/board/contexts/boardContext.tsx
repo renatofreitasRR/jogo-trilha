@@ -5,6 +5,7 @@ import { GamePoints } from '../services/gamePoints';
 import { useCountdown } from '../hooks/useCountdown';
 import { WebSocketContext } from './webSocketContext';
 import { Player } from '../interfaces/player';
+import { useAudio } from '@/app/shared/hooks/useAudio';
 
 interface BoardContextProps {
     clickInDot: (dot_id: string) => void;
@@ -50,6 +51,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
         playerWin,
         setPlayerWin
     } = useContext(WebSocketContext);
+
+    const { playBlockAudio, playClickAudio, playEatAudio, playLoseAudio, playMoveAudio, playWinAudio } = useAudio();
 
 
     function resetAll() {
@@ -162,6 +165,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
             }
         });
 
+        playMoveAudio();
+
         return dots;
     }
 
@@ -175,6 +180,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
             }
         });
 
+        playEatAudio();
+
         return result;
     }
 
@@ -186,12 +193,10 @@ export function BoardProvider({ children }: BoardProviderProps) {
         let currentPlayerOneChipsAvailable = playerOneChipsAvailables;
         let currentPlayerTwoChipsAvailable = playerTwoChipsAvailables;
 
-        if (connection?.connectionId != playerTurn)
+        if (connection?.connectionId != playerTurn) {
+            playBlockAudio();
             return;
-
-        //TO DO
-        // if (currentPlayer != playerTurn)
-        //     return;
+        }
 
         sendMessage({
             boardDots: currentDots,
@@ -224,17 +229,16 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 canStart: true,
                 eatTime: currentEatTime,
                 gameOver: false,
-                playerOneChipsAvailables: playerOneChipsAvailables,
-                playerTwoChipsAvailables: playerTwoChipsAvailables,
+                playerOneChipsAvailables: currentPlayerOneChipsAvailable,
+                playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
                 playerTurn: currentPlayerTurn
             });
 
             if (level == 2 && gamePoints.gameOver(currentPlayerTurn, currentDots, firstPlayer as Player, secondPlayer as Player)) {
                 setGameOver(true);
 
-                //TO DO
-                setPlayerWin(1);
-                alert(`Fim de Jogo, vitória do jogador ${currentPlayerTurn}`);
+                alert(`Fim de Jogo, vitória do jogador ${currentPlayerTurn == firstPlayer?.id ? firstPlayer?.userNickName : secondPlayer?.userNickName} `);
+                playWinAudio();
 
                 sendMessage({
                     boardDots: currentDots,
@@ -242,8 +246,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                     canStart: true,
                     eatTime: currentEatTime,
                     gameOver: true,
-                    playerOneChipsAvailables: playerOneChipsAvailables,
-                    playerTwoChipsAvailables: playerTwoChipsAvailables,
+                    playerOneChipsAvailables: currentPlayerOneChipsAvailable,
+                    playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
                     playerTurn: currentPlayerTurn
                 });
 
@@ -262,8 +266,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 canStart: true,
                 eatTime: currentEatTime,
                 gameOver: true,
-                playerOneChipsAvailables: playerOneChipsAvailables,
-                playerTwoChipsAvailables: playerTwoChipsAvailables,
+                playerOneChipsAvailables: currentPlayerOneChipsAvailable,
+                playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
                 playerTurn: currentPlayerTurn
             });
 
@@ -278,8 +282,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
         if (level === 2) {
 
             if (GameRules.canBlink(dotClicked, currentPlayerTurn)) {
-
-
 
                 currentDots = resetBlink(currentDots);
                 currentDots = blinkNeighbourhoods(dotClicked, currentDots);
@@ -352,8 +354,10 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         //LVL 1
 
-        if (GameRules.canPutDot(playerTurn, dotClicked, currentPlayerOneChipsAvailable, currentPlayerTwoChipsAvailable, currentEatTime, firstPlayer as Player, secondPlayer as Player) === false)
+        if (GameRules.canPutDot(playerTurn, dotClicked, currentPlayerOneChipsAvailable, currentPlayerTwoChipsAvailable, currentEatTime, firstPlayer as Player, secondPlayer as Player) === false) {
+            playBlockAudio();
             return;
+        }
 
         const isPlayerOne = currentPlayerTurn == firstPlayer?.id;
 
@@ -373,6 +377,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 return dot;
             }
         });
+
+        playClickAudio();
 
         if (gamePoints.rowCombined(dotClicked, currentPlayerTurn, currentDots, getDot)) {
 
