@@ -8,11 +8,13 @@ import { WebSocketContext } from "../../contexts/webSocketContext";
 //to do
 export function PlayerTurn() {
 
-    const { playerTurn, firstPlayer, secondPlayer } = useContext(WebSocketContext);
+    const { playerTurn, firstPlayer, secondPlayer, connection } = useContext(WebSocketContext);
 
     return (
         <div className={styles.player_turn}>
-            <h2 className={styles.player_name}>Turno Jogador {playerTurn == firstPlayer?.id ? firstPlayer.userNickName : secondPlayer?.userNickName}</h2>
+            <h2 className={styles.player_name}>
+                {playerTurn == connection?.connectionId ? "Sua vez" : "Vez do adversário"}
+            </h2>
             <Chip playerColor={playerTurn == firstPlayer?.id ? "blue" : "red"} />
         </div>
     )
