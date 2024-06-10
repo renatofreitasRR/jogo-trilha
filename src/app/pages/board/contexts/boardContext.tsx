@@ -4,7 +4,7 @@ import dots_json from "../../../../../data/data.json";
 import { GameRules } from '../services/gameRules';
 import { GamePoints } from '../services/gamePoints';
 import { useCountdown } from '../hooks/useCountdown';
-import { GameAudio } from '../services/gameSounds';
+import { useAudio } from '../../../shared/hooks/useAudio';
 
 interface BoardContextProps {
     resetTimer: () => void;
@@ -37,7 +37,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
     const [eatTime, setEatTime] = useState(false);
     const [gameOver, setGameOver] = useState(false);
     const { resetTimer, seconds } = useCountdown(changeTurn);
-    const audio = new GameAudio();
+    const { playBlockAudio, playClickAudio, playEatAudio, playLoseAudio, playMoveAudio, playWinAudio } = useAudio();
 
     function loadDots() {
         const dots_data = dots_json;
@@ -167,6 +167,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
             }
         });
 
+        playMoveAudio();
+
         return dots;
     }
 
@@ -180,7 +182,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
             }
         });
 
-        audio.eatAudio();
+        playEatAudio();
 
         return result;
     }
@@ -189,7 +191,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
     function clickInDot(dot_id: string) {
         let currentDots = boardDots;
         let currentEatTime = eatTime;
-
 
         const dotClicked = getDot(dot_id, currentDots);
         const gamePoints = new GamePoints();
@@ -208,6 +209,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 setGameOver(true);
                 setPlayerWin(playerTurn);
                 alert(`Fim de Jogo, vitória do jogador ${playerTurn}`);
+
+                playWinAudio();
 
                 resetAll();
 
@@ -257,8 +260,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
                 setBoardDots(currentDots);
                 setEatTime(currentEatTime);
 
-                audio.moveAudio();
-
                 return;
 
             }
@@ -266,8 +267,11 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         //LVL 1
 
-        if (GameRules.canPutDot(playerTurn, dotClicked, playerOneChipsAvailables, playerTwoChipsAvailables, currentEatTime) === false)
+        if (GameRules.canPutDot(playerTurn, dotClicked, playerOneChipsAvailables, playerTwoChipsAvailables, currentEatTime) === false) {
+            playBlockAudio();
             return;
+
+        }
 
         const isPlayerOne = playerTurn === 1;
 
@@ -286,6 +290,10 @@ export function BoardProvider({ children }: BoardProviderProps) {
             }
         });
 
+        console.log("CHEGOU ATÉ O AUDIO");
+
+        playClickAudio();
+
         if (gamePoints.rowCombined(dotClicked, playerTurn, currentDots, getDot)) {
 
             currentDots = blinkDotsToEat(playerTurn, currentDots);
@@ -298,8 +306,6 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
         changeTurn();
         setBoardDots(currentDots);
-
-        audio.clickAudio();
     }
 
     useEffect(() => {
