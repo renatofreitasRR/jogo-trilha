@@ -108,6 +108,10 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
             connect.on("ReceivedMessage", (states: BoardStates) => {
                 setAwaitTurn(false);
 
+                if (states.gameOver == true) {
+                    console.log("PLAYER WIN GAME OVER", states.playerWin);
+                }
+
                 setBoardDots(states.boardDots);
                 setPlayerTurn(states.playerTurn);
                 setAwaitTurn(states.awaitTurn);

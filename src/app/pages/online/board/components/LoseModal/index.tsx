@@ -12,7 +12,7 @@ export function LoseModal() {
     return (
         <>
             <Modal
-                isOpen={playerWin != undefined && playerWin == connection?.connectionId}
+                isOpen={playerWin != undefined && playerWin != connection?.connectionId}
                 onClose={onClose}
                 closeOnOverlayClick={false}
                 closeOnEsc={false}

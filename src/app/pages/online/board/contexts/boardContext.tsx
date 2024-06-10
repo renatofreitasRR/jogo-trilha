@@ -193,6 +193,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
         let currentPlayerOneChipsAvailable = playerOneChipsAvailables;
         let currentPlayerTwoChipsAvailable = playerTwoChipsAvailables;
 
+        console.log("CONNECTION ID", connection?.connectionId)
+
         if (connection?.connectionId != playerTurn) {
             playBlockAudio();
             return;
@@ -237,9 +239,11 @@ export function BoardProvider({ children }: BoardProviderProps) {
             });
 
             if (level == 2 && gamePoints.gameOver(currentPlayerTurn, currentDots, firstPlayer as Player, secondPlayer as Player)) {
+
+                console.log("CONNECTION", connection?.connectionId)
+                setPlayerWin(connection?.connectionId);
                 setGameOver(true);
 
-                setPlayerWin(currentPlayerTurn);
                 playWinAudio();
 
                 sendMessage({
@@ -251,10 +255,10 @@ export function BoardProvider({ children }: BoardProviderProps) {
                     playerOneChipsAvailables: currentPlayerOneChipsAvailable,
                     playerTwoChipsAvailables: currentPlayerTwoChipsAvailable,
                     playerTurn: currentPlayerTurn,
-                    playerWin: currentPlayerTurn
+                    playerWin: connection?.connectionId,
                 });
 
-                resetAll();
+                // resetAll();
 
                 return;
             }
