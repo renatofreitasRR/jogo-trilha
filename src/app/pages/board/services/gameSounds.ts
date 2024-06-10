@@ -1,6 +1,5 @@
 
 export class GameAudio {
-    // let audio = new Audio('/sounds/click.wav');
     private _clickAudio: any;
     private _blockAudio: any;
     private _eatAudio: any;

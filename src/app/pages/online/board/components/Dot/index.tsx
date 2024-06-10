@@ -20,20 +20,6 @@ export default function Dot({ dot }: DotProps) {
         playerTurn
     } = useContext(WebSocketContext);
 
-    let audio = new Audio('/sounds/click.wav');
-
-    // const audioRef: any = useRef();
-
-    const play = () => {
-        audio.play()
-    }
-
-    function selectDot(id: string) {
-        clickInDot(id);
-        play();
-    }
-
-
     return (
         <button
             type='button'
@@ -47,7 +33,7 @@ export default function Dot({ dot }: DotProps) {
             ${playerTurn === firstPlayer?.id ? styles.player_one : styles.player_two}
             ${dot.has_piece && dot.player === firstPlayer?.id ? styles.dot_image_blue : dot.has_piece ? styles.dot_image_red : ''}
             `}
-            onClick={() => selectDot(dot.id)}
+            onClick={() => clickInDot(dot.id)}
             title='Botão'
         >
             <div>
