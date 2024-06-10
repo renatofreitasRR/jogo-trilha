@@ -9,6 +9,7 @@ const useAudio = () => {
     const [winAudio, setWinAudio] = useState<any>(null);
     const [loseAudio, setLoseAudio] = useState<any>(null);
     const [moveAudio, setMoveAudio] = useState<any>(null);
+    const [selectAudio, setSelectAudio] = useState<any>(null);
 
     useEffect(() => {
         setClickAudio(new Audio('/sounds/click.mp3'));
@@ -17,6 +18,7 @@ const useAudio = () => {
         setWinAudio(new Audio('/sounds/win.mp3'));
         setLoseAudio(new Audio('/sounds/lose.mp3'));
         setMoveAudio(new Audio('/sounds/move.mp3'));
+        setSelectAudio(new Audio('/sounds/select.mp3'));
     }, [])
 
     function playClickAudio() {
@@ -43,9 +45,13 @@ const useAudio = () => {
         moveAudio.play()
     }
 
+    function playSelectAudio() {
+        selectAudio.play()
+    }
 
 
-    return { playBlockAudio, playClickAudio, playEatAudio, playLoseAudio, playMoveAudio, playWinAudio };
+
+    return { playBlockAudio, playClickAudio, playEatAudio, playLoseAudio, playMoveAudio, playWinAudio, playSelectAudio };
 };
 
 export { useAudio };
