@@ -7,6 +7,7 @@ import { useCountdown } from '../hooks/useCountdown';
 import { useAudio } from '../../../shared/hooks/useAudio';
 
 interface BoardContextProps {
+    resetAll: () => void;
     resetTimer: () => void;
     changeTurn: () => void;
     clickInDot: (dot_id: string) => void;
@@ -71,6 +72,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
         setPlayerWin(undefined);
         setPlayerTurn(1);
         setGameOver(false);
+        resetTimer();
     }
 
     function resetBlink(current_dots: DotType[]): DotType[] {
@@ -208,11 +210,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
             if (level == 2 && gamePoints.gameOver(playerTurn, currentDots)) {
                 setGameOver(true);
                 setPlayerWin(playerTurn);
-                alert(`Fim de Jogo, vitória do jogador ${playerTurn}`);
 
                 playWinAudio();
-
-                resetAll();
 
                 return;
             }
@@ -323,7 +322,8 @@ export function BoardProvider({ children }: BoardProviderProps) {
                     turnTime: seconds,
                     clickInDot,
                     changeTurn,
-                    resetTimer
+                    resetTimer,
+                    resetAll
                 }}>
             {children}
         </BoardContext.Provider>

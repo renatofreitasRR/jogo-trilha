@@ -1,0 +1,407 @@
+.container{
+    background-image: url(../../../../public/assets/Background.png);
+    background-position: center;
+    background-size: cover;
+    width: 100vw;
+    height: 101vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    position: relative; 
+}
+
+.link{
+    cursor: pointer;
+
+    text-decoration: none;
+    color: black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+    font-size: 1rem;
+
+    width: 200px;
+    height: 50px;
+
+    outline: 0;
+
+    border-radius: 50px;
+    background: #66f56f;
+    box-shadow: inset 28px 28px 56px #57d05e,
+                inset -28px -28px 56px #75ff80;
+}
+
+.link_disabled{
+    cursor: not-allowed;
+
+    background: #dedede;
+    box-shadow: inset 28px 28px 56px #bdbdbd,
+            inset -28px -28px 56px #ffffff;
+}
+
+.link + .link{
+    margin-top: 10px;
+}
+
+.machine {
+    width: 100vw;
+    height: 101vh;
+    background-image: url(../../../../public/assets/Maquina.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
+.screen
+{
+    width: 39vw;
+    height: 45vh;
+    position: absolute;
+    top: 52%;
+    left: 51.5%;
+    transform: translate(-50%, -50%);
+}
+
+.button_login
+{
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    background-image: url(../../../../public/assets/registro.png);
+    background-size: cover;
+}
+
+.button_login:hover
+{
+    cursor: pointer;
+    background-image: url(../../../../public/assets/registroPressionado.png);
+}
+
+
+
+.menu
+{
+    width: 39vw;
+    height: 45vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button_menu
+{
+    width: 11vw;
+    height: 4vw;
+    display: block;
+    position: relative;
+    background-color: transparent;
+    cursor: pointer;
+    margin-top: 2vh;
+    border: none;
+}
+
+.button_play
+{
+    background-image: url(../../../../public/assets/Jogar.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.button_play:hover
+{
+    background-image: url(../../../../public/assets/JogarSelecionado.png);
+}
+
+.button_rank
+{
+    background-image: url(../../../../public/assets/Rank.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.button_rank:hover
+{
+    background-image: url(../../../../public/assets/RankSelecionado.png);
+}
+
+.button_store
+{
+    background-image: url(../../../../public/assets/Loja.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.button_store:hover
+{
+    background-image: url(../../../../public/assets/LojaSelecionado.png);
+}
+
+/* ALTERAÇÕES MARINHO */
+
+#Logo
+{
+    width: 28.2vw;
+    height: 13vh;
+    z-index: 9999;
+    position: fixed;
+    margin-left: 36.6%;
+    cursor: pointer;
+}
+
+#Conteiner {
+    background-image: url(../../../../public/assets/Background.png);
+    background-position: center;
+    background-size: cover;
+    width: 100vw;
+    height: 101vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    position: relative; 
+}
+
+#Maquina {
+    width: 100vw;
+    height: 101vh;
+    background-image: url(../../../../public/assets/Maquina.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+}
+
+#Tela
+{
+    width: 39vw;
+    height: 45vh;
+    position: absolute;
+    top: 52%;
+    left: 51.5%;
+    transform: translate(-50%, -50%);
+}
+
+#Voltar
+{
+    width: 3vw;
+    height: 3vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 0.6vw;
+    margin-top: 2vh;
+}
+
+
+#BotaoVoltar
+{
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    background-image: url(../../../../public/assets/Voltar.png);
+    background-size: cover;
+    cursor: pointer;
+}
+
+#BotaoVoltar:hover
+{
+    background-image: url(../../../../public/assets/VoltarSelecionado.png);
+}
+
+#SaldoImg
+{
+        width: 9vw;
+        height: 3.5vw;
+        position: absolute;
+        top: -1vh;
+        right: 0.5vw;
+        margin-left: 0.6vw;
+        margin-top: 2vh;
+        background-image: url(../../../../public/assets/Saldo.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+}
+
+#SaldoTxt
+{
+    position: absolute;
+    top: 60%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 3vh;
+    font-family: Game;
+    color: #FFB629;
+}
+
+#TextoSelecionePacote {
+    position: absolute;
+    top: 30%;
+    left: 2%;
+    text-align: center;
+    font-size: 2.2vh;
+    font-family: Game;
+    color: #FFB629;
+    background-image: url(../../../../public/assets/textBackground.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#TextoPacotesDisponiveis {
+    position: absolute;
+    top: 40%;
+    left: 2%;
+    text-align: center;
+    font-size: 2.2vh;
+    font-family: Game;
+    color: #FFB629;
+    background-image: url(../../../../public/assets/textBackground.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#IconePerfilFrame {
+    background-image: url(../../../../public/assets/frame.png);
+    position: absolute;
+    width: 10vw;
+    height: 4vw;
+    margin-top: 1vh;
+    left: 42.5%;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#IconePerfilFrameMenuInicial {
+    background-image: url(../../../../public/assets/frame.png);
+    position: absolute;
+    width: 10vw;
+    height: 4vw;
+    margin-top: 2vh;
+    margin-left: 2vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+@font-face {
+    font-family: Game;
+    src: url(../../../../public/fonts/PressStart2P.ttf);
+  }
+  
+  
+#AreaPacotes
+{
+    width: 39vw;
+    height: 45vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Pacote
+{
+    margin-top: 7vh;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    height: 33vh;
+    width: 16vw;
+    background-image: url(../../../../public/assets/PacoteJetsons.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+
+#Flinstones
+{
+    background-image: url(../../../../public/assets/PacoteFlinstones.png);
+}
+
+#Flinstones:hover
+{
+    background-image: url(../../../../public/assets/FlinstonesSelecionado.png);
+}
+
+#Jetsons
+{
+    background-image: url(../../../../public/assets/PacoteJetsons.png);
+
+}
+
+#Jetsons:hover
+{
+    background-image: url(../../../../public/assets/JetsonsSelecionado.png);
+}
+
+#ViewJetsons
+{
+    width: 36vw;
+    height: 35vh;
+    margin-top: 2vh;
+    margin-left: 1.5vw;
+    background-image: url(../../../../public/assets/ViewJetsons.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#BotaoComprar
+{
+    margin-top: -4vh;
+    width: 10vw;
+    height: 10vh;
+    background-image: url(../../../../public/assets/BotaoComprar.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin-left: 14.5vw;
+}
+
+#BotaoComprar:hover
+{
+    background-image: url(../../../../public/assets/BotaoComprarSelecionado.png);
+    cursor: pointer;
+}
+
+#ConfirmaCompra
+{
+    width: 29vw;
+    height: 35vh;
+    margin-top: 4vh;
+    margin-left: 6vw;
+    background-image: url(../../../../public/assets/ContaSaldoPosCompra.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#AreaConfirmacao
+{
+    width: 14vw;
+    height: 20vh;
+    position: absolute;
+    z-index: 9999;
+    color: #FFB629;
+    text-align: center;
+    font-size: 3vh;
+    font-family: Game;
+    margin-top: 7vh;
+    margin-left: 14.1vw;
+}

@@ -6,6 +6,7 @@ import styles from './page.module.css';
 import ChipAvailable from "./components/ChipAside";
 import { PlayerTurn } from "./components/PlayerTurn";
 import { CountdownTimer } from "./components/Timer/CountdownTimer"
+import { WinModal } from "./components/WinModal";
 
 export default function Board() {
     return (
@@ -47,6 +48,7 @@ export default function Board() {
                         controls
                     />
                 </div>
+                <WinModal />
             </BoardProvider>
         </div>
     );
