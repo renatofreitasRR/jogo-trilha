@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 
 export function WinModal() {
     const { onClose } = useDisclosure()
-    const { playerWin, connection } = useContext(WebSocketContext);
+    const { playerWin, connection, resetBoard } = useContext(WebSocketContext);
 
 
 
@@ -33,7 +33,9 @@ export function WinModal() {
                         <img src={"/assets/background/win.gif"} />
 
                         <div className={styles.buttons}>
-                            <button>
+                            <button
+                                onClick={resetBoard}
+                            >
                                 Jogar Novamente
                             </button>
 

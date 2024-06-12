@@ -30,6 +30,7 @@ interface WebSocketContextProps {
     setPlayerTurn: Dispatch<SetStateAction<string>>
     connection: HubConnection | null;
     awaitTurn: boolean;
+    resetBoard: () => void;
     boardDots: DotType[];
     loadDots: () => void;
     currentDotClicked: string | undefined;
@@ -74,26 +75,50 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
     const router = useRouter();
     const { room } = params;
 
+    const dots_data = dots_json;
+
+    const dots_in_layer_1_array: any[] = Object.entries(dots_data)
+        .filter(([key, value]) => value.layers.includes(1))
+        .map(([key, value]) => ({ id: key, main_layer: 1, ...value }));
+
+    const dots_in_layer_2_array: any[] = Object.entries(dots_data)
+        .filter(([key, value]) => value.layers.includes(2))
+        .map(([key, value]) => ({ id: key, main_layer: 2, ...value }));
+
+    const dots_in_layer_3_array: any[] = Object.entries(dots_data)
+        .filter(([key, value]) => value.layers.includes(3))
+        .map(([key, value]) => ({ id: key, main_layer: 3, ...value }));
+
+    const arrays_joined: DotType[] = dots_in_layer_1_array
+        .concat(dots_in_layer_2_array)
+        .concat(dots_in_layer_3_array)
+
     function loadDots() {
-        const dots_data = dots_json;
-
-        const dots_in_layer_1_array: any[] = Object.entries(dots_data)
-            .filter(([key, value]) => value.layers.includes(1))
-            .map(([key, value]) => ({ id: key, main_layer: 1, ...value }));
-
-        const dots_in_layer_2_array: any[] = Object.entries(dots_data)
-            .filter(([key, value]) => value.layers.includes(2))
-            .map(([key, value]) => ({ id: key, main_layer: 2, ...value }));
-
-        const dots_in_layer_3_array: any[] = Object.entries(dots_data)
-            .filter(([key, value]) => value.layers.includes(3))
-            .map(([key, value]) => ({ id: key, main_layer: 3, ...value }));
-
-        const arrays_joined: DotType[] = dots_in_layer_1_array
-            .concat(dots_in_layer_2_array)
-            .concat(dots_in_layer_3_array)
-
         setBoardDots(arrays_joined);
+    }
+
+    function resetBoard() {
+        loadDots();
+        setPlayerTurn(firstPlayer?.id ?? "");
+        setAwaitTurn(false);
+        setCanStart(true);
+        setEatTime(false);
+        setPlayerOneChipsAvailables(9);
+        setPlayerTwoChipsAvailables(9);
+        setGameOver(false);
+        setPlayerWin(undefined);
+
+        sendMessage({
+            awaitTurn: false,
+            boardDots: arrays_joined,
+            canStart: true,
+            eatTime: false,
+            gameOver: false,
+            playerOneChipsAvailables: 9,
+            playerTwoChipsAvailables: 9,
+            playerTurn: firstPlayer?.id ?? "",
+            playerWin: undefined
+        })
     }
 
     async function joinRoom() {
@@ -202,6 +227,7 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
                 setLevels,
                 setPlayerOneChipsAvailables,
                 setPlayerTwoChipsAvailables,
+                resetBoard,
                 awaitTurn,
                 canStart,
                 connection,
