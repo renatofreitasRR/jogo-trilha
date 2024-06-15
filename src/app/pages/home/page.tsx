@@ -17,11 +17,12 @@ export default function Home() {
 
   useEffect(() => {
     function getUser() {
-      const userString = window?.localStorage?.getItem("usuario");
+      const userString = window?.sessionStorage?.getItem("usuario");
 
       if (userString) {
         const userParsed = JSON.parse(userString);
         setUserName(userParsed.usrnome);
+
         return userParsed.usrnome;
       }
       else {
