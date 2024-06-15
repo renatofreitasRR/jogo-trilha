@@ -12,7 +12,7 @@ export default function Home() {
   const router = useRouter();
 
   function getUser() {
-    const userString = getLocalItem("usuario");
+    const userString = window?.localStorage?.getItem("usuario");
 
     if (userString) {
       const userParsed = JSON.parse(userString);
