@@ -31,6 +31,8 @@ export default function Home() {
 
       }
     }
+
+    getUser()
   }, [])
 
 
