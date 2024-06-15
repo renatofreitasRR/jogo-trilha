@@ -6,26 +6,32 @@ import PerfilFrame from '../perfil/components/perfilFrame';
 import styles from './styles.module.css';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
   const { playClickAudio } = useAudio();
+  const [userName, setUserName] = useState("");
   const router = useRouter();
 
-  function getUser() {
-    const userString = window?.localStorage?.getItem("usuario");
 
-    if (userString) {
-      const userParsed = JSON.parse(userString);
 
-      return userParsed.usrnome;
+  useEffect(() => {
+    function getUser() {
+      const userString = window?.localStorage?.getItem("usuario");
+
+      if (userString) {
+        const userParsed = JSON.parse(userString);
+        setUserName(userParsed.usrnome);
+        return userParsed.usrnome;
+      }
+      else {
+        router.push("/")
+
+        return ""
+
+      }
     }
-    else {
-      router.push("/")
-
-      return ""
-
-    }
-  }
+  }, [])
 
 
 
@@ -40,7 +46,7 @@ export default function Home() {
             </Link>
           </div>
           <div className={styles.menu}>
-            <h1>Bem vindo {getUser()} !</h1>
+            <h1>Bem vindo {userName} !</h1>
             <Link
               href="/pages/board"
               className={`${styles.button_play} ${styles.button_menu}`}
