@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import styles from '../../styles.module.css';
 import SelecaoPacote from './components/selecaoPacote';
 import PerfilFrame from './components/perfilFrame';
+import { api } from '@/app/services/api';
 
 const Perfil: React.FC = () => {
     var [pacotesDisponiveis, setPacotesDisponiveis] = useState(["jetsons", "flinstones"]); //Mockado
@@ -13,7 +14,7 @@ const Perfil: React.FC = () => {
     useEffect(() => {
         const fetchPacotesDisponiveis = async () => {
             try {
-                const response = await axios.get('/api/pacotesDisponiveis'); //ToDo: Substituir pelo endpoint da API que retorna os Pacotes Disponíveis do usuário
+                const response = await api.get('/usuario-tema/pacotesDisponiveis'); //ToDo: Substituir pelo endpoint da API que retorna os Pacotes Disponíveis do usuário
                 setPacotesDisponiveis(response.data);
             } catch (error) {
                 console.error('Erro ao buscar pacotes:', error);
@@ -22,7 +23,7 @@ const Perfil: React.FC = () => {
 
         const fetchPacoteAtual = async () => {
             try {
-                const response = await axios.get('/api/pacoteAtual'); //ToDo: Substituir pelo endpoint da API que retorna o Pacote Ativo do usuário
+                const response = await api.get('/api/pacoteAtual'); //ToDo: Substituir pelo endpoint da API que retorna o Pacote Ativo do usuário
                 setPacoteAtual(response.data);
             } catch (error) {
                 console.error('Erro ao buscar pacote atual:', error);

@@ -79,17 +79,27 @@
 .button_login
 {
     height: 40px;
-    width: 30%;
     background-color: white;
     border-radius: 10px;
-    position: relative;
     font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
 } 
 
 .button_login:hover
 {
     cursor: pointer;
     opacity: 0.5;
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
 }
 
 /* Arte botão cadastrar aqui */
@@ -110,30 +120,29 @@
 }
 
 .input_login{
-    width: 80%;
     height: 20%;
     padding: 8px;
     text-align: center;
     font-weight: bold;
-    margin-bottom: 30px;
+    margin-bottom: 8px;
     font-size: 15px;
     border-radius: 10px;
+}
+
+.form_login{
+    display: flex;
+    flex-direction: column;
 }
 
 .label_login{
     font-weight: bold;
     font-size: 25px;
-    padding: 105px;
     border-radius: 20px;
     position: relative;
 }
 
 .error_message {
-    color: white ;
+    color: rgb(255, 0, 0) ;
     font-size: 12px;
     font-style: italic;
-    margin-top: 45px;
-    position: fixed;
-    width: 50%;
-    left: 25%;
 }
