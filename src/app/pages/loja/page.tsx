@@ -1,14 +1,37 @@
 "use client";
 import Link from 'next/link';
 import styles from '../../styles.module.css';
+import { useState } from 'react';
+import Image from 'next/image';
 
 const Loja: React.FC = () => {
 
+    const [currentIcon, setCurrentIcon] = useState(0);
+
+    const icons = [
+        '/assets/Icon1.png',
+        '/assets/Icon2.png',
+        '/assets/Icon3.png',
+        '/assets/Icon4.png'
+    ];
+
+    const titles = [
+        'JETSONS',
+        'FLINTSTONES',
+        'SCOOBY-DOO',
+        'PAC-MAN'
+    ];
+
+    const handleIconChange = () => {
+        setCurrentIcon((prevIcon) => (prevIcon + 1) % icons.length);
+    };
+
+    const handleIconChangeBack = () => {
+        setCurrentIcon((prevIcon) => (prevIcon - 1 + icons.length) % icons.length);
+    };
 
     return (
         <>
-
-            {/*ARRUMAR O HREF AQUI, TEM QUE VOLTAR A PAGINA PRINCIPAL*/}
             <Link href="/">
                 <div id={styles["Logo"]}> </div>
             </Link>
@@ -18,34 +41,47 @@ const Loja: React.FC = () => {
                     <div id={styles["Tela"]}>
 
                         <Link href='../../' id={styles["Voltar"]}>
-                            <div id={styles["BotaoVoltar"]}>   </div>
+                            <div id={styles["BotaoVoltar"]}></div>
                         </Link>
 
                         <div id={styles["SaldoImg"]}>
                             <div id={styles["SaldoTxt"]}>
-                                {/*AQUI VAI A FUNÇÃO QUE DEVE RETORNAR O SALDO NA CONTA DO USUÁRIO*/}
-                                {/*AQUI TAMBÉM PRECISA LINKAR COM A TELA DE SALDO, PRA UM HREF */}
                                 9999
                             </div>
                         </div>
-                        
+                        <div id={styles["TituloTema"]}>
+                            {titles[currentIcon]}
+                        </div>
                         <div id={styles["AreaPacotes"]}>
-                            <Link href="../../pages/jetsonsCompra">
-                                <div className={styles.Pacote} id={styles["Jetsons"]}> </div>
-                            </Link>
+                            <div 
+                                id={styles["SetaMudaPacoteVolta"]}
+                                onClick={handleIconChangeBack}
+                            ></div>
+                            <div className={styles.Pacote}></div>
+                            <div 
+                                id={styles["IconeLoja"]}
+                            >
+                                <Image 
+                                    src={icons[currentIcon]} 
+                                    alt={`Icone ${currentIcon + 1}`}
+                                    layout="fill"
+                                    objectFit="contain"
+                                />
+                            </div>
+                            <div 
+                                id={styles["SetaMudaPacote"]}
+                                onClick={handleIconChange}
+                            ></div>
 
-                            <Link href="../../pages/flinstonesCompra">
-                                <div className={styles.Pacote} id={styles["Flinstones"]}> </div>
+                            <Link href={`../../pages/compra?icon=${currentIcon}`}>
+                                <div id={styles["BotaoComprarLoja"]}></div>
                             </Link>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </>
     );
 };
 
 export default Loja;
-
