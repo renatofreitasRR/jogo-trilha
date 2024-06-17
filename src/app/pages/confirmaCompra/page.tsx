@@ -8,7 +8,7 @@ const ConfirmaCompra: React.FC = () => {
     const [selectedTitle, setSelectedTitle] = useState('Titulo');
     const searchParams = useSearchParams();
 
-    const iconParam = searchParams.get('icon'); // RETORNA QUAL O ICON SELECIONADO NA LOJA
+    // const iconParam = searchParams.get('icon'); // RETORNA QUAL O ICON SELECIONADO NA LOJA
     //1 = JETSONS, 2= FLINSTONES, 3= SCOOBY-DOO, 4= PAC-MAN
 
     const titles = [
@@ -51,13 +51,13 @@ const ConfirmaCompra: React.FC = () => {
                                 <p>{selectedTitle}</p>
                             </div>
                             <div id={styles["AreaConfirmacao"]}>
-                                
+
                                 <div id={styles["AreaValorSaldo"]}>GETSALDO </div>
                                 {/* AQUI DEVE SER IMPLEMENTADA A FUNÇÃO QUE RECEBE QUANTO O USUARIO TEM NA CONTA */}
                                 -200 <br />
                                 ---- <br />
                                 <div id={styles["AreaSaldoPosCompra"]}>FIMSALDO</div>
-                                 
+
                             </div>
                         </div>
 
