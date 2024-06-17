@@ -49,7 +49,7 @@ const Compra: React.FC = () => {
     }, [searchParams]);
 
     return (
-        <Suspense>
+        <>
             <Link href="/">
                 <div id={styles["Logo"]}></div>
             </Link>
@@ -85,7 +85,7 @@ const Compra: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </Suspense>
+        </>
     );
 };
 
