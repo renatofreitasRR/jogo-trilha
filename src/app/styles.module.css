@@ -317,18 +317,94 @@
 
 .Pacote
 {
-    margin-top: 7vh;
     margin-left: 1vw;
     margin-right: 1vw;
     height: 33vh;
     width: 16vw;
-    background-image: url(../../public/assets/PacoteJetsons.png);
+    background-image: url(../../public/assets/FundoTemasLoja.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:contain;
+    
+}
+
+#BotaoComprarLoja
+{
+    background-image: url(../../public//assets/BotaoComprar.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+    width: 9vw;
+    height: 10vh;
+    z-index: 9;
+    margin-left: -15.4vw;
+    margin-top: 35vh;
+}
+
+#BotaoComprarLoja:hover
+{
+    background-image: url(../../public//assets/BotaoComprarSelecionado.png);
+}
+
+#SetaMudaPacote
+{
+    background-image: url(../../public/assets/Voltar.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: scaleX(-1);
+    height: 5vh;
+    width: 2vw;
+}
+
+#SetaMudaPacoteVolta
+{
+    background-image: url(../../public/assets/Voltar.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 5vh;
+    width: 2vw;
 }
 
 
+#SetaMudaPacote:hover
+{
+    background-image: url(../../public/assets/VoltarSelecionado.png);
+    cursor: pointer;
+}
+
+#SetaMudaPacoteVolta:hover
+{
+    background-image: url(../../public/assets/VoltarSelecionado.png);
+    cursor: pointer;
+}
+
+
+
+#TituloTema
+{
+    position: absolute;
+    margin-top: 9vh;
+    height: 5vh;
+    width: 11vw;
+    z-index: 999;
+    color: #FFB629;
+    margin-left: 14vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#IconeLoja
+{
+    margin-top: 3vh;
+    width: 13vw;
+    height: 15vh;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+/* 
 #Flinstones
 {
     background-image: url(../../public/assets/PacoteFlinstones.png);
@@ -348,15 +424,18 @@
 #Jetsons:hover
 {
     background-image: url(../../public/assets/JetsonsSelecionado.png);
-}
+} */
 
-#ViewJetsons
+#View
 {
     width: 36vw;
     height: 35vh;
     margin-top: 2vh;
     margin-left: 1.5vw;
-    background-image: url(../../public/assets/ViewJetsons.png);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../../public/assets/ViewTemas.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -364,9 +443,9 @@
 
 #BotaoComprar
 {
-    margin-top: -4vh;
+    margin-top: 0vh;
     width: 10vw;
-    height: 10vh;
+    height: 7vh;
     background-image: url(../../public/assets/BotaoComprar.png);
     background-repeat: no-repeat;
     background-position: center;
@@ -380,16 +459,57 @@
     cursor: pointer;
 }
 
+#BotaoComprarConfirma
+{
+    margin-top: -2vh;
+    width: 10vw;
+    height: 7vh;
+    background-image: url(../../public/assets/BotaoComprar.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin-left: 14.5vw;
+}
+
+#BotaoComprarConfirma:hover
+{
+    background-image: url(../../public/assets/BotaoComprarSelecionado.png);
+    cursor: pointer;
+}
+
 #ConfirmaCompra
 {
     width: 29vw;
     height: 35vh;
     margin-top: 4vh;
     margin-left: 6vw;
-    background-image: url(../../public/assets/ContaSaldoPosCompra.png);
+    background-image: url(../../public/assets/ConfirmaCompra.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+}
+
+#AreaTituloConfirmacao
+{
+    width: 10vw;
+    height: 6vh;
+    position: absolute;
+    z-index: 9999;
+    align-items: center;
+    color: #FFB629;
+    text-align: center;
+    font-size: 3vh;
+    font-family: Game;
+    margin-top: 14.5vh;
+    margin-left: 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#AreaTituloConfirmacao p
+{
+    font-size: 2vh;
 }
 
 #AreaConfirmacao
@@ -404,4 +524,79 @@
     font-family: Game;
     margin-top: 7vh;
     margin-left: 14.1vw;
+}
+
+#TituloTemaCompra
+{
+    position: absolute;
+    margin-top: 6.5vh;
+    height: 5vh;
+    width: 11vw;
+    z-index: 999;
+    color: #FFB629;
+    margin-left: 14vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#PecaTema
+{
+    position: absolute;
+    margin-top: 7vh;
+    height: 17vh;
+    width: 11vw;
+    z-index: 999;
+    color: #FFB629;
+    margin-left: 24.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#IconeTema
+{
+    position: absolute;
+    height: 17vh;
+    width: 11vw;
+    color: #FFB629;
+    margin-left: 0;
+    margin-top: 7vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#FundoTema
+{
+    position: absolute;
+    margin-top: 7vh;
+    height: 17vh;
+    width: 11vw;
+    z-index: 999;
+    color: #FFB629;
+    margin-left: -24.3vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#AreaValorSaldo
+{
+    background-color: red;
+}
+
+#AreaSaldoPosCompra
+{
+    background-color: red;
 }
