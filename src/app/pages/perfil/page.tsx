@@ -1,37 +1,41 @@
 "use client";
-import axios from 'axios';
+import { api } from '@/app/services/api';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import styles from '../../styles.module.css';
-import SelecaoPacote from './components/selecaoPacote';
 import PerfilFrame from './components/perfilFrame';
-import { api } from '@/app/services/api';
+import SelecaoPacote from './components/selecaoPacote';
 
 const Perfil: React.FC = () => {
-    var [pacotesDisponiveis, setPacotesDisponiveis] = useState(["jetsons", "flinstones"]); //Mockado
-    var [pacoteAtual, setPacoteAtual] = useState("jetsons"); //Mockado
+    var [pacotesDisponiveis, setPacotesDisponiveis] = useState(["jetsons", "flinstones", "scooby doo", "pacman"]); //Mockado
+    var [pacoteAtual, setPacoteAtual] = useState("");
+    const [userId, setUserId] = useState("");
 
     useEffect(() => {
-        const fetchPacotesDisponiveis = async () => {
-            try {
-                const response = await api.get('/usuario-tema/pacotesDisponiveis'); //ToDo: Substituir pelo endpoint da API que retorna os Pacotes Disponíveis do usuário
-                setPacotesDisponiveis(response.data);
-            } catch (error) {
-                console.error('Erro ao buscar pacotes:', error);
+        function fetchUserId() {
+            const userString = window?.sessionStorage?.getItem("usuario");
+
+            if (userString) {
+                const userParsed = JSON.parse(userString);
+                setUserId(userParsed.usrcodigo);
             }
         };
 
+        fetchUserId();
+
         const fetchPacoteAtual = async () => {
             try {
-                const response = await api.get('/api/pacoteAtual'); //ToDo: Substituir pelo endpoint da API que retorna o Pacote Ativo do usuário
-                setPacoteAtual(response.data);
+                const response = await api.get('/getTemaAtivo/' + userId);
+
+                const data = response.data.tema;
+
+                setPacoteAtual(data.tmanome);
             } catch (error) {
                 console.error('Erro ao buscar pacote atual:', error);
             }
         };
 
-        fetchPacotesDisponiveis();
-        fetchPacoteAtual()
+        fetchPacoteAtual();
     }, []);
 
 
@@ -73,7 +77,7 @@ const Perfil: React.FC = () => {
                                         nome={pacote.toUpperCase()} idx={idx}
                                         onClick={() => {
                                             setPacoteAtual(pacote);
-                                            selecionarPacote(pacote)
+                                            selecionarPacote(pacote, userId);
                                         }} />
                                 })}
                             </div> : "Nenhum Pacote Disponível :("}
@@ -88,7 +92,7 @@ const Perfil: React.FC = () => {
 
 export default Perfil;
 
-function selecionarPacote(pacote: string) {
-    //ToDo: Implementar salvar no banco o pacote atual
-    //ToDo: Implementar aplicar o pacote selecionado
+function selecionarPacote(nomePacote: string, idUsuario: string) {
+    //Salva no banco o pacote selecionado
+    api.post('/updateTemaAtivo/' + idUsuario, nomePacote);
 }
