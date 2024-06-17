@@ -14,7 +14,6 @@ export default function ByPass() {
     async function submitForm(e: FormEvent) {
         e.preventDefault();
         router.push(`/pages/online/board/${room}`);
-        setLocalItem("nome", userName);
     }
 
     return (
@@ -24,15 +23,6 @@ export default function ByPass() {
                     Bem-vindo ao Jogo Trilha Online!
                 </h1>
                 <form onSubmit={submitForm}>
-                    <FormControl id="username" mb={4} mt={8}>
-                        <FormLabel>Nome do Usuário</FormLabel>
-                        <Input
-                            type="text"
-                            placeholder="Digite aqui o nome do seu usuário"
-                            onChange={(e) => setUserName(e.currentTarget.value)}
-                            required
-                        />
-                    </FormControl>
                     <FormControl id="room" mb={4}>
                         <FormLabel>Nome da Sala</FormLabel>
                         <Input
