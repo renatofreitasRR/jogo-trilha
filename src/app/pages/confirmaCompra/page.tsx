@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import styles from '../../styles.module.css';
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 
 const ConfirmaCompra: React.FC = () => {
     const [selectedTitle, setSelectedTitle] = useState('Titulo');
@@ -26,7 +26,7 @@ const ConfirmaCompra: React.FC = () => {
     }, [searchParams]);
 
     return (
-        <>
+        <Suspense>
             <Link href="/">
                 <div id={styles["Logo"]}></div>
             </Link>
@@ -71,7 +71,7 @@ const ConfirmaCompra: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </Suspense>
     );
 };
 

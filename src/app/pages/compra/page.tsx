@@ -1,6 +1,6 @@
 "use client";
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import styles from '../../styles.module.css';
 import { useSearchParams } from 'next/navigation';
 
@@ -49,7 +49,7 @@ const Compra: React.FC = () => {
     }, [searchParams]);
 
     return (
-        <>
+        <Suspense>
             <Link href="/">
                 <div id={styles["Logo"]}></div>
             </Link>
@@ -85,7 +85,7 @@ const Compra: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </Suspense>
     );
 };
 
