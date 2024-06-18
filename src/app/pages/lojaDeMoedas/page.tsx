@@ -2,33 +2,23 @@
 import Link from 'next/link';
 import styles from '../../styles.module.css';
 import { useState } from 'react';
-import Image from 'next/image';
 
-const Loja: React.FC = () => {
+const lojaDeMoedas: React.FC = () => {
 
-    const [currentIcon, setCurrentIcon] = useState(0);
+    const [quantity, setQuantity] = useState(1); // Estado para armazenar a quantidade
 
-    const icons = [
-        '/assets/Icon1.png',
-        '/assets/Icon2.png',
-        '/assets/Icon3.png',
-        '/assets/Icon4.png'
-    ];
-
-    const titles = [
-        'JETSONS',
-        'FLINTSTONES',
-        'SCOOBY-DOO',
-        'PAC-MAN'
-    ];
-
-    const handleIconChange = () => {
-        setCurrentIcon((prevIcon) => (prevIcon + 1) % icons.length);
+   
+    const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = Math.max(1, Number(event.target.value)); // Garante que o valor não seja menor que 1
+        setQuantity(value);
     };
 
-    const handleIconChangeBack = () => {
-        setCurrentIcon((prevIcon) => (prevIcon - 1 + icons.length) % icons.length);
+    // Função para formatar o valor em reais
+    const formatCurrency = (value: number) => {
+        return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     };
+
+    const SaldoASerAdicionado = 500 * quantity; // AQUI RECEBE O VALOR A SER MANDADO PRO BANCO
 
     return (
         <>
@@ -53,33 +43,21 @@ const Loja: React.FC = () => {
                         </div>
                         </Link>
 
-                        
-                        <div id={styles["TituloTema"]}>
-                            {titles[currentIcon]}
-                        </div>
                         <div id={styles["AreaPacotes"]}>
-                            <div 
-                                id={styles["SetaMudaPacoteVolta"]}
-                                onClick={handleIconChangeBack}
-                            ></div>
-                            <div className={styles.Pacote}></div>
-                            <div 
-                                id={styles["IconeLoja"]}
-                            >
-                                <Image 
-                                    src={icons[currentIcon]} 
-                                    alt={`Icone ${currentIcon + 1}`}
-                                    layout="fill"
-                                    objectFit="contain"
+                            <div className={styles.PacoteMoedas}>
+                                <input 
+                                    type="number" 
+                                    id={styles["AlteraQtdPacotes"]} 
+                                    value={quantity} 
+                                    onChange={handleQuantityChange} 
+                                    min="1"
                                 />
+                                <div id={styles["AlteraMoedasPacotes"]}> {SaldoASerAdicionado}x </div>
+                                <div id={styles["AlteraRealPacotes"]}> {formatCurrency(10 * quantity)} </div>
                             </div>
-                            <div 
-                                id={styles["SetaMudaPacote"]}
-                                onClick={handleIconChange}
-                            ></div>
-
-                            <Link href={`../../pages/compra?icon=${currentIcon}`}>
-                                <div id={styles["BotaoComprarLoja"]}></div>
+                            
+                            <Link href={`../../pages/perfil`}>
+                                <div id={styles["BotaoComprarLojaMoedas"]}></div>
                             </Link>
                         </div>
                     </div>
@@ -89,4 +67,4 @@ const Loja: React.FC = () => {
     );
 };
 
-export default Loja;
+export default lojaDeMoedas;
