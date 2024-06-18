@@ -17,6 +17,12 @@
     border: 0;
 }
 
+.chip_icon{
+    width: 45px;
+    height: 45px;
+    object-fit: scale-down;
+}
+
 .dot_image{
     background-position: center;
     background-repeat: no-repeat;

@@ -7,6 +7,7 @@ import ChipAvailable from "./components/ChipAside";
 import { PlayerTurn } from "./components/PlayerTurn";
 import { CountdownTimer } from "./components/Timer/CountdownTimer"
 import { WinModal } from "./components/WinModal";
+import BoardComponent from "./components/BoardComponent";
 
 export default function Board() {
     return (
@@ -14,40 +15,7 @@ export default function Board() {
             <BoardProvider>
                 <PlayerTurn />
                 <CountdownTimer />
-                <div className={styles.page_content}>
-                    <div className={styles.page_division}>
-                        <ChipAvailable player={1} />
-                        <main className={styles.board_container}>
-                            <Layer
-                                layer={1}
-                            />
-                            <Layer
-                                layer={2}
-                            />
-                            <Layer
-                                layer={3}
-                            />
-                            <Separator
-                                position='left'
-                            />
-                            <Separator
-                                position='right'
-                            />
-                            <Separator
-                                position='top'
-                            />
-                            <Separator
-                                position='bottom'
-                            />
-                        </main>
-                        <ChipAvailable player={2} />
-                    </div>
-                    <audio
-                        muted
-                        src='/sounds/play.mp3'
-                        controls
-                    />
-                </div>
+                <BoardComponent />
                 <WinModal />
             </BoardProvider>
         </div>

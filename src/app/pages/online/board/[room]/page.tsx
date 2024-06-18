@@ -12,6 +12,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { getLocalItem } from "@/app/utils/sessionStorage";
 import { WinModal } from "../components/WinModal";
 import { LoseModal } from "../components/LoseModal";
+import BoardOnlineComponent from "../components/BoardComponent";
 
 export default function BoardOnline() {
 
@@ -26,40 +27,7 @@ export default function BoardOnline() {
                     <PlayerTurn />
                     <h1 className={styles.user}>Usuário: {getLocalItem("nome")}</h1>
                     <h1>Room {room}</h1>
-                    <div className={styles.page_content}>
-                        <div className={styles.page_division}>
-                            <ChipAvailable player={1} />
-                            <main className={styles.board_container}>
-                                <Layer
-                                    layer={1}
-                                />
-                                <Layer
-                                    layer={2}
-                                />
-                                <Layer
-                                    layer={3}
-                                />
-                                <Separator
-                                    position='left'
-                                />
-                                <Separator
-                                    position='right'
-                                />
-                                <Separator
-                                    position='top'
-                                />
-                                <Separator
-                                    position='bottom'
-                                />
-                            </main>
-                            <ChipAvailable player={2} />
-                        </div>
-                        <audio
-                            muted
-                            src='/sounds/play.mp3'
-                            controls
-                        />
-                    </div>
+                    <BoardOnlineComponent />
                     <AwaitModal />
                     <WinModal />
                     <LoseModal />

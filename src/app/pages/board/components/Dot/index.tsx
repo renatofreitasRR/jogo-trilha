@@ -1,5 +1,5 @@
 'use client'
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { BoardContext } from '../../contexts/boardContext';
 import { DotType } from '../../interfaces/dotType';
 import styles from './index.module.css';
@@ -11,8 +11,19 @@ interface DotProps {
 export default function Dot({ dot }: DotProps) {
     const {
         clickInDot,
-        playerTurn
+        playerTurn,
+        pacoteAtual
     } = useContext(BoardContext);
+
+    var [pacotesDisponiveis, setPacotesDisponiveis] = useState(["jetsons", "flinstones", "scooby doo", "pacman"]); //Mockado
+
+
+    const iconMapping: any = {
+        jetsons: '/assets/Icon1.png',
+        flinstones: '/assets/Icon2.png',
+        'scooby doo': '/assets/Icon3.png',
+        pacman: '/assets/Icon4.png'
+    };
 
     return (
         <div
@@ -34,7 +45,16 @@ export default function Dot({ dot }: DotProps) {
                 title='Botão'
             >
                 <div>
-                    <strong>{dot.id}</strong>
+                    {
+                        pacoteAtual
+                            ?
+                            <img
+                                className={`${styles.chip_icon}`}
+                                src={iconMapping[pacoteAtual]}
+                            /> :
+                            <>
+                            </>
+                    }
                 </div>
             </button>
         </div>

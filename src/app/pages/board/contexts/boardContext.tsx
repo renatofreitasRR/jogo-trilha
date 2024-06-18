@@ -5,6 +5,7 @@ import { GameRules } from '../services/gameRules';
 import { GamePoints } from '../services/gamePoints';
 import { useCountdown } from '../hooks/useCountdown';
 import { useAudio } from '../../../shared/hooks/useAudio';
+import { api } from '@/app/services/api';
 
 interface BoardContextProps {
     resetAll: () => void;
@@ -18,6 +19,7 @@ interface BoardContextProps {
     playerTwoChipsAvailables: number;
     gameOver: boolean;
     turnTime: number;
+    pacoteAtual: string;
 }
 
 export const BoardContext = createContext({} as BoardContextProps);
@@ -39,6 +41,35 @@ export function BoardProvider({ children }: BoardProviderProps) {
     const [gameOver, setGameOver] = useState(false);
     const { resetTimer, seconds } = useCountdown(changeTurn);
     const { playBlockAudio, playClickAudio, playEatAudio, playLoseAudio, playMoveAudio, playWinAudio } = useAudio();
+
+    var [pacotesDisponiveis, setPacotesDisponiveis] = useState(["jetsons", "flinstones", "scooby doo", "pacman"]); //Mockado
+    var [pacoteAtual, setPacoteAtual] = useState("");
+
+    useEffect(() => {
+        const fetchPacoteAtual = async () => {
+
+            let userId = "";
+
+            const userString = window?.sessionStorage?.getItem("usuario");
+
+            if (userString) {
+                const userParsed = JSON.parse(userString);
+                userId = userParsed.usrcodigo
+            }
+
+            try {
+                const response = await api.get('/usuarios/getTemaAtivo/' + userId);
+
+                const data = response.data[0];
+
+                setPacoteAtual(data.tmanome);
+            } catch (error) {
+                console.error('Erro ao buscar pacote atual:', error);
+            }
+        };
+
+        fetchPacoteAtual();
+    }, []);
 
     function loadDots() {
         const dots_data = dots_json;
@@ -320,6 +351,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
                     gameOver,
                     playerWin,
                     turnTime: seconds,
+                    pacoteAtual,
                     clickInDot,
                     changeTurn,
                     resetTimer,

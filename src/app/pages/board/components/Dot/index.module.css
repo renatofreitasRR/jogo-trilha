@@ -19,6 +19,12 @@
     background-size: cover;
 }
 
+.chip_icon{
+    width: 45px;
+    height: 45px;
+    object-fit: scale-down;
+}
+
 .dot_image_gray{
     background-image: url('../../../../../../public/assets/dot/gray_circle.svg');
 }

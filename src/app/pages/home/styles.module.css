@@ -124,7 +124,7 @@
 
 .button_rank
 {
-    background-image: url(../../../../public/assets/Rank.png);
+    background-image: url(../../../../public/assets/BotaoOnline.png);
     background-size:contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -132,7 +132,7 @@
 
 .button_rank:hover
 {
-    background-image: url(../../../../public/assets/RankSelecionado.png);
+    background-image: url(../../../../public/assets/BotaoOnlineSelecionado.png);
 }
 
 .button_store

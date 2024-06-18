@@ -25,7 +25,7 @@ const Perfil: React.FC = () => {
 
         const fetchPacoteAtual = async () => {
             try {
-                const response = await api.get('/getTemaAtivo/' + userId);
+                const response = await api.get('/usuarios/getTemaAtivo/' + userId);
 
                 const data = response.data.tema;
 
@@ -37,6 +37,11 @@ const Perfil: React.FC = () => {
 
         fetchPacoteAtual();
     }, []);
+
+    async function salvarTudo(pacote: string) {
+        setPacoteAtual(pacote);
+        await selecionarPacote(pacote, userId);
+    }
 
 
     return (
@@ -75,10 +80,7 @@ const Perfil: React.FC = () => {
                                 {pacotesDisponiveis.map(function (pacote, idx) {
                                     return <SelecaoPacote ativo={pacote.toUpperCase() === pacoteAtual.toUpperCase()}
                                         nome={pacote.toUpperCase()} idx={idx}
-                                        onClick={() => {
-                                            setPacoteAtual(pacote);
-                                            selecionarPacote(pacote, userId);
-                                        }} />
+                                        onClick={() => salvarTudo(pacote)} />
                                 })}
                             </div> : "Nenhum Pacote Disponível :("}
                         </div>
@@ -92,7 +94,8 @@ const Perfil: React.FC = () => {
 
 export default Perfil;
 
-function selecionarPacote(nomePacote: string, idUsuario: string) {
-    //Salva no banco o pacote selecionado
-    api.post('/updateTemaAtivo/' + idUsuario, nomePacote);
+async function selecionarPacote(nomePacote: string, idUsuario: string) {
+    await api.post(`/usuarios/updateTemaAtivo/${idUsuario}`, {
+        "nome_tema_ativo": nomePacote
+    });
 }

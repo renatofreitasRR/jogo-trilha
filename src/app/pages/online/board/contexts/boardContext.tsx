@@ -6,6 +6,7 @@ import { useCountdown } from '../hooks/useCountdown';
 import { WebSocketContext } from './webSocketContext';
 import { Player } from '../interfaces/player';
 import { useAudio } from '@/app/shared/hooks/useAudio';
+import { api } from '@/app/services/api';
 
 interface BoardContextProps {
     clickInDot: (dot_id: string) => void;
@@ -15,6 +16,7 @@ interface BoardContextProps {
     playerOneChipsAvailables: number;
     playerTwoChipsAvailables: number;
     gameOver: boolean;
+    pacoteAtual: string;
 }
 
 export const BoardContext = createContext({} as BoardContextProps);
@@ -54,6 +56,34 @@ export function BoardProvider({ children }: BoardProviderProps) {
 
     const { playBlockAudio, playClickAudio, playEatAudio, playLoseAudio, playMoveAudio, playWinAudio } = useAudio();
 
+    var [pacotesDisponiveis, setPacotesDisponiveis] = useState(["jetsons", "flinstones", "scooby doo", "pacman"]); //Mockado
+    var [pacoteAtual, setPacoteAtual] = useState("");
+
+    useEffect(() => {
+        const fetchPacoteAtual = async () => {
+
+            let userId = "";
+
+            const userString = window?.sessionStorage?.getItem("usuario");
+
+            if (userString) {
+                const userParsed = JSON.parse(userString);
+                userId = userParsed.usrcodigo
+            }
+
+            try {
+                const response = await api.get('/usuarios/getTemaAtivo/' + userId);
+
+                const data = response.data[0];
+
+                setPacoteAtual(data.tmanome);
+            } catch (error) {
+                console.error('Erro ao buscar pacote atual:', error);
+            }
+        };
+
+        fetchPacoteAtual();
+    }, []);
 
     function resetAll() {
         loadDots();
@@ -436,6 +466,7 @@ export function BoardProvider({ children }: BoardProviderProps) {
         <BoardContext.Provider
             value={
                 {
+                    pacoteAtual,
                     playerOneChipsAvailables,
                     playerTwoChipsAvailables,
                     boardDots,

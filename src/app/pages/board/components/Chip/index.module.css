@@ -16,13 +16,22 @@
     background-size: cover;
 }
 
+.chip_icon{
+    width: 45px;
+    height: 45px;
+    object-fit: scale-down;
+}
+
 .chip_image_blue{
+    z-index: 1000;
     background-image: url('../../../../../../public/assets/dot/blue_circle.svg')!important;
 }
 
 .chip_image_red{
+    z-index: 1000;
     background-image: url('../../../../../../public/assets/dot/red_circle.svg')!important;
 }
+
 
 
 .chip_container + .chip_container{
