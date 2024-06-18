@@ -1,0 +1,22 @@
+.available_room{
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    padding: 16px;
+    background-color: #1389d4;
+
+    border-radius: 16px;
+
+    margin-top: 16px;
+}
+
+.available_room_container{
+    max-height: 500px;
+
+    overflow-y: auto;
+}
+
+.available_room_title{
+    margin-top: 16px;
+}

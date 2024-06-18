@@ -1,3 +1,5 @@
+"use client"
+
 export function setLocalItem(key: string, value: string): void {
     sessionStorage.setItem(key, value);
 }
