@@ -10,6 +10,12 @@
     position: relative; 
 }
 
+.form_cadastro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .link{
     cursor: pointer;
 
@@ -70,6 +76,13 @@
     text-align: center;
 }
 
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
 .menu
 {
     width: 39vw;
@@ -85,11 +98,14 @@
 .button_salvar
 {
     height: 40px;
-    width: 30%;
     background-color: white;
     border-radius: 10px;
     font-weight: bold;
-    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
 } 
 
 .button_salvar:hover
@@ -105,6 +121,7 @@
     width: 30%;
     background-color: white;
     border-radius: 10px;
+    position: relative;
     font-weight: bold;
 }
 
@@ -132,13 +149,10 @@
 }
 
 .error_message {
-    color: white ;
+    color: rgb(255, 0, 0) ;
     font-size: 12px;
     font-style: italic;
-    margin-top: 53.5px;
-    position: fixed;
-    width: 50%;
-    left: 25%;
+    margin-bottom: 8px;
 }
 
 .form_cadastro{
