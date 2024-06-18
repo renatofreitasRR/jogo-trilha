@@ -1,14 +1,44 @@
 "use client";
+import { api } from '@/app/services/api';
 import Link from 'next/link';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect, Suspense } from 'react';
 import styles from '../../styles.module.css';
 
 const CompraContent: React.FC = () => {
+    var [moedas, setMoedas] = useState(0);
+    const [userId, setUserId] = useState("");
     const [selectedTitle, setSelectedTitle] = useState('Titulo');
     const [selectedBackground, setSelectedBackground] = useState<string | null>(null);
     const [selectedIcon, setSelectedIcon] = useState<number>(0);
     const searchParams = useSearchParams();
+
+    useEffect(() => {
+        function fetchUserId() {
+            const userString = window?.sessionStorage?.getItem("usuario");
+
+            if (userString) {
+                const userParsed = JSON.parse(userString);
+                setUserId(userParsed.usrcodigo);
+            }
+        };
+
+        fetchUserId();
+
+        const fetchMoedas = async () => {
+            try {
+                const response = await api.get('/usuarios/getcoins/' + userId);
+
+                const data = response.data.user;
+
+                setMoedas(data.usrmoedas);
+            } catch (error) {
+                console.error('Erro ao buscar moedas:', error);
+            }
+        };
+
+        fetchMoedas();
+    }, []);
 
     const titles = [
         'JETSONS',
@@ -62,7 +92,7 @@ const CompraContent: React.FC = () => {
                         </Link>
                         <div id={styles["SaldoImg"]}>
                             <div id={styles["SaldoTxt"]}>
-                                9999
+                                {moedas}
                             </div>
                         </div>
                         <div id={styles["TituloTemaCompra"]}>

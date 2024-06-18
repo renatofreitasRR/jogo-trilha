@@ -1,12 +1,41 @@
 "use client";
+import { api } from '@/app/services/api';
 import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import styles from '../../styles.module.css';
-import { useState } from 'react';
 import Image from 'next/image';
 
 const Loja: React.FC = () => {
-
+    var [moedas, setMoedas] = useState(0);
+    const [userId, setUserId] = useState("");
     const [currentIcon, setCurrentIcon] = useState(0);
+
+    useEffect(() => {
+        function fetchUserId() {
+            const userString = window?.sessionStorage?.getItem("usuario");
+
+            if (userString) {
+                const userParsed = JSON.parse(userString);
+                setUserId(userParsed.usrcodigo);
+            }
+        };
+
+        fetchUserId();
+
+        const fetchMoedas = async () => {
+            try {
+                const response = await api.get('/usuarios/getcoins/' + userId);
+
+                const data = response.data.user;
+
+                setMoedas(data.usrmoedas);
+            } catch (error) {
+                console.error('Erro ao buscar moedas:', error);
+            }
+        };
+
+        fetchMoedas();
+    }, []);
 
     const icons = [
         '/assets/Icon1.png',
@@ -48,7 +77,7 @@ const Loja: React.FC = () => {
                         <Link href={'../../pages/lojaDeMoedas'}>
                         <div id={styles["SaldoImg"]}>
                             <div id={styles["SaldoTxt"]}>
-                                GetSaldo
+                                {moedas}
                             </div>
                         </div>
                         </Link>
