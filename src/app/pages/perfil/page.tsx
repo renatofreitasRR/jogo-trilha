@@ -7,8 +7,9 @@ import PerfilFrame from './components/perfilFrame';
 import SelecaoPacote from './components/selecaoPacote';
 
 const Perfil: React.FC = () => {
-    var [pacotesDisponiveis, setPacotesDisponiveis] = useState(["jetsons", "flinstones", "scooby doo", "pacman"]); //Mockado
+    var [pacotesDisponiveis, setPacotesDisponiveis] = useState(["jetsons", "flinstones", "scooby-doo", "pac-man"]); //Mockado
     var [pacoteAtual, setPacoteAtual] = useState("");
+    var [moedas, setMoedas] = useState(0);
     const [userId, setUserId] = useState("");
 
     useEffect(() => {
@@ -36,13 +37,26 @@ const Perfil: React.FC = () => {
         };
 
         fetchPacoteAtual();
+
+        const fetchMoedas = async () => {
+            try {
+                const response = await api.get('/usuarios/getcoins/' + userId);
+
+                const data = response.data.user;
+
+                setMoedas(data.usrmoedas);
+            } catch (error) {
+                console.error('Erro ao buscar moedas:', error);
+            }
+        };
+
+        fetchMoedas();
     }, []);
 
     async function salvarTudo(pacote: string) {
         setPacoteAtual(pacote);
         await selecionarPacote(pacote, userId);
     }
-
 
     return (
         <>
@@ -62,7 +76,7 @@ const Perfil: React.FC = () => {
                             <div id={styles["SaldoTxt"]}>
                                 {/*AQUI VAI A FUNÇÃO QUE DEVE RETORNAR O SALDO NA CONTA DO USUÁRIO*/}
                                 {/*AQUI TAMBÉM PRECISA LINKAR COM A TELA DE SALDO, PRA UM HREF */}
-                                9999
+                                {moedas}
                             </div>
                         </div>
 

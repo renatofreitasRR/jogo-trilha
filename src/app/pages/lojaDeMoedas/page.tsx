@@ -1,12 +1,40 @@
 "use client";
+import { api } from '@/app/services/api';
 import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import styles from '../../styles.module.css';
-import { useState } from 'react';
 
 const lojaDeMoedas: React.FC = () => {
-
+    var [moedas, setMoedas] = useState(0);
     const [quantity, setQuantity] = useState(1); // Estado para armazenar a quantidade
+    const [userId, setUserId] = useState("");
 
+    useEffect(() => {
+        function fetchUserId() {
+            const userString = window?.sessionStorage?.getItem("usuario");
+
+            if (userString) {
+                const userParsed = JSON.parse(userString);
+                setUserId(userParsed.usrcodigo);
+            }
+        };
+
+        fetchUserId();
+
+        const fetchMoedas = async () => {
+            try {
+                const response = await api.get('/usuarios/getcoins/' + userId);
+
+                const data = response.data.user;
+
+                setMoedas(data.usrmoedas);
+            } catch (error) {
+                console.error('Erro ao buscar moedas:', error);
+            }
+        };
+
+        fetchMoedas();
+    }, []);
    
     const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = Math.max(1, Number(event.target.value)); // Garante que o valor não seja menor que 1
@@ -18,7 +46,12 @@ const lojaDeMoedas: React.FC = () => {
         return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     };
 
-    const SaldoASerAdicionado = 500 * quantity; // AQUI RECEBE O VALOR A SER MANDADO PRO BANCO
+    const saldoASerAdicionado = 500 * quantity; // AQUI RECEBE O VALOR A SER MANDADO PRO BANCO
+
+    async function comprarMoedasOnClick(newMoedas: number) {
+        setMoedas(moedas + newMoedas);
+        addMoedas(newMoedas, userId);
+    }
 
     return (
         <>
@@ -38,7 +71,7 @@ const lojaDeMoedas: React.FC = () => {
                         <Link href={'../../pages/lojaDeMoedas'}>
                         <div id={styles["SaldoImg"]}>
                             <div id={styles["SaldoTxt"]}>
-                                GetSaldo
+                                {moedas}
                             </div>
                         </div>
                         </Link>
@@ -52,13 +85,13 @@ const lojaDeMoedas: React.FC = () => {
                                     onChange={handleQuantityChange} 
                                     min="1"
                                 />
-                                <div id={styles["AlteraMoedasPacotes"]}> {SaldoASerAdicionado}x </div>
+                                <div id={styles["AlteraMoedasPacotes"]}> {saldoASerAdicionado}x </div>
                                 <div id={styles["AlteraRealPacotes"]}> {formatCurrency(10 * quantity)} </div>
                             </div>
-                            
-                            <Link href={`../../pages/perfil`}>
-                                <div id={styles["BotaoComprarLojaMoedas"]}></div>
-                            </Link>
+
+                            <button onClick={() => comprarMoedasOnClick(saldoASerAdicionado)}>
+                                <div id={styles["BotaoComprarLojaMoedas"]}> </div>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -68,3 +101,9 @@ const lojaDeMoedas: React.FC = () => {
 };
 
 export default lojaDeMoedas;
+
+async function addMoedas(moedas: number, userId: string) {
+    await api.post(('/usuarios/addcoins/' + userId), {
+        "moedas": moedas
+    });
+}
